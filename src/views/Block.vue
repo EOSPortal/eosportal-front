@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="block">
 
     </div>
 </template>
@@ -12,5 +12,9 @@
 
         },
     })
-    export default class Home extends Vue {}
+    export default class Block extends Vue {}
 </script>
+
+<style lang="scss">
+
+</style>
