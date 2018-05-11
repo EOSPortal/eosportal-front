@@ -1,0 +1,25 @@
+
+// Body
+$body-bg: #f5f8fa;
+
+// ---------------------------
+//  Colors
+// ---------------------------
+
+$primary: #ffa64d;
+
+// Typography
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// navigation
+$navigation-bg: white;
+$navigation-border-color: #ccc;
+$navigation-link-color: #969696;
+$navigation-link-hover-color: darken($navigation-link-color, 15%);
+$navigation-link-active-color: $primary;
+$navigation-link-active-hover-color: darken($navigation-link-active-color, 15%);
+
+$navbar-light-color: #333;
+$navbar-light-hover-color: red;
