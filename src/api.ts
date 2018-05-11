@@ -6,10 +6,10 @@ export const getInfos = (chainName: string) =>
 fetchJson(chainUrl(chainName) + "/infos");
 
 export const getAllProducers = (chainName: string) =>
-  fetchJson(chainUrl(chainName) + "producers");
+  fetchJson(chainUrl(chainName) + "/producers");
 
 export const getProducer = (chainName: string, id: string) =>
-  fetchJson(chainUrl(chainName) + "producers/" + id);
+  fetchJson(chainUrl(chainName) + "/producers/" + id);
 
 export const getProducerBlocks = (chainName: string, id: string) =>
   fetchJson(`${chainUrl(chainName)}/producers/${id}/blocks`);
