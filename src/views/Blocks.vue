@@ -1,5 +1,6 @@
 <template>
-    <div class="blocks">
+    <div class="container">
+		<h1 class="text-center p-4 m-4">Blocks</h1>
 
     </div>
 </template>
