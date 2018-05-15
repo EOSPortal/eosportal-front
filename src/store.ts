@@ -19,7 +19,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getProducers({ commit, state }) {
-      commit("setProducers", (await getAllProducers(state.chainName)).data);
+      commit("setProducers", await getAllProducers(state.chainName));
     }
   }
 });
