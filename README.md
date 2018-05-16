@@ -1,38 +1,6 @@
 # EOSPortal Front-end
+![Waffle.io - Columns and their card count](https://badge.waffle.io/zrts/eosportal-front.svg?columns=all)
 
-README.md follows
+This is the frontend for the EOS Voting Portal.
 
-## Table of contents
-* [api](#api)
-    * [Producers](#producers)
-    * [Chains](#chains)
-    * [Blocks](#blocks)
-    * [Infos](#infos)
-
-
-## api
-The base URL http://prototype.eosportal.io/api/
-
-### Producers
-
-Producers end point. This is the list with all the block_producers
-
-/producers
-
-### Chains
-
-Chains end point. This end point contains all EOS chains.
-
-/chains
-
-### Blocks
-
-Blocks end point. This end point contains all Block from the beginning of the chain
-
-/blocks
-
-### Infos
-
-Infos end point.
-
-/infos
+Here is the backend project: [eosportal-api](https://github.com/zrts/eosportal-api)
