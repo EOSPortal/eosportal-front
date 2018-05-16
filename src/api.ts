@@ -2,7 +2,7 @@ import {
   chainUrl,
   baseUrl,
   fetchJson,
-  getDataForPages
+  getDataForAllPages
 } from "./utils/api.util";
 import { concat } from "ramda";
 
@@ -11,22 +11,8 @@ export const getChains = () => fetchJson(`${baseUrl}/api/chains`);
 export const getInfos = (chainName: string) =>
   fetchJson(chainUrl(chainName) + "/infos");
 
-export const getAllProducers = async (chainName: string) => {
-  // get list of 25 first producers
-  const responds = await fetchJson(chainUrl(chainName) + "/producers");
-  if (responds.current_page === responds.last_page) {
-    return responds.data;
-  }
-
-  // if their are more pages get the rest of the pages
-  const headData = responds.data;
-  const tailData = await getDataForPages(
-    chainUrl(chainName) + "/producers",
-    responds.current_page + 1,
-    responds.last_page
-  );
-  return concat(headData, tailData);
-};
+export const getAllProducers = async (chainName: string) =>
+  getDataForAllPages(chainUrl(chainName) + "/producers");
 
 export const getProducer = (chainName: string, id: string) =>
   fetchJson(chainUrl(chainName) + "/producers/" + id);

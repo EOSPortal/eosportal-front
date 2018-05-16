@@ -26,6 +26,23 @@ export const getDataForPages = async (
   return accumulateData(responses);
 };
 
+export const getDataForAllPages = async(resource: string) => {
+    // get first page/list of results
+    const responds = await fetchJson(resource);
+    if (responds.current_page === responds.last_page) {
+      return responds.data;
+    }
+  
+    // if their are more pages get the rest of the pages
+    const headData = responds.data;
+    const tailData = await getDataForPages(
+      resource,
+      responds.current_page + 1,
+      responds.last_page
+    );
+    return concat(headData, tailData);
+}
+
 const log = (data: any) => {
   console.log(data);
   return data;
