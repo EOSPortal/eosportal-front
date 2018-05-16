@@ -6,7 +6,7 @@ import {
 } from "./utils/api.util";
 import { concat } from "ramda";
 
-export const getChains = () => fetchJson(`${baseUrl}/api/chains`);
+export const getChains = () => getDataForAllPages(`${baseUrl}/api/chains`);
 
 export const getInfos = (chainName: string) =>
   fetchJson(chainUrl(chainName) + "/infos");

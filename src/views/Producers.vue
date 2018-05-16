@@ -30,21 +30,34 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapState, mapActions } from "vuex";
-import { getAllProducers } from "../api";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 @Component({
   components: {},
   props: {},
   computed: mapState(["chainName", "producers"]),
-  methods: mapActions(["getProducers"])
+  methods: {
+    ...mapActions(["getProducers"]),
+    ...mapMutations(["setChain"])
+  },
+  watch: {
+    "$route.params.chainName": function(newChainName) {
+      this.setNewChain(this.$route.params.chainName);
+    }
+  }
 })
 export default class Producers extends Vue {
   producers: Array<any>;
   chainName: string;
   getProducers: () => void;
+  setChain: (chainName: string) => void;
 
   created() {
+    this.setNewChain(this.$route.params.chainName);
+  }
+
+  setNewChain(newChain: string) {
+    this.setChain(newChain);
     this.getProducers();
   }
 }

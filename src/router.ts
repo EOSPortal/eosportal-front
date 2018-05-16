@@ -2,6 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 /**
+ * Importing all chains related views
+ */
+import Chains from './views/Chains.vue';
+
+/**
  * importing home view
  */
 import Home from './views/Home.vue';
@@ -41,6 +46,14 @@ export default new Router({
           component: Home
       },
       /**
+       * @description chains component route
+       */
+      {
+          path: '/chains',
+          name: 'chains',
+          component: Chains
+      },
+      /**
        * @description blocks component route with child route to an individual block
        */
       {
@@ -58,7 +71,7 @@ export default new Router({
        * @description producers component route with child route to an individual producers
        */
       {
-          path: '/producers',
+          path: '/:chainName/producers',
           name: 'producers',
           component: Producers,
           children: [
