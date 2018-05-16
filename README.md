@@ -1,4 +1,4 @@
-# EOSPortal Front-end
+# EOS Voting Portal Frontend
 ![Waffle.io - Columns and their card count](https://badge.waffle.io/zrts/eosportal-front.svg?columns=all)
 
 This is the frontend for the EOS Voting Portal.
