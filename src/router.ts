@@ -7,6 +7,11 @@ import Router from 'vue-router';
 import Chains from './views/Chains.vue';
 
 /**
+ * Importing specific chain related view
+ */
+import Chain from './views/Chain.vue';
+
+/**
  * importing home view
  */
 import Home from './views/Home.vue';
@@ -15,13 +20,11 @@ import Home from './views/Home.vue';
  * Importing all block related views
  */
 import Blocks from './views/Blocks.vue';
-import Block from './views/Block.vue';
 
 /**
  * Importing all producers related views
  */
 import Producers from './views/Producers.vue';
-import Producer from './views/Producer.vue';
 
 /**
  * importing infos related view
@@ -53,50 +56,29 @@ export default new Router({
           name: 'chains',
           component: Chains
       },
-      /**
-       * @description blocks component route with child route to an individual block
-       */
       {
-          path: '/blocks',
-          name: 'blocks',
-          component: Blocks,
+          path: '/:chainName',
+          component: Chain,
           children: [
+              /**
+               * loads as default view
+               */
               {
-                  path: 'block/:id',
-                  component: Block
+                  path: '',
+                  name: 'infos',
+                  component: Infos
+              },
+              {
+                  path: 'producers',
+                  name: 'producers',
+                  component: Producers
+              },
+              {
+                  path: 'blocks',
+                  name: 'blocks',
+                  component: Blocks
               }
           ]
-      },
-      /**
-       * @description producers component route with child route to an individual producers
-       */
-      {
-          path: '/:chainName/producers',
-          name: 'producers',
-          component: Producers,
-          children: [
-              {
-                  path: 'producer/:id',
-                  component: Producer,
-                  /**
-                   * @description route to all blocks by this producer
-                   */
-                  children: [
-                      {
-                          path: '/blocks',
-                          component: Blocks
-                      }
-                  ]
-              }
-          ]
-      },
-      /**
-       * @description infos component route
-       */
-      {
-          path: '/infos',
-          name: 'infos',
-          component: Infos
       },
       /**
        * @description about component route can be used to display information on how to vote.
