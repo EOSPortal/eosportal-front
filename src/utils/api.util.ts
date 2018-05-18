@@ -42,11 +42,3 @@ export const getDataForAllPages = async(resource: string) => {
     );
     return concat(headData, tailData);
 }
-
-/**
- * Can be removed?
- */
-// const log = (data: any) => {
-//   console.log(data);
-//   return data;
-// };
