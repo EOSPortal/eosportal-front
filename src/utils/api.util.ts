@@ -6,7 +6,7 @@ export const chainUrl = (chainName: string) =>
   `https://${chainName}.${config.domain}/api`;
 
 export const fetchJson = (url: string) =>
-  fetch(url).then(responds => responds.json());
+  fetch(url).then(responds => responds.json()).catch(error => console.error(error));
 
 export const getDataForPages = async (
   resource: string,
@@ -43,7 +43,10 @@ export const getDataForAllPages = async(resource: string) => {
     return concat(headData, tailData);
 }
 
-const log = (data: any) => {
-  console.log(data);
-  return data;
-};
+/**
+ * Can be removed?
+ */
+// const log = (data: any) => {
+//   console.log(data);
+//   return data;
+// };
