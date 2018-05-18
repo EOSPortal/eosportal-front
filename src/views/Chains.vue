@@ -9,10 +9,10 @@
                     <th>Created at</th>
                     <th>Uploaded at</th>
 				</tr>
-			</thead
+			</thead>
 
 			<tbody>
-	            <router-link :to="chain.name + '/producers'" tag="tr" v-bind:key="chain.id" v-for="chain in chains" style="cursor:pointer;">
+	            <router-link :to="chain.name" tag="tr" v-bind:key="chain.id" v-for="chain in chains" style="cursor:pointer;">
 	                <td>{{chain.name}}</td>
                     <td>{{chain.api_url}}</td>
                     <td>{{chain.created_at}}</td>

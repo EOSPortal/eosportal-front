@@ -4,3 +4,8 @@
 This is the frontend for the EOS Voting Portal.
 
 Here is the backend project: [eosportal-api](https://github.com/zrts/eosportal-api)
+
+
+## Dependencies
+
+* [Vue-Bootstrap](https://bootstrap-vue.js.org/docs/)

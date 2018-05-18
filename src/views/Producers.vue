@@ -15,7 +15,7 @@
 			</thead>
 
 			<tbody>
-	            <tr v-bind:key="producer.id" v-for="producer in producers">
+	            <tr v-for="producer in producers">
 	                <td>{{producer.name}}</td>
 	                <td>{{producer.organization}}</td>
 	                <td>{{producer.contact}}</td>
