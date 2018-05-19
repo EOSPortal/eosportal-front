@@ -1,77 +1,58 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-/**
- * Importing all chains related views
- */
+import Help from './views/Help.vue';
 import Chains from './views/Chains.vue';
-
-/**
- * Importing specific chain related view
- */
 import Chain from './views/Chain.vue';
-
-/**
- * importing home view
- */
-import Home from './views/Home.vue';
-
-/**
- * Importing all block related views
- */
-import Blocks from './views/Blocks.vue';
-
-/**
- * Importing all producers related views
- */
-import Producers from './views/Producers.vue';
-
-/**
- * importing infos related view
- */
-import Infos from './views/Infos.vue';
-
-/**
- * importing about view
- */
+import VotingPower from './views/chain/VotingPower.vue';
+import Blocks from './views/chain/Blocks.vue';
+import Producer from './views/chain/Producer.vue';
+import Producers from './views/chain/Producers.vue';
+import Info from './views/chain/Info.vue';
 import About from './views/About.vue';
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
-      /**
-       * @description home component route
-       */
       {
           path: '/',
-          name: 'home',
-          component: Home
-      },
-      /**
-       * @description chains component route
-       */
-      {
-          path: '/chains',
           name: 'chains',
           component: Chains
       },
       {
-          path: '/:chainId',
+          path: '/help',
+          name: 'help',
+          component: Help
+      },
+      {
+          path: '/chain/:chainId',
           component: Chain,
           children: [
-              /**
-               * loads as default view
-               */
               {
                   path: '',
-                  name: 'infos',
-                  component: Infos
+                  name: '',
+                  redirect: '/chain/:chainId/producers'
+              },
+              {
+                  path: 'power',
+                  name: 'power',
+                  component: VotingPower
               },
               {
                   path: 'producers',
                   name: 'producers',
                   component: Producers
+              },
+              {
+                  path: 'producers/:producer',
+                  name: 'producer',
+                  component: Producer
+              },
+              {
+                  path: 'info',
+                  name: 'info',
+                  component: Info
               },
               {
                   path: 'blocks',
@@ -80,17 +61,11 @@ export default new Router({
               }
           ]
       },
-      /**
-       * @description about component route can be used to display information on how to vote.
-       */
       {
           path: '/about',
           name: 'about',
           component: About
       },
-      /**
-       * @description if no route matched the user will be send back to the home page.
-       */
       {
           path: '*',
           redirect: '/' // might change this to a 404 page not found route

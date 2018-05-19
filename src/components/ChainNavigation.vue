@@ -1,8 +1,9 @@
 <template>
     <b-nav pills class="d-flex justify-content-center p-2 m-2">
-        <b-nav-item exact-active-class="active" :to="{ name: 'infos' }" exact>Chain Info</b-nav-item>
-        <b-nav-item exact-active-class="active" :to="{ name: 'blocks' }">Blocks</b-nav-item>
+        <b-nav-item exact-active-class="active" :to="{ name: 'power' }">Voting Power</b-nav-item>
         <b-nav-item exact-active-class="active" :to="{ name: 'producers' }">Producers</b-nav-item>
+        <b-nav-item exact-active-class="active" :to="{ name: 'info' }" exact>Chain Info</b-nav-item>
+        <b-nav-item exact-active-class="active" :to="{ name: 'blocks' }">Blocks</b-nav-item>
     </b-nav>
 </template>
 

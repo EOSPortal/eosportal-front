@@ -8,7 +8,7 @@ import { concat } from "ramda";
 
 export const getChains = () => getDataForAllPages(`${baseUrl}/api/chains`);
 
-export const getInfos = (chainId: number) =>
+export const getInfo = (chainId: number) =>
   fetchJson(chainUrl(chainId) + "/infos");
 
 export const getAllProducers = async (chainId: number) =>
