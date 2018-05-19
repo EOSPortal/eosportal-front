@@ -14,14 +14,14 @@ export const getInfos = (chainId: number) =>
 export const getAllProducers = async (chainId: number) =>
   getDataForAllPages(chainUrl(chainId) + "/producers");
 
-export const getProducer = (chainId: number) =>
-  fetchJson(chainUrl(chainId) + "/producers/");
+export const getProducer = (chainId: number, producerId:number) =>
+  fetchJson(`${chainUrl(chainId)}/producers/${producerId}`);
 
-export const getProducerBlocks = (chainId: number) =>
-  fetchJson(`${chainUrl(chainId)}/producers/blocks`);
+export const getProducerBlocks = (chainId: number, producerId: number) =>
+  fetchJson(`${chainUrl(chainId)}/producers/${producerId}/blocks`);
 
 export const getAllBlocks = (chainId: number) =>
   fetchJson(chainUrl(chainId) + "/blocks");
 
-export const getBlock = (chainId: number, id: number) =>
-  fetchJson(`${chainUrl(chainId)}/blocks/${id}`);
+export const getBlock = (chainId: number, blockId: number) =>
+  fetchJson(`${chainUrl(chainId)}/blocks/${blockId}`);
