@@ -8,6 +8,8 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+@import "layout/reset";
+@import "layout/global";
 @import "layout/header";
 @import "layout/navbar-nav";
 @import "layout/masthead";

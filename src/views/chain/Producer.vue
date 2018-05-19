@@ -1,6 +1,6 @@
 <template>
-    <div class="producer">
-
+    <div class="container">
+        <h1 class="text-center p-4 m-4">Producer</h1>
     </div>
 </template>
 
