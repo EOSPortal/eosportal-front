@@ -16,7 +16,7 @@ Here is the backend project: [eosportal-api](https://github.com/zrts/eosportal-a
 
 ## Installation
 
-##### Cloning and Dependencies
+### Cloning and Dependencies
 
 **Clone the repo and install dependencies.**
 
@@ -30,7 +30,7 @@ Here is the backend project: [eosportal-api](https://github.com/zrts/eosportal-a
 
 `npm i` or `npm install`
 
-##### Scripts
+### Scripts
 
 **Serve the development environment.**
 
