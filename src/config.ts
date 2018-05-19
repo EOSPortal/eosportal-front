@@ -1,3 +1,3 @@
 export default {
-  domain: "eosportal.io"
+  domain: "api.eosportal.io"
 };
