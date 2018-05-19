@@ -6,13 +6,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    chainName: "",
+    chainId: "",
     producers: [],
     chains: []
   },
   mutations: {
-    setChain(state: any, chainName: string) {
-      state.chainName = chainName;
+    setChain(state: any, chainId: number) {
+      state.chainId = chainId;
     },
     setProducers(state: any, producers: Array<any>) {
       state.producers = producers;
@@ -23,7 +23,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getProducers({ commit, state }) {
-      commit("setProducers", await getAllProducers(state.chainName));
+      commit("setProducers", await getAllProducers(state.chainId));
     },
     async getChains({ commit, state }) {
       commit("setChains", await getChains());

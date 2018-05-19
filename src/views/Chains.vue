@@ -12,8 +12,8 @@
 			</thead>
 
 			<tbody>
-	            <router-link :to="chain.name" tag="tr" v-bind:key="chain.id" v-for="chain in chains" style="cursor:pointer;">
-	                <td>{{chain.name}}</td>
+	            <router-link :to="chain.id.toString()" tag="tr" v-bind:key="chain.id" v-for="chain in chains" style="cursor:pointer;">
+	                <td>{{chain.chain_id}}</td>
                     <td>{{chain.api_url}}</td>
                     <td>{{chain.created_at}}</td>
                     <td>{{chain.updated_at}}</td>

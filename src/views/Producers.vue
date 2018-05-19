@@ -1,7 +1,7 @@
 <template>
     <div class="container">
 		<h1 class="text-center p-4 m-4">Producers</h1>
-        <p>Chain: {{chainName}}</p>
+        <p>Chain: {{chainId}}</p>
         <table class="table table-striped table-hover">
 			<thead>
 				<tr>
@@ -35,29 +35,28 @@ import { mapState, mapActions, mapMutations } from "vuex";
 @Component({
   components: {},
   props: {},
-  computed: mapState(["chainName", "producers"]),
+  computed: mapState(["chainId", "producers"]),
   methods: {
     ...mapActions(["getProducers"]),
     ...mapMutations(["setChain"])
   },
   watch: {
-    "$route.params.chainName": function(newChainName) {
-      this.setNewChain(this.$route.params.chainName);
+    "$route.params.chainId": () => {
+      this.setNewChain(parseInt(this.$route.params.chainId));
     }
   }
 })
 export default class Producers extends Vue {
   producers: Array<any>;
-  chainName: string;
   getProducers: () => void;
-  setChain: (chainName: string) => void;
+  setChain: (chainId: number) => void;
 
   created() {
-    this.setNewChain(this.$route.params.chainName);
+    this.setNewChain(parseInt(this.$route.params.chainId));
   }
 
-  setNewChain(newChain: string) {
-    this.setChain(newChain);
+  setNewChain(_chainId: number) {
+    this.setChain(_chainId);
     this.getProducers();
   }
 }

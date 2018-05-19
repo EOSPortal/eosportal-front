@@ -18,7 +18,7 @@
             ChainNavigation
         },
         props: {},
-        computed: mapState(["chainName", "producers"]),
+        computed: mapState(["producers"]),
         methods: {
             ...mapActions(["getProducers"]),
             ...mapMutations(["setChain"])
@@ -26,16 +26,16 @@
     })
     export default class Chain extends Vue {
         producers: Array<any>;
-        chainName: string;
+        chainId: number;
         getProducers: () => void;
-        setChain: (chainName: string) => void;
+        setChain: (chainId: number) => void;
 
         created() {
-            this.setNewChain(this.$route.params.chainName);
+            this.setNewChain(this.$route.params.chainId);
         }
 
-        setNewChain(newChain: string) {
-            this.setChain(newChain);
+        setNewChain(_chainId: number) {
+            this.setChain(_chainId);
             this.getProducers();
         }
     }

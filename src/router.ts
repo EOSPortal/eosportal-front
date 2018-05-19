@@ -57,7 +57,7 @@ export default new Router({
           component: Chains
       },
       {
-          path: '/:chainName',
+          path: '/:chainId',
           component: Chain,
           children: [
               /**

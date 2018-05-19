@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class="text-center p-4 m-4">{{chainName}} Chain Information</h1>
+        <h1 class="text-center p-4 m-4">Chain Information</h1>
     </div>
 </template>
 
@@ -12,7 +12,7 @@
         components: {
 
         },
-        computed: mapState(["chainName"]),
+        computed: mapState([""]),
     })
     export default class Infos extends Vue {}
 </script>

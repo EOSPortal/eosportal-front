@@ -8,20 +8,20 @@ import { concat } from "ramda";
 
 export const getChains = () => getDataForAllPages(`${baseUrl}/api/chains`);
 
-export const getInfos = (chainName: string) =>
-  fetchJson(chainUrl(chainName) + "/infos");
+export const getInfos = (chainId: number) =>
+  fetchJson(chainUrl(chainId) + "/infos");
 
-export const getAllProducers = async (chainName: string) =>
-  getDataForAllPages(chainUrl(chainName) + "/producers");
+export const getAllProducers = async (chainId: number) =>
+  getDataForAllPages(chainUrl(chainId) + "/producers");
 
-export const getProducer = (chainName: string, id: string) =>
-  fetchJson(chainUrl(chainName) + "/producers/" + id);
+export const getProducer = (chainId: number) =>
+  fetchJson(chainUrl(chainId) + "/producers/");
 
-export const getProducerBlocks = (chainName: string, id: string) =>
-  fetchJson(`${chainUrl(chainName)}/producers/${id}/blocks`);
+export const getProducerBlocks = (chainId: number) =>
+  fetchJson(`${chainUrl(chainId)}/producers/blocks`);
 
-export const getAllBlocks = (chainName: string) =>
-  fetchJson(chainUrl(chainName) + "/blocks");
+export const getAllBlocks = (chainId: number) =>
+  fetchJson(chainUrl(chainId) + "/blocks");
 
-export const getBlock = (chainName: string, id: string) =>
-  fetchJson(`${chainUrl(chainName)}/blocks/${id}`);
+export const getBlock = (chainId: number, id: number) =>
+  fetchJson(`${chainUrl(chainId)}/blocks/${id}`);
