@@ -70,30 +70,25 @@ nav {
         float:right;
 
         .link {
-            height:48px;
-            line-height:46px;
-            padding:0 30px;
-            border-radius:$radius;
+            height: 48px;
+            line-height: 45px;
+            padding: 0 30px;
+            border-radius: 5px;
             text-transform: uppercase;
-            font-size:21px;
-            font-weight:300;
-            display:inline-block;
-            margin-left:8px;
-            color:$dark-blue;
-            background:$light-green;
+            font-size: 13px;
+            font-weight: 800;
+            display: inline-block;
+            margin-left: 8px;
+            background:transparent;
+            color: $light-green;
             border: 2px solid $light-green;
 
             transition: all 0.2s ease;
             transition-property: background, color;
 
-            &:hover {
-                background:transparent;
-                color: $light-green;
-            }
-
-            &.router-link-exact-active {
-                background:transparent;
-                color: $light-green;
+            &:hover, &.router-link-exact-active {
+                color:$dark-blue;
+                background:$light-green;
             }
         }
     }
@@ -104,6 +99,37 @@ nav {
     border:2px solid $medium-blue;
     padding:35px;
     max-width:640px;
+}
+
+.cta {
+    button {
+        margin:0 0 20px 0;
+        outline:0;
+        cursor: pointer;
+        height:70px;
+        font-size:28px;
+        border:2px solid $light-green;
+        border-radius:$radius;
+        text-transform: uppercase;
+        padding:0 35px;
+        background:transparent;
+        color:$light-green;
+        opacity:1;
+        box-shadow: 0 0 150px rgba(255,255,255,0.1);
+
+        transition: all 0.2s ease;
+        transition-property: background, color, opacity;
+
+        &:hover {
+            background:$light-green;
+            color:$dark-blue;
+        }
+
+        &:active {
+            background:transparent;
+            color:$light-green;
+        }
+    }
 }
 
 
@@ -165,25 +191,42 @@ table {
     tbody {
 
         tr {
-            height:60px;
+            height:100px;
             box-shadow:inset 0 -1px 0 $medium-blue;
             background:transparent;
             transition: background 0.1s ease, transform 0.2s ease;
 
-            &:hover {
-                background:$light-blue;
-                transform:scale(1.01);
-            }
-
-            &:active {
-                background:transparent;
-                transform:scale(0.99);
-            }
-
             td {
                 padding-left:10px;
-                text-align:center;
+                text-align:left;
 
+                &:first-child { text-align:left; }
+                &:last-child { text-align:right; }
+
+                button {
+                    outline:0;
+                    cursor: pointer;
+                    height:50px;
+                    border:2px solid $light-green;
+                    color:$light-green;
+                    border-radius:2px;
+                    background:transparent;
+                    text-transform: uppercase;
+                    padding:0 25px;
+
+                    transition: all 0.2s ease;
+                    transition-property: background, color;
+
+                    &:hover {
+                        background:$light-green;
+                        color:$dark-blue;
+                    }
+
+                    &:active {
+                        color:$light-green;
+                        background:transparent;
+                    }
+                }
             }
         }
     }

@@ -1,8 +1,12 @@
 <template>
     <section>
-		<section class="box contain w640 add-new-chain">
-			<h2 class="center-text" style="width:100%;">Index a new Chain</h2>
+		<section class="contain center-text cta" style="margin-top:30px;">
+			<h1>Select a chain to start <b>Voting</b></h1>
+			<button>Or go to the top voted chain</button>
 
+		</section>
+		<section class="box contain w640 add-new-chain">
+			<h2 class="center-text" style="width:100%;">Submit a new Chain</h2>
 			<section class="input-container">
 				<input placeholder="http://chaindomain.com/" />
 				<button>Add Chain</button>
@@ -29,26 +33,20 @@
 					<th>Total Voters</th>
 					<th>Vote Percentage</th>
 					<th>Connected BPs</th>
+					<th></th>
 				</tr>
 				</thead>
 
 				<tbody>
-				<router-link :to="'chain/'+chain.id.toString()" tag="tr" :key="chain.id" v-for="chain in chains" style="cursor:pointer;">
-					<td>{{chain.chain_id || Math.round(Math.random() * 10000000000 + 1)}}</td>
-					<td>{{chain.api_url.replace('http://', '').replace('https://','')}}</td>
-					<td>{{chain.booted || '2/6/2018'}}</td>
-					<td>{{chain.voters || Math.round(Math.random() * 300000 + 1) | humanNum}}</td>
-					<td>{{chain.percentage || (Math.random() * 100 + 0.1).toFixed(2) + '%'}}</td>
-					<td>{{chain.bp_count || Math.round(Math.random() * 100 + 1)}}</td>
-				</router-link>
-				<router-link :to="'chain/'+chain.id.toString()" tag="tr" :key="chain.id" v-for="chain in chains" style="cursor:pointer;">
-					<td>{{chain.chain_id || Math.round(Math.random() * 10000000000 + 1)}}</td>
-					<td>{{chain.api_url.replace('http://', '').replace('https://','')}}</td>
-					<td>{{chain.booted || '2/6/2018'}}</td>
-					<td>{{chain.voters || Math.round(Math.random() * 300000 + 1) | humanNum}}</td>
-					<td>{{chain.percentage || (Math.random() * 100 + 0.1).toFixed(2) + '%'}}</td>
-					<td>{{chain.bp_count || Math.round(Math.random() * 100 + 1)}}</td>
-				</router-link>
+					<tr :key="chain.id" v-for="chain in chains">
+						<td>{{chain.chain_id || Math.round(Math.random() * 10000000000 + 1)}}</td>
+						<td>{{chain.api_url.replace('http://', '').replace('https://','')}}</td>
+						<td>{{chain.booted || '2/6/2018'}}</td>
+						<td>{{chain.voters || Math.round(Math.random() * 300000 + 1) | humanNum}}</td>
+						<td>{{chain.percentage || (Math.random() * 100 + 0.1).toFixed(2) + '%'}}</td>
+						<td>{{chain.bp_count || Math.round(Math.random() * 100 + 1)}}</td>
+						<td><router-link :to="'chain/'+chain.id.toString()" tag="button">Select Chain</router-link></td>
+					</tr>
 				</tbody>
 			</table>
 		</section>
