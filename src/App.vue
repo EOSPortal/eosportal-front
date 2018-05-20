@@ -1,18 +1,20 @@
 <template>
 
     <div id="app">
-        <Header></Header>
-        <router-view/>
+        <section class="app-container">
+            <Menu></Menu>
+            <router-view/>
+        </section>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import Header from './components/Header';
+    import Menu from './components/Menu';
 
     @Component({
         components: {
-            Header
+            Menu
         },
     })
     export default class App extends Vue {}
