@@ -2,13 +2,13 @@
 
 1. Create an issue or pick an available open issue.
 2. Assign the issue to yourself.
-3. In the project board (https://github.com/zrts/eosportal-front/projects) move the issue to "In Progress".
+3. Add the tag "In Progress" to the issue.
 3. Create a feature branch.
 4. Do development.
 5. Create a pull request for the issue.
-6. Move the issue to "Review" in waffle.
+6. Replace "In Progress" tag with "Review"
 
 ## Review Workflow
-1. Pick an issue from an project board's "Review" column.
+1. Pick an issue with the "Review" tag.
 2. Review it with comments.
-3. If accepted merge it. Else, if not accepted make comments and move it back to "In Progress".
+3. Once an issue has 2 or more approvals it can be merged.
