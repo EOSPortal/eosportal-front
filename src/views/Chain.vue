@@ -22,6 +22,18 @@
         methods: {
             ...mapActions(["getProducers"]),
             ...mapMutations(["setChain"])
+        },
+        mounted(){
+        	//TODO: Get chain data from id, bind to state, use api url to build network for Scatter
+            // const chain = //get chain
+            // setChainData(chain)
+            // setNetwork(chain.api_url)
+        },
+        destroyed(){
+        	//TODO: Unbind `chain` and `network` from state, also log out of Scatter
+            // setChainData(null);
+            // setNetwork(null);
+            // logout();
         }
     })
     export default class Chain extends Vue {
@@ -29,6 +41,7 @@
         chainId: number;
         getProducers: () => void;
         setChain: (chainId: number) => void;
+        setNetwork: (networkString:string) => void;
 
         created() {
             this.setNewChain(this.$route.params.chainId);
