@@ -1,15 +1,12 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,600");
 
 // Variables
 @import "variables";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
 @import "layout/reset";
 @import "layout/global";
-@import "layout/header";
-@import "layout/navbar-nav";
-@import "layout/masthead";
+
+@import "themes/dark";

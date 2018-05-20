@@ -1,10 +1,13 @@
 <template>
-    <b-nav pills class="d-flex justify-content-center p-2 m-2">
-        <b-nav-item exact-active-class="active" :to="{ name: 'power' }">Voting Power</b-nav-item>
-        <b-nav-item exact-active-class="active" :to="{ name: 'producers' }">Producers</b-nav-item>
-        <b-nav-item exact-active-class="active" :to="{ name: 'info' }" exact>Chain Info</b-nav-item>
-        <b-nav-item exact-active-class="active" :to="{ name: 'blocks' }">Blocks</b-nav-item>
-    </b-nav>
+    <section>
+        <section class="contain">
+            <router-link exact-active-class="active" :to="{ name: 'power' }">Voting Power</router-link>
+            <router-link exact-active-class="active" :to="{ name: 'producers' }">Producers</router-link>
+            <router-link exact-active-class="active" :to="{ name: 'info' }" exact>Chain Info</router-link>
+            <router-link exact-active-class="active" :to="{ name: 'blocks' }">Blocks</router-link>
+        </section>
+        <hr/>
+    </section>
 </template>
 
 <script lang="ts">
@@ -12,13 +15,10 @@
     /**
      * Bootstrap-vue components
      */
-    import bNav from 'bootstrap-vue/es/components/nav/nav';
-    import bNavItem from 'bootstrap-vue/es/components/nav/nav-item';
 
     @Component({
         components: {
-            bNav,
-            bNavItem
+        	
         }
     })
 

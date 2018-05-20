@@ -1,3 +1,28 @@
 body {
   overflow-y: scroll;
 }
+
+h1 {
+  font-size:36px;
+  font-weight:300;
+  margin-bottom:20px;
+}
+
+h2 {
+  font-weight:300;
+  margin-bottom:10px;
+}
+
+.contain {
+  max-width:1480px;
+  padding:0 20px;
+  margin:0 auto;
+}
+
+.center-text {
+  text-align:center;
+}
+
+p {
+  font-size:14px;
+}
