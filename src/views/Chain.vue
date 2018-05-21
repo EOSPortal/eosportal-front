@@ -12,44 +12,45 @@
     import { mapState, mapActions, mapMutations } from "vuex";
 
     import ChainNavigation from '../components/ChainNavigation';
+    import {getChainProducers, getChainState} from "@/utils/eos.util";
 
     @Component({
         components: {
             ChainNavigation
         },
         props: {},
-        computed: mapState(["producers"]),
+        computed: mapState(['chainId', 'producers']),
         methods: {
-            ...mapActions(["getProducers"]),
-            ...mapMutations(["setChain"])
-        },
-        mounted(){
-        	//TODO: Get chain data from id, bind to state, use api url to build network for Scatter
-            // const chain = //get chain
-            // setChainData(chain)
-            // setNetwork(chain.api_url)
-        },
-        destroyed(){
-        	//TODO: Unbind `chain` and `network` from state, also log out of Scatter
-            // setChainData(null);
-            // setNetwork(null);
-            // logout();
+            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData"])
         }
     })
+
     export default class Chain extends Vue {
         producers: Array<any>;
         chainId: number;
-        getProducers: () => void;
         setChain: (chainId: number) => void;
-        setNetwork: (networkString:string) => void;
+        setNetwork: (networkString:string | null) => void;
+        setProducers: (producers:any[]) => void;
+        setChainData: (chainData:any) => void;
 
         created() {
-            this.setNewChain(this.$route.params.chainId);
+            this.setChain(this.$route.params.chainId);
+            this.initialize();
         }
 
-        setNewChain(_chainId: number) {
-            this.setChain(_chainId);
-            this.getProducers();
+        destroyed(){
+            this.setNetwork(null);
+            this.setChainData(null);
+            this.setProducers([]);
+            //TODO: logout();
+        }
+
+        async initialize(){
+            //TODO: Get chain data from id, bind to state, use api url to build network for Scatter
+
+            this.setNetwork('http://193.93.219.219:8888/');
+            await this.setChainData(await getChainState());
+            await this.setProducers(await getChainProducers());
         }
     }
 </script>
