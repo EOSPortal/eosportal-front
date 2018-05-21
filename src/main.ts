@@ -12,4 +12,12 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
+
+document.addEventListener('scatterLoaded', () => {
+
+  window.scatter.requireVersion(4.0);
+  store.dispatch('setScatter', window.scatter);
+  window.scatter = null;
+
+});
