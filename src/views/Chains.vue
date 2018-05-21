@@ -8,8 +8,8 @@
 		<section class="box contain w640 add-new-chain">
 			<h2 class="center-text" style="width:100%;">Submit a new Chain</h2>
 			<section class="input-container">
-				<input placeholder="http://chaindomain.com/" />
-				<button>Add Chain</button>
+				<input placeholder="http://chaindomain.com/" v-model="newChain" />
+				<button @click="addChain">Add Chain</button>
 			</section>
 
 		</section>
@@ -56,19 +56,45 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapActions } from "vuex";
+import Eos from 'eosjs';
+import * as urlUtils from "@/utils/url.util";
+import {getChainProducers, getChainState} from "@/utils/eos.util";
 
 @Component({
-  components: {},
-  computed: mapState(["chains"]),
-  methods: mapActions(["getChains"])
+	components: {},
+	computed: mapState(["chains"]),
+	methods: mapActions(["getChains"]),
+	data(){return {
+		newChain:''
+	}}
 })
 export default class Chains extends Vue {
-  chains: any[];
-  getChains: () => void;
+	chains: any[];
+	getChains: () => void;
 
-  created() {
-    this.getChains();
-  }
+	newChain:string = '';
+
+	created() {
+		this.getChains();
+		this.newChain = '';
+	}
+
+	async addChain(){
+		if(this.newChain.indexOf('http://') != 0 && this.newChain.indexOf('https://') != 0)
+			return alert('Malformed EOSIO node URL');
+
+		const {host, port} = urlUtils.urlToHostPort(this.newChain);
+
+		const eos = Eos.Localnet({httpEndpoint:`http://${host}:${port}`});
+		const info = await eos.getInfo({}).catch(() => null);
+
+		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
+			return alert('Could not get chain info');
+
+		//TODO: Chain is validated, should be pushed to the backend
+//		const info = await getChainInfo();
+//		console.log('info', info);
+	}
 }
 </script>
 

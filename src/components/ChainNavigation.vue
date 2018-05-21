@@ -1,10 +1,10 @@
 <template>
     <section>
-        <section class="contain">
-            <router-link exact-active-class="active" :to="{ name: 'power' }">Voting Power</router-link>
-            <router-link exact-active-class="active" :to="{ name: 'producers' }">Producers</router-link>
-            <router-link exact-active-class="active" :to="{ name: 'info' }" exact>Chain Info</router-link>
-            <router-link exact-active-class="active" :to="{ name: 'blocks' }">Blocks</router-link>
+        <section class="contain chain-nav">
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">Voting Power</router-link>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">Producers</router-link>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'info' }" exact>Chain Info</router-link>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'blocks' }">Blocks</router-link>
         </section>
         <hr/>
     </section>

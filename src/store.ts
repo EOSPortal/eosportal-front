@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getAllProducers , getChains} from "./api";
+import * as urlUtils from "@/utils/url.util";
 
 import Eos from 'eosjs';
 
@@ -9,9 +10,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     chainId: "",
-    producers: [],
     chains: [],
     chainData:null,
+
+    producers:[],
 
     // Scatter related
     network:null,
@@ -26,11 +28,11 @@ export default new Vuex.Store({
     setChainData(state:any, chainData:any){
       state.chainData = chainData;
     },
-    setProducers(state: any, producers: Array<any>) {
-      state.producers = producers;
-    },
     setChains(state: any, chains: any[]) {
       state.chains = chains
+    },
+    setProducers(state: any, producers: any[]) {
+      state.producers = producers
     },
 
     // Scatter related
@@ -45,8 +47,8 @@ export default new Vuex.Store({
 
 
   actions: {
-    async getProducers({ commit, state }) {
-      commit("setProducers", await getAllProducers(state.chainId));
+    async setChain({ commit, state }, chain) {
+      commit("setChain", chain);
     },
     async getChains({ commit, state }) {
       commit("setChains", await getChains());
@@ -57,15 +59,15 @@ export default new Vuex.Store({
     async setScatter({ commit, state }, scatter:any) {
       commit("setScatter", scatter);
     },
+    async setProducers({ commit, state }, producers:any[]) {
+      commit("setProducers", producers);
+    },
 
     // Scatter related
     // -----------------------------------------
-    setNetwork({ commit }, networkString:string){
+    setNetwork({ commit }, networkString:string | null){
       if(networkString === null) return commit('setNetwork', null);
-
-      const networkParts:Array<string> = networkString.replace('http://', '').replace('https://', '').split('/')[0].split(':');
-      const host = networkParts[0];
-      const port = networkParts[1] || 80;
+      const {host, port} = urlUtils.urlToHostPort(networkString);
       commit('setNetwork', { blockchain:'eos', host, port});
     },
     async login({state}){
@@ -76,7 +78,7 @@ export default new Vuex.Store({
     async logout({state}){
       if(!state.scatter) return false;
       if(!state.scatter.identity) return false;
-      return scatter.forgetIdentity();
+      return state.scatter.forgetIdentity();
     },
     getScatterEos({ state }){
       if(!state.network) return null;
@@ -87,5 +89,6 @@ export default new Vuex.Store({
   getters:{
     identity:state => state.scatter.identity,
     account:state => state.scatter.identity.accounts.find(account => account.blockchain === 'eos'),
+    orderedProducers:state => state.producers.sort((a,b) => b.total_votes - a.total_votes),
   }
 });

@@ -11,26 +11,35 @@
 		</section>
         <hr/>
 		<section class="contain">
+
+			<section class="input-container big" style="margin-bottom:20px;">
+				<input placeholder="Search..." v-model="searchTerms" />
+				<!--<button>Search</button>-->
+			</section>
+
 			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
 					<th>Name</th>
-					<th>Organization</th>
-					<!--<th>Contact</th>-->
-					<th>Location</th>
-					<th>p2p</th>
-					<th>api</th>
+					<th>Account</th>
+					<!--<th>Location</th>-->
+					<th>Total Votes</th>
+					<th>Active Since</th>
+					<th>URL</th>
+					<th></th>
 				</tr>
 				</thead>
 
+
 				<tbody>
-				<router-link tag="tr" :to="producer.name" append v-for="producer in producers">
-					<td>{{producer.name}}</td>
-					<td>{{producer.organization}}</td>
-					<!--<td>{{producer.contact}}</td>-->
-					<td>{{producer.location}}</td>
-					<td>{{producer.p2p_url}}</td>
-					<td>{{producer.api_url}}</td>
+				<router-link tag="tr" :to="producer.owner" append v-for="producer in filteredProducers()">
+					<td>{{producerName(producer)}}</td>
+					<td>{{producer.owner}}</td>
+					<!--<td>{{producer.location}}</td>-->
+					<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+					<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
+					<td>{{producer.url}}</td>
+					<td><button>Vote</button></td>
 				</router-link>
 				</tbody>
 			</table>
@@ -40,35 +49,36 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapState, mapActions, mapMutations } from "vuex";
+import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 
 @Component({
-  components: {},
-  props: {},
-  computed: mapState(["chainId", "producers"]),
-  methods: {
-    ...mapActions(["getProducers"]),
-    ...mapMutations(["setChain"])
-  },
-  watch: {
-    "$route.params.chainId": () => {
-      this.setNewChain(parseInt(this.$route.params.chainId));
-    }
-  }
+	components: {},
+	props: {},
+	data(){return {
+		searchTerms:'',
+	}},
+	computed: mapState(["producers", 'chainData']),
+	methods: {
+		filteredProducers(){
+			return this.orderedProducers().filter(bp => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
+		},
+		producerName({url, owner}){
+			if(!url.length) return owner;
+			const baseUrl = url
+				.replace('http://','')
+				.replace('https://','')
+				.replace('www.','').split('/')[0]
+				.split('.');
+			baseUrl.pop();
+			return baseUrl.join('.');
+		},
+		...mapActions([]),
+		...mapGetters(['orderedProducers']),
+		...mapMutations([])
+	}
 })
 export default class Producers extends Vue {
-  producers: Array<any>;
-  getProducers: () => void;
-  setChain: (chainId: number) => void;
-
-  created() {
-    this.setNewChain(parseInt(this.$route.params.chainId));
-  }
-
-  setNewChain(_chainId: number) {
-    this.setChain(_chainId);
-    this.getProducers();
-  }
+	producers: Array<any>;
 }
 </script>
 
