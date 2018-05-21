@@ -12,6 +12,7 @@ export default new Vuex.Store({
     chainId: "",
     chains: [],
     chainData:null,
+    theme:'dark',
 
     producers:[],
 
@@ -22,6 +23,9 @@ export default new Vuex.Store({
 
 
   mutations: {
+    async setTheme(state:any, theme:string) {
+      state.theme = theme;
+    },
     setChain(state: any, chainId: number) {
       state.chainId = chainId;
     },
@@ -47,7 +51,10 @@ export default new Vuex.Store({
 
 
   actions: {
-    async setChain({ commit, state }, chain) {
+    async setTheme({ commit }, theme:string) {
+      commit("setTheme", theme);
+    },
+    async setChain({ commit, state }, chain:any) {
       commit("setChain", chain);
     },
     async getChains({ commit, state }) {

@@ -1,10 +1,10 @@
 <template>
     <section>
-		<section class="contain center-text cta" style="margin-top:30px;">
-			<h1>Select a chain to start <b>Voting</b></h1>
-			<button>Or go to the top voted chain</button>
+		<!--<section class="contain center-text cta" style="margin-top:30px;">-->
+			<!--<h1>Select a chain to start <b>Voting</b></h1>-->
+			<!--<button>Or go to the top voted chain</button>-->
 
-		</section>
+		<!--</section>-->
 		<section class="box contain w640 add-new-chain">
 			<h2 class="center-text" style="width:100%;">Submit a new Chain</h2>
 			<section class="input-container">
@@ -101,7 +101,7 @@ export default class Chains extends Vue {
 <style lang="scss">
 	.add-new-chain {
 		margin:50px auto;
-		box-shadow: inset 0 0 150px rgba(0,0,0,0.3);
+		/*box-shadow: inset 0 0 150px rgba(0,0,0,0.3);*/
 
 		.input-container {
 			margin-top:15px;

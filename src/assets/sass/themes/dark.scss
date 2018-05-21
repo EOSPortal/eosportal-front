@@ -1,269 +1,150 @@
-$radius:5px;
+
 
 $dark-blue:#031017;
 $medium-blue:#071d29;
 $light-blue:#294b5e;
 $light-green:#55cfbc;
+$flashy:yellow;
 
-body {
-    font-family:'Raleway', sans-serif;
+.dark {
     background:$dark-blue;
     color: $light-green;
-}
 
-hr {
-    border:0;
-    width:100%;
-    height:1px;
-    background:$medium-blue;
-    margin:20px 0;
-}
+    .flashy {
+        color:$flashy;
+    }
 
-nav {
-    padding:25px 45px;
-    color:$light-green;
-    overflow: hidden;
-    border-bottom:1px solid $medium-blue;
+    hr {
+        background:$medium-blue;
+    }
 
-    .ham {
-        float:left;
-        width:50px;
-        overflow: hidden;
-        margin-right:45px;
-        cursor: pointer;
+    nav {
+        color:$light-green;
+        border-bottom:1px solid $medium-blue;
 
-        hr {
-            border:0;
-            outline:0;
-            width:100%;
-            height:1px;
-            float:left;
-            margin:0 0 16px 0;
-            background:$light-green;
-            box-shadow: 0 1px 2px $light-green, 0 -1px 2px $light-green;
+        .ham {
 
-            &:last-child {
-                width:55%;
-                margin-bottom:8px;
+            hr {
+                background:$light-green;
+                box-shadow: 0 1px 2px $light-green, 0 -1px 2px $light-green;
             }
+        }
 
-            &:first-child {
-                margin-top:8px;
+        .logo {
+
+            img {
+                filter: brightness(70%) hue-rotate(180deg);
+            }
+        }
+
+        .links {
+
+            .link {
+                background:transparent;
+                color: $light-green;
+                border: 2px solid $light-green;
+
+                &:hover, &.router-link-exact-active {
+                    color:$dark-blue;
+                    background:$light-green;
+                }
             }
         }
     }
 
-    .logo {
-        cursor: pointer;
-        float:left;
-        font-size:45px;
-        font-weight:300;
-
-        img {
-            height: 46px;
-            vertical-align: top;
-            filter: brightness(70%) hue-rotate(180deg);
-        }
+    .box {
+        border:2px solid $medium-blue;
     }
 
-    .links {
-        float:right;
-
-        .link {
-            height: 48px;
-            line-height: 45px;
-            padding: 0 30px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-size: 13px;
-            font-weight: 800;
-            display: inline-block;
-            margin-left: 8px;
+    .cta {
+        button {
+            border:2px solid $light-green;
             background:transparent;
-            color: $light-green;
-            border: 2px solid $light-green;
+            color:$light-green;
+            opacity:1;
+            box-shadow: 0 0 150px rgba(255,255,255,0.1);
 
             transition: all 0.2s ease;
-            transition-property: background, color;
+            transition-property: background, color, opacity;
 
-            &:hover, &.router-link-exact-active {
-                color:$dark-blue;
+            &:hover {
                 background:$light-green;
+                color:$dark-blue;
+            }
+
+            &:active {
+                background:transparent;
+                color:$light-green;
             }
         }
     }
-}
 
-.box {
-    border-radius:$radius;
-    border:2px solid $medium-blue;
-    padding:35px;
-    max-width:640px;
-}
+    .chain-nav {
 
-.cta {
-    button {
-        margin:0 0 20px 0;
-        outline:0;
-        cursor: pointer;
-        height:70px;
-        font-size:28px;
-        border:2px solid $light-green;
-        border-radius:$radius;
-        text-transform: uppercase;
-        padding:0 35px;
-        background:transparent;
-        color:$light-green;
-        opacity:1;
-        box-shadow: 0 0 150px rgba(255,255,255,0.1);
-
-        transition: all 0.2s ease;
-        transition-property: background, color, opacity;
-
-        &:hover {
-            background:$light-green;
-            color:$dark-blue;
-        }
-
-        &:active {
+        button {
+            border:2px solid $light-green;
             background:transparent;
             color:$light-green;
-        }
-    }
-}
+            opacity:1;
+            box-shadow: 0 0 150px rgba(255,255,255,0.1);
 
-.chain-nav {
-    button {
-        margin:0 0 20px 0;
-        outline:0;
-        cursor: pointer;
-        height:40px;
-        font-size:18px;
-        border:2px solid $light-green;
-        border-radius:$radius;
-        text-transform: uppercase;
-        padding:0 15px;
-        background:transparent;
-        color:$light-green;
-        opacity:1;
-        box-shadow: 0 0 150px rgba(255,255,255,0.1);
+            &:hover, &.active {
+                background:$light-green;
+                color:$dark-blue;
+            }
 
-        transition: all 0.2s ease;
-        transition-property: background, color, opacity;
-
-        &:hover, &.active {
-            background:$light-green;
-            color:$dark-blue;
-        }
-
-        &:active {
-            background:transparent;
-            color:$light-green;
-        }
-    }
-}
-
-
-$input-height: 40px;
-
-.input-container {
-    display: flex;
-    flex-wrap: wrap;
-
-    input {
-        outline:0;
-        height:$input-height;
-        padding:0 15px;
-        color: $light-green;
-        border:2px solid $medium-blue;
-        border-radius:$radius;
-        background:transparent;
-        flex-grow: 1;
-        min-width: 25%;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    button {
-        cursor: pointer;
-        background:$medium-blue;
-        color:$light-blue;
-        font-weight:800;
-        text-transform: uppercase;
-        height:$input-height;
-        padding:0 35px;
-        border-radius:$radius;
-        border:0;
-        outline:0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-
-    &.big {
-        input, button {
-            font-size:22px;
-            font-weight:500;
-            height:60px;
-        }
-    }
-}
-
-table {
-    width:100%;
-    border-spacing: 0;
-    border-collapse: separate;
-
-    thead {
-        background:$medium-blue;
-        color:$light-blue;
-        border:0;
-
-        tr {
-            height:40px;
-
-            th {
+            &:active {
+                background:transparent;
+                color:$light-green;
             }
         }
-
     }
 
-    tbody {
 
-        tr {
-            height:100px;
-            box-shadow:inset 0 -1px 0 $medium-blue;
+    $input-height: 40px;
+
+    .input-container {
+
+        input {
+            color: $light-green;
+            border:2px solid $medium-blue;
             background:transparent;
-            transition: background 0.1s ease, transform 0.2s ease;
+        }
 
-            td {
-                padding-left:10px;
-                text-align:left;
+        button {
+            background:$medium-blue;
+            color:$light-blue;
+        }
+    }
 
-                &:first-child { text-align:left; }
-                &:last-child { text-align:right; }
+    table {
 
-                button {
-                    outline:0;
-                    cursor: pointer;
-                    height:50px;
-                    border:2px solid $light-green;
-                    color:$light-green;
-                    border-radius:2px;
-                    background:transparent;
-                    text-transform: uppercase;
-                    padding:0 25px;
+        thead {
+            background:$medium-blue;
+            color:$light-blue;
+        }
 
-                    transition: all 0.2s ease;
-                    transition-property: background, color;
+        tbody {
 
-                    &:hover {
-                        background:$light-green;
-                        color:$dark-blue;
-                    }
+            tr {
+                box-shadow:inset 0 -1px 0 $medium-blue;
+                background:transparent;
 
-                    &:active {
+                td {
+                    button {
+                        border:2px solid $light-green;
                         color:$light-green;
                         background:transparent;
+
+                        &:hover {
+                            background:$light-green;
+                            color:$dark-blue;
+                        }
+
+                        &:active {
+                            color:$light-green;
+                            background:transparent;
+                        }
                     }
                 }
             }

@@ -1,14 +1,23 @@
 <template>
     <div class="container">
-        <h1 class="text-center p-4 m-4">Voting Power</h1>
+        <section class="contain">
+            <h3>Delegating Bandwidth</h3>
+            <p>
+                In order to vote you will need to stake some of your tokens for CPU and Bandwidth. This will allow you to use those
+                same staked tokens for voting as well.
+            </p>
+        </section>
         <hr/>
-        <h3>Delegating Bandwidth</h3>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <section class="contain">
+            <h2 class="flashy">It looks like you don't have <b>Scatter</b></h2>
+            <p>
+                In order to vote using this portal you will have to first install Scatter.
+                Visit the <a href=""><u class="flashy">Chrome Store</u></a> to grab the latest version.
+                <br><br>
+                [IMAGES]
+            </p>
+        </section>
+        <hr/>
     </div>
 </template>
 
@@ -19,6 +28,11 @@
         components: {
 
         },
+        mounted(){
+        	setTimeout(() => {
+
+            }, 1000);
+        }
     })
     export default class Producer extends Vue {}
 </script>

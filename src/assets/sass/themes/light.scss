@@ -1,0 +1,154 @@
+
+
+$light-gray: #f6f0f3;
+$medium-gray: #a8a8a8;
+$light-blue: #f6f0f3;
+$dark-blue: #767676;
+$flashy: #4068cb;
+
+.light {
+  //background: $light-gray;
+  color: $dark-blue;
+
+  .flashy {
+    color:$flashy;
+  }
+
+  hr {
+    background: $medium-gray;
+  }
+
+  nav {
+    color: $dark-blue;
+    border-bottom:1px solid $medium-gray;
+
+    .ham {
+
+      hr {
+        background: $dark-blue;
+        box-shadow: 0 1px 2px $dark-blue, 0 -1px 2px $dark-blue;
+      }
+    }
+
+    .logo {
+
+      img {
+        filter: brightness(70%) hue-rotate(180deg);
+      }
+    }
+
+    .links {
+
+      .link {
+        background:transparent;
+        color: $dark-blue;
+        border: 2px solid $dark-blue;
+
+        &:hover, &.router-link-exact-active {
+          color: $light-gray;
+          background: $dark-blue;
+        }
+      }
+    }
+  }
+
+  .box {
+    border:2px solid $medium-gray;
+  }
+
+  .cta {
+    button {
+      border:2px solid $dark-blue;
+      background:transparent;
+      color: $dark-blue;
+      opacity:1;
+      box-shadow: 0 0 150px rgba(255,255,255,0.1);
+
+      transition: all 0.2s ease;
+      transition-property: background, color, opacity;
+
+      &:hover {
+        background: $dark-blue;
+        color: $light-gray;
+      }
+
+      &:active {
+        background:transparent;
+        color: $dark-blue;
+      }
+    }
+  }
+
+  .chain-nav {
+
+    button {
+      border:2px solid $dark-blue;
+      background:transparent;
+      color: $dark-blue;
+      opacity:1;
+      box-shadow: 0 0 150px rgba(255,255,255,0.1);
+
+      &:hover, &.active {
+        background: $dark-blue;
+        color: $light-gray;
+      }
+
+      &:active {
+        background:transparent;
+        color: $dark-blue;
+      }
+    }
+  }
+
+
+  $input-height: 40px;
+
+  .input-container {
+
+    input {
+      color: $dark-blue;
+      border:2px solid $medium-gray;
+      background:transparent;
+    }
+
+    button {
+      background: $medium-gray;
+      color:$light-blue;
+    }
+  }
+
+  table {
+
+    thead {
+      background: $medium-gray;
+      color:$light-blue;
+    }
+
+    tbody {
+
+      tr {
+        box-shadow:inset 0 -1px 0 $medium-gray;
+        background:transparent;
+
+        td {
+          button {
+            border:2px solid $dark-blue;
+            color: $dark-blue;
+            background:transparent;
+
+            &:hover {
+              background: $dark-blue;
+              color: $light-gray;
+            }
+
+            &:active {
+              color: $dark-blue;
+              background:transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
