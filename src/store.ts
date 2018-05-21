@@ -78,7 +78,7 @@ export default new Vuex.Store({
     async logout({state}){
       if(!state.scatter) return false;
       if(!state.scatter.identity) return false;
-      return scatter.forgetIdentity();
+      return state.scatter.forgetIdentity();
     },
     getScatterEos({ state }){
       if(!state.network) return null;

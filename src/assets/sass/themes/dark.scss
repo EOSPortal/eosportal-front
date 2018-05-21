@@ -132,6 +132,37 @@ nav {
     }
 }
 
+.chain-nav {
+    button {
+        margin:0 0 20px 0;
+        outline:0;
+        cursor: pointer;
+        height:40px;
+        font-size:18px;
+        border:2px solid $light-green;
+        border-radius:$radius;
+        text-transform: uppercase;
+        padding:0 15px;
+        background:transparent;
+        color:$light-green;
+        opacity:1;
+        box-shadow: 0 0 150px rgba(255,255,255,0.1);
+
+        transition: all 0.2s ease;
+        transition-property: background, color, opacity;
+
+        &:hover, &.active {
+            background:$light-green;
+            color:$dark-blue;
+        }
+
+        &:active {
+            background:transparent;
+            color:$light-green;
+        }
+    }
+}
+
 
 $input-height: 40px;
 
@@ -166,6 +197,14 @@ $input-height: 40px;
         outline:0;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+    }
+
+    &.big {
+        input, button {
+            font-size:22px;
+            font-weight:500;
+            height:60px;
+        }
     }
 }
 

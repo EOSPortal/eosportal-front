@@ -11,6 +11,12 @@
 		</section>
         <hr/>
 		<section class="contain">
+
+			<section class="input-container big" style="margin-bottom:20px;">
+				<input placeholder="Search..." v-model="searchTerms" />
+				<!--<button>Search</button>-->
+			</section>
+
 			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
@@ -26,14 +32,14 @@
 
 
 				<tbody>
-				<router-link tag="tr" :to="producer.owner" append v-for="producer in orderedProducers()">
+				<router-link tag="tr" :to="producer.owner" append v-for="producer in filteredProducers()">
 					<td>{{producerName(producer)}}</td>
 					<td>{{producer.owner}}</td>
 					<!--<td>{{producer.location}}</td>-->
-					<td>{{producer.total_votes}}</td>
+					<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
 					<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
 					<td>{{producer.url}}</td>
-					<td><button>View Producer</button></td>
+					<td><button>Vote</button></td>
 				</router-link>
 				</tbody>
 			</table>
@@ -48,8 +54,14 @@ import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 @Component({
 	components: {},
 	props: {},
-	computed: mapState(["producers"]),
+	data(){return {
+		searchTerms:'',
+	}},
+	computed: mapState(["producers", 'chainData']),
 	methods: {
+		filteredProducers(){
+			return this.orderedProducers().filter(bp => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
+		},
 		producerName({url, owner}){
 			if(!url.length) return owner;
 			const baseUrl = url
@@ -60,9 +72,9 @@ import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 			baseUrl.pop();
 			return baseUrl.join('.');
 		},
-		...mapActions(["getProducers"]),
+		...mapActions([]),
 		...mapGetters(['orderedProducers']),
-		...mapMutations(["setChain"])
+		...mapMutations([])
 	}
 })
 export default class Producers extends Vue {

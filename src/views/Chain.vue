@@ -21,7 +21,7 @@
         props: {},
         computed: mapState(['chainId', 'producers']),
         methods: {
-            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData"])
+            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout"])
         }
     })
 
@@ -32,6 +32,7 @@
         setNetwork: (networkString:string | null) => void;
         setProducers: (producers:any[]) => void;
         setChainData: (chainData:any) => void;
+        logout:() => void;
 
         created() {
             this.setChain(this.$route.params.chainId);
@@ -42,7 +43,7 @@
             this.setNetwork(null);
             this.setChainData(null);
             this.setProducers([]);
-            //TODO: logout();
+            this.logout();
         }
 
         async initialize(){
