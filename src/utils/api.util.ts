@@ -1,9 +1,9 @@
 import config from "../config";
 import { map, range, reduce, concat } from "ramda";
 
-export const baseUrl = `https://${config.domain}`;
+export const baseUrl = `//${config.domain}`;
 export const chainUrl = (chainId: number) =>
-  `https://${config.domain}/chains/${chainId}`;
+  `//${config.domain}/chains/${chainId}`;
 
 export const fetchJson = (url: string) =>
   fetch(url).then(responds => responds.json()).catch(error => console.error(error));
