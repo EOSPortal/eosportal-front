@@ -11,7 +11,7 @@
     import { Component, Vue } from "vue-property-decorator";
     import { mapState, mapActions, mapMutations } from "vuex";
 
-    import ChainNavigation from '../components/ChainNavigation';
+    import ChainNavigation from '../components/ChainNavigation.vue';
     import {getChainProducers, getChainState} from "@/utils/eos.util";
 
     @Component({

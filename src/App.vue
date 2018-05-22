@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import Menu from './components/Menu';
+    import Menu from './components/Menu.vue';
     import {mapState} from "vuex";
 
     @Component({
