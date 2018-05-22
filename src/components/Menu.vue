@@ -41,8 +41,8 @@
         }
     })
     export default class Producers extends Vue {
-    	theme:string;
-        setTheme:(theme:string) => void;
+    	theme!:string;
+        setTheme!:(theme:string) => void;
 
         toggleTheme(){
             this.setTheme(this.theme === 'dark' ? 'light' : 'dark');

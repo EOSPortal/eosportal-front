@@ -69,8 +69,8 @@ import {getChainProducers, getChainState} from "@/utils/eos.util";
 	}}
 })
 export default class Chains extends Vue {
-	chains: any[];
-	getChains: () => void;
+	chains!: any[];
+	getChains!: () => void;
 
 	newChain:string = '';
 

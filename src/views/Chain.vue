@@ -26,16 +26,16 @@
     })
 
     export default class Chain extends Vue {
-        producers: Array<any>;
-        chainId: number;
-        setChain: (chainId: number) => void;
-        setNetwork: (networkString:string | null) => void;
-        setProducers: (producers:any[]) => void;
-        setChainData: (chainData:any) => void;
-        logout:() => void;
+        producers!: Array<any>;
+        chainId!: number;
+        setChain!: (chainId: number) => void;
+        setNetwork!: (networkString:string | null) => void;
+        setProducers!: (producers:any[]) => void;
+        setChainData!: (chainData:any) => void;
+        logout!:() => void;
 
         created() {
-            this.setChain(this.$route.params.chainId);
+            this.setChain(parseInt(this.$route.params.chainId));
             this.initialize();
         }
 
