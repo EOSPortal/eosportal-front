@@ -60,7 +60,7 @@ import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 	computed: mapState(["producers", 'chainData']),
 	methods: {
 		filteredProducers(){
-			return this.orderedProducers().filter(bp => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
+			return this.orderedProducers().filter((bp: any) => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
 		},
 		producerName({url, owner}){
 			if(!url.length) return owner;
@@ -78,7 +78,7 @@ import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 	}
 })
 export default class Producers extends Vue {
-	producers: Array<any>;
+	producers!: Array<any>;
 }
 </script>
 

@@ -1,5 +1,6 @@
 import store from '@/store';
 import Eos from 'eosjs';
+import { prop, path } from 'ramda'
 
 export const getEos = () => {
 	if(!store.state.network) return null;
@@ -8,7 +9,7 @@ export const getEos = () => {
 	});
 };
 
-const getEosioTable = (table, limit = 500) => {
+const getEosioTable = (table: any, limit = 500) => {
 	const eos = getEos();
 	if(!eos) return null;
 	return eos.getTableRows({
@@ -22,12 +23,12 @@ const getEosioTable = (table, limit = 500) => {
 
 export const getChainState = () => {
 	return getEosioTable('global', 1)
-		.then(res => res.rows[0])
+		.then(path(['rows', 0]))
 		.catch(() => null);
 };
 
 export const getChainProducers = () => {
 	return getEosioTable('producers')
-		.then(res => res.rows)
+		.then(prop('rows'))
 		.catch(() => []);
 };
