@@ -8,33 +8,60 @@
             </p>
         </section>
         <hr/>
-        <section class="contain">
-            <h2 class="flashy">It looks like you don't have <b>Scatter</b></h2>
-            <p>
-                In order to vote using this portal you will have to first install Scatter.
-                Visit the <a href=""><u class="flashy">Chrome Store</u></a> to grab the latest version.
-                <br><br>
-                [IMAGES]
-            </p>
+        <section class="contain" v-if="!scatter || !identity">
+            <section v-if="!scatter">
+                <h2 class="flashy">It looks like you don't have <b>Scatter</b></h2>
+                <p>
+                    In order to vote using this portal you will have to first install Scatter.
+                    Visit the <a href=""><u class="flashy">Chrome Store</u></a> to grab the latest version.
+                    <br><br>
+                    [IMAGES]
+                </p>
+            </section>
+            <section v-if="scatter && !identity">
+                <h2 class="flashy">We need an <b>Identity</b> to use</h2>
+                <p>
+                    Before you can use <b>EOS</b>Portal with Scatter you need to pair an Identity.
+                    <br><br>
+                </p>
+                <section class="cta">
+                    <button @click="pair">Use Identity</button>
+                </section>
+            </section>
+        </section>
+        <section v-else class="contain">
+            Scatter ready
         </section>
         <hr/>
+        <section class="contain">
+
+        </section>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
+
 
     @Component({
         components: {
 
         },
-        mounted(){
-        	setTimeout(() => {
-
-            }, 1000);
+        computed:{
+            ...mapState(["scatter"]),
+            ...mapGetters(['identity']),
+        },
+        methods:{
+        	pair(){
+                this.login();
+            },
+            ...mapActions(['login'])
         }
     })
-    export default class Producer extends Vue {}
+    export default class VotingPower extends Vue {
+
+    }
 </script>
 
 <style lang="scss">

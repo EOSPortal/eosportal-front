@@ -14,6 +14,7 @@ export default new Vuex.Store({
     chainData:null,
     theme:'dark',
 
+    voter:null,
     producers:[],
 
     // Scatter related
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
     setProducers(state: any, producers: any[]) {
       state.producers = producers
+    },
+    setVoter(state: any, voter: any) {
+      state.voter = voter
     },
 
     // Scatter related
@@ -69,6 +73,9 @@ export default new Vuex.Store({
     async setProducers({ commit, state }, producers:any[]) {
       commit("setProducers", producers);
     },
+    async setVoter({ commit, state }, voter:any) {
+      commit("setVoter", voter);
+    },
 
     // Scatter related
     // -----------------------------------------
@@ -80,6 +87,7 @@ export default new Vuex.Store({
     async login({state}){
       if(!state.scatter) return false;
       if(!state.network) return false;
+      await state.scatter.suggestNetwork(state.network);
       return state.scatter.getIdentity({accounts:[state.network]});
     },
     async logout({state}){
@@ -87,15 +95,11 @@ export default new Vuex.Store({
       if(!state.scatter.identity) return false;
       return state.scatter.forgetIdentity();
     },
-    getScatterEos({ state }){
-      if(!state.network) return null;
-      return state.scatter.eos( state.network, Eos.Localnet, {} )
-    },
   },
 
   getters:{
-    identity:state => state.scatter.identity,
-    account:state => state.scatter.identity.accounts.find(account => account.blockchain === 'eos'),
+    identity:state => state.scatter ? state.scatter.identity : null,
+    account:state => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find(account => account.blockchain === 'eos') : null,
     orderedProducers:state => state.producers.sort((a,b) => b.total_votes - a.total_votes),
   }
 });

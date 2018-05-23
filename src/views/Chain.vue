@@ -9,19 +9,28 @@
 
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
-    import { mapState, mapActions, mapMutations } from "vuex";
+    import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
 
     import ChainNavigation from '../components/ChainNavigation';
-    import {getChainProducers, getChainState} from "@/utils/eos.util";
+    import {getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
 
     @Component({
         components: {
             ChainNavigation
         },
         props: {},
-        computed: mapState(['chainId', 'producers']),
+        computed: {
+            ...mapState(['chainId', 'producers', 'voter']),
+            ...mapGetters(['account', 'identity'])
+        },
         methods: {
-            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout"])
+            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
+        },
+        watch:{
+        	async account(){
+        		if(this.account)
+                    await this.setVoter(await getVoter(this.account.name));
+            }
         }
     })
 
@@ -32,6 +41,7 @@
         setNetwork: (networkString:string | null) => void;
         setProducers: (producers:any[]) => void;
         setChainData: (chainData:any) => void;
+        setVoter: (voter:any) => void;
         logout:() => void;
 
         created() {
@@ -43,6 +53,7 @@
             this.setNetwork(null);
             this.setChainData(null);
             this.setProducers([]);
+            this.setVoter(null);
             this.logout();
         }
 
