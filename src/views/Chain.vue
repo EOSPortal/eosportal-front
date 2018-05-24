@@ -8,10 +8,9 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
+    import { Component, Vue, Watch } from "vue-property-decorator";
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
-
-    import ChainNavigation from '../components/ChainNavigation';
+    import ChainNavigation from '@/components/ChainNavigation.vue';
     import {getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
 
     @Component({
@@ -20,32 +19,31 @@
         },
         props: {},
         computed: {
-            ...mapState(['chainId', 'producers', 'voter']),
+            ...mapState(['producers', 'chainId', 'voter']),
             ...mapGetters(['account', 'identity'])
         },
         methods: {
             ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
-        },
-        watch:{
-        	async account(){
-        		if(this.account)
-                    await this.setVoter(await getVoter(this.account.name));
-            }
         }
     })
 
+
+
     export default class Chain extends Vue {
-        producers: Array<any>;
-        chainId: number;
-        setChain: (chainId: number) => void;
-        setNetwork: (networkString:string | null) => void;
-        setProducers: (producers:any[]) => void;
-        setChainData: (chainData:any) => void;
-        setVoter: (voter:any) => void;
-        logout:() => void;
+        producers!: Array<any>;
+        chainId!: number;
+        voter!:any;
+        account!:any;
+        identity!:any;
+        setChain!: (chainId: number) => void;
+        setNetwork!: (networkString:string | null) => void;
+        setProducers!: (producers:any[]) => void;
+        setChainData!: (chainData:any) => void;
+        logout!:() => void;
+        setVoter!:(voter:any) => void;
 
         created() {
-            this.setChain(this.$route.params.chainId);
+            this.setChain(parseInt(this.$route.params.chainId));
             this.initialize();
         }
 
@@ -63,6 +61,12 @@
             this.setNetwork('http://193.93.219.219:8888/');
             await this.setChainData(await getChainState());
             await this.setProducers(await getChainProducers());
+        }
+
+        @Watch('account')
+        async accountChanged(){
+            if(this.account)
+                await this.setVoter(await getVoter(this.account.name));
         }
     }
 </script>

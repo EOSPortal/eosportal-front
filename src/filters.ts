@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
-Vue.filter("humanNum", _number => {
+Vue.filter("humanNum", (_number: string) => {
 	const abs = Math.abs(Number(_number));
-	const fix = (n) => n.toFixed(2);
+	const fix = (n: number) => n.toFixed(2);
 	return abs >= 1.0e+9
 		? fix(abs / 1.0e+9) + "B"
 		: abs >= 1.0e+6 ? fix(abs / 1.0e+6) + "M"

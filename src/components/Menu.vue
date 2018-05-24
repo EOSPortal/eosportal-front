@@ -34,15 +34,12 @@
         props: {},
         computed: mapState(["theme"]),
         methods: {
-        	toggleTheme(){
-                this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
-            },
             ...mapActions(['setTheme']),
         }
     })
     export default class Producers extends Vue {
-    	theme:string;
-        setTheme:(theme:string) => void;
+    	theme!:string;
+        setTheme!:(theme:string) => void;
 
         toggleTheme(){
             this.setTheme(this.theme === 'dark' ? 'light' : 'dark');

@@ -53,14 +53,15 @@
             ...mapGetters(['identity']),
         },
         methods:{
-        	pair(){
-                this.login();
-            },
             ...mapActions(['login'])
         }
     })
     export default class VotingPower extends Vue {
+        login!:() => void;
 
+        pair(){
+            this.login();
+        }
     }
 </script>
 

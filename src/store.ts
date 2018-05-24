@@ -98,8 +98,8 @@ export default new Vuex.Store({
   },
 
   getters:{
-    identity:state => state.scatter ? state.scatter.identity : null,
-    account:state => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find(account => account.blockchain === 'eos') : null,
-    orderedProducers:state => state.producers.sort((a,b) => b.total_votes - a.total_votes),
+    identity:(state:any) => state.scatter ? state.scatter.identity : null,
+    account:(state:any) => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find((account:any) => account.blockchain === 'eos') : null,
+    orderedProducers:(state:any) => state.producers.sort((a:any,b:any) => b.total_votes - a.total_votes),
   }
 });

@@ -7,6 +7,9 @@ import './filters'
 
 Vue.config.productionTip = false;
 
+declare global {
+  interface Window { scatter: any; }
+}
 
 new Vue({
   router,
