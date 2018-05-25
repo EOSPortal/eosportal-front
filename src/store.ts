@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
+import {findLast, propEq} from "ramda" 
 
 import Eos from 'eosjs';
 
@@ -9,7 +10,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    chainId: "",
     chains: [],
     chainData:null,
     theme:'light',
@@ -26,9 +26,6 @@ export default new Vuex.Store({
   mutations: {
     async setTheme(state:any, theme:string) {
       state.theme = theme;
-    },
-    setChain(state: any, chainId: number) {
-      state.chainId = chainId;
     },
     setChainData(state:any, chainData:any){
       state.chainData = chainData;
@@ -57,9 +54,6 @@ export default new Vuex.Store({
   actions: {
     async setTheme({ commit }, theme:string) {
       commit("setTheme", theme);
-    },
-    async setChain({ commit, state }, chain:any) {
-      commit("setChain", chain);
     },
     async getChains({ commit, state }) {
       commit("setChains", await getChains());
@@ -101,5 +95,6 @@ export default new Vuex.Store({
     identity:(state:any) => state.scatter ? state.scatter.identity : null,
     account:(state:any) => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find((account:any) => account.blockchain === 'eos') : null,
     orderedProducers:(state:any) => state.producers.sort((a:any,b:any) => b.total_votes - a.total_votes),
+    getProducerByOwner: state => (owner: string) => findLast(propEq('owner', owner))(state.producers) 
   }
 });

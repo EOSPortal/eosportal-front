@@ -17,11 +17,11 @@
         },
         props: {},
         computed: {
-            ...mapState(['producers', 'chainId', 'voter']),
+            ...mapState(['producers', 'voter']),
             ...mapGetters(['account', 'identity'])
         },
         methods: {
-            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
+            ...mapActions(["setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
         }
     })
 
@@ -29,11 +29,9 @@
 
     export default class Chain extends Vue {
         producers!: Array<any>;
-        chainId!: number;
         voter!:any;
         account!:any;
         identity!:any;
-        setChain!: (chainId: number) => void;
         setNetwork!: (networkString:string | null) => void;
         setProducers!: (producers:any[]) => void;
         setChainData!: (chainData:any) => void;
@@ -41,7 +39,6 @@
         setVoter!:(voter:any) => void;
 
         created() {
-            this.setChain(parseInt(this.$route.params.chainId));
             this.initialize();
         }
 
