@@ -2,15 +2,41 @@
     <div class="container">
         <section class="contain">
 			<h3>{{producer.owner}}</h3>
+            <div v-if="bpStandardInfo === false" class="alert alert-warning" role="alert">
+                This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
+            </div>
 			<p>
-				
+				{{bpStandardInfo.description}}
 			</p>
+      
+      <a class="btn btn-primary" :href="'//' + producer.url" role="button" target="_blank">Website</a>
 		</section>
         <hr/>
-		<section class="contain">
-            <pre>{{JSON.stringify(producer, null, " ")}}</pre>
-            <pre>{{JSON.stringify(bpInfo, null, " ")}}</pre>
-		</section>
+		    <section class="contain">
+          <div class="list-group">
+            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Last produced block</h5>
+              </div>
+              <p class="mb-1">{{timeSinceLastBlock}} ago</p>
+              <small class="text-muted">at {{new Date(producer.last_produced_block_time*1000)}}</small>
+            </div>
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Became active</h5>
+              </div>
+              <p class="mb-1">{{becameActive}} ago</p>
+              <small class="text-muted">at {{new Date(producer.time_became_active*1000)}}</small>
+            </a>
+        </div>
+	  	</section>
+      <section style="margin-top:40px;">
+        <h3>Debuging</h3>
+         <h5>BP Chain Info:</h5>
+        <pre>{{JSON.stringify(producer, null, " ")}}</pre>
+        <h5>BP Standard Info:</h5>
+        <pre>{{JSON.stringify(bpStandardInfo, null, " ")}}</pre>
+      </section>
     </div>
 </template>
 
@@ -18,19 +44,47 @@
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters } from "vuex";
 import { fetchJson } from "@/utils/api.util";
+import { validateBpInfo } from "@/utils/bp-json-validation.util";
+import { getTimeSince } from "@/utils/date.util";
 @Component({
   computed: {
     ...mapGetters(["getProducerByOwner"]),
     producer() {
       return this.getProducerByOwner(this.$route.params.producer);
     },
-    bpInfo() {
-      return fetchJson("//" + this.producer.url + "/bp.json");
+    timeSinceLastBlock() {
+      return getTimeSince(this.producer.last_produced_block_time);
+    },
+    becameActive() {
+      return getTimeSince(this.producer.time_became_active);
+    }
+  },
+  methods: {
+    getBpStandardInfo() {
+      console.log("url: " + this.producer.url);
+      fetchJson("//" + this.producer.url + "/bp.json")
+        .then(validateBpInfo)
+        .catch(error => {
+          console.log(
+            "this BP does not have a avalibe valide bp.json at it's url root. Error: "
+          );
+          console.log(error);
+          return false;
+        })
+        .then(_ => {
+          console.log("result " + _);
+          this.bpStandardInfo = _;
+        });
     }
   },
   components: {}
 })
 export default class Producer extends Vue {
+  bpStandardInfo: any = {};
+
+  mounted() {
+    this.getBpStandardInfo();
+  }
 }
 </script>
 
