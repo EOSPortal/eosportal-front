@@ -1,10 +1,8 @@
 <template>
-    <div class="container">
+    <section>
         <ChainNavigation />
-        <div class="row">
-            <router-view></router-view>
-        </div>
-    </div>
+        <router-view></router-view>
+    </section>
 </template>
 
 <script lang="ts">

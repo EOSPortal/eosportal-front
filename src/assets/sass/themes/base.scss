@@ -178,11 +178,13 @@ table {
 
   thead {
     border:0;
+    text-align:left;
 
     tr {
       height:40px;
 
       th {
+        padding:0 10px;
       }
     }
 

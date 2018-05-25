@@ -2,7 +2,7 @@
 
 $dark-blue:#031017;
 $medium-blue:#071d29;
-$light-blue:#294b5e;
+$light-blue: #557d9c;
 $light-green:#55cfbc;
 $flashy:yellow;
 
@@ -86,7 +86,6 @@ $flashy:yellow;
             background:transparent;
             color:$light-green;
             opacity:1;
-            box-shadow: 0 0 150px rgba(255,255,255,0.1);
 
             &:hover, &.active {
                 background:$light-green;
