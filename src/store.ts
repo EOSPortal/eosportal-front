@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
+import {findLast, propEq} from "ramda"
 
 import Eos from 'eosjs';
 
@@ -90,5 +91,6 @@ export default new Vuex.Store({
     identity:state => state.scatter.identity,
     account:state => state.scatter.identity.accounts.find((account: any) => account.blockchain === 'eos'),
     orderedProducers:state => state.producers.sort((a: any,b: any) => b.total_votes - a.total_votes),
+    getProducerByOwner: state => (owner: string) => findLast(propEq('owner', owner))(state.producers)
   }
 });
