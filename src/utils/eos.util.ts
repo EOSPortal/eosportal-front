@@ -45,7 +45,7 @@ export const getChainProducers = () => {
 
 export const getVoter = async (accountName:string) => {
 	if(!accountName || !accountName.length) return null;
-	return getEosioTable('voters', 1, format.encodeName(accountName))
+	return getEosioTable('voters', 1, format.encodeName(accountName, false))
 		.then((res:any) => res.rows[0] || null)
 		.catch(null);
 };
@@ -66,8 +66,8 @@ export const getBalances = async (accountName:string) => {
 };
 
 export const voteFor = async (userAccountName:string, producersArray:Array<string>) => {
-	console.log('useracc', userAccountName);
-	return getScatterEos().voteproducer(userAccountName, '', producersArray);
+	const sorted:Array<string> = producersArray.sort((a:any, b:any) => parseInt(format.encodeName(a, false)) - parseInt(format.encodeName(b, false)));
+	return getScatterEos().voteproducer(userAccountName, '', sorted);
 };
 
 export const delegateAll = async (accountName:string, token:string = 'EOS') => {

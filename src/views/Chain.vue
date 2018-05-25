@@ -47,7 +47,7 @@
             this.setChainData(null);
             this.setProducers([]);
             this.setVoter(null);
-            this.logout();
+//            this.logout();
         }
 
         async initialize(){

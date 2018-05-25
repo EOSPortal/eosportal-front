@@ -34,7 +34,7 @@
 
 
 				<tbody>
-					<router-link tag="tr" :to="producer.owner" append v-for="producer in filteredProducers()">
+					<tr v-for="producer in filteredProducers()">
 					<td>{{producerName(producer.url, producer.owner)}}</td>
 					<td>{{producer.owner}}</td>
 					<!--<td>{{producer.location}}</td>-->
@@ -43,9 +43,10 @@
 					<td>{{producer.url}}</td>
 					<td>
 						<!--<router-link :to="producer.owner" tag="button" append>Vote</router-link>-->
+						<router-link tag="button" :to="producer.owner" append>View</router-link>
 						<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">Vote</button>
 					</td>
-				</router-link>
+				</tr>
 
 				</tbody>
 			</table>
@@ -65,7 +66,9 @@ import { delegateAll, voteFor } from "@/utils/eos.util";
     ...mapState(["producers", "chainData", "voter"]),
     ...mapGetters(["orderedProducers", "account"])
   },
-  mounted() {},
+  mounted() {
+
+  },
   methods: {
     ...mapActions([])
   }
@@ -100,7 +103,7 @@ export default class Producers extends Vue {
   }
 
   async vote() {
-    const delegated = await delegateAll(this.account.name);
+//    const delegated = await delegateAll(this.account.name);
     const test = await voteFor(this.account.name, this.votedFor);
     console.log("test", test);
   }
