@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getAllProducers , getChains} from "./api";
+import {getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
 
 import Eos from 'eosjs';
@@ -12,7 +12,7 @@ export default new Vuex.Store({
     chainId: "",
     chains: [],
     chainData:null,
-    theme:'dark',
+    theme:'light',
 
     voter:null,
     producers:[],

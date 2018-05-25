@@ -11,7 +11,7 @@
     import { Component, Vue, Watch } from "vue-property-decorator";
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
     import ChainNavigation from '@/components/ChainNavigation.vue';
-    import {getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
+    import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
 
     @Component({
         components: {
@@ -58,7 +58,13 @@
         async initialize(){
             //TODO: Get chain data from id, bind to state, use api url to build network for Scatter
 
-            this.setNetwork('http://193.93.219.219:8888/');
+            //this.$route.params.chainId
+
+//            this.setNetwork('http://test.eosys.io:8888/');
+//            const test = await getAccount('eosportaltst');
+            this.setNetwork('http://bp.blockgenic.io:8888/');
+//            const test = await getAccount('lioninjungle');
+//            console.log('test', test);
             await this.setChainData(await getChainState());
             await this.setProducers(await getChainProducers());
         }

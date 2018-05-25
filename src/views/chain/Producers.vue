@@ -103,7 +103,7 @@ export default class Producers extends Vue {
 	}
 
 	producerName(url:string, owner:string){
-		if(!url.length) return owner;
+		if(!url || !url.length) return owner;
 		const baseUrl = url
 			.replace('http://','')
 			.replace('https://','')

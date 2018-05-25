@@ -75,7 +75,9 @@ export const delegateAll = async (accountName:string, token:string = 'EOS') => {
 	const balances = await getBalances(accountName);
 	console.log('balances', balances);
 	const stakableTokenBalance = balances.find((b:any) => b.split(' ')[1] === token) || `0.0000 ${token}`;
+	console.log('stakableTokenBalance', stakableTokenBalance);
 	const division = stakableTokenBalance.replace(` ${token}`,'')/2;
+	console.log('division', division);
 	const half = `${division} ${token}`;
 	return await getScatterEos().delegatebw(accountName, accountName, half, half, 0);
 };

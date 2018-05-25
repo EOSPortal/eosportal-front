@@ -34,6 +34,12 @@
         </section>
         <hr/>
         <section class="contain">
+            <!--<p>-->
+                <!--{{percentage}}% ( {{voter}} )-->
+            <!--</p>-->
+            <!--<br>-->
+            <!--<input type="range" v-model="percentage" />-->
+
 
         </section>
     </div>
@@ -49,7 +55,7 @@
 
         },
         computed:{
-            ...mapState(["scatter"]),
+            ...mapState(["scatter", "voter"]),
             ...mapGetters(['identity']),
         },
         methods:{
@@ -58,6 +64,7 @@
     })
     export default class VotingPower extends Vue {
         login!:() => void;
+        percentage:number = 0;
 
         pair(){
             this.login();
