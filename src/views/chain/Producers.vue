@@ -17,6 +17,8 @@
 				<!--<button>Search</button>-->
 			</section>
 
+			<button @click="vote">Vote For Selected Producers</button>
+
 			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
@@ -32,15 +34,18 @@
 
 
 				<tbody>
-				<router-link tag="tr" :to="producer.owner" append v-for="producer in filteredProducers()">
-					<td>{{producerName(producer)}}</td>
+				<tr v-for="producer in filteredProducers()">
+					<td>{{producerName(producer.url, producer.owner)}}</td>
 					<td>{{producer.owner}}</td>
 					<!--<td>{{producer.location}}</td>-->
 					<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
 					<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
 					<td>{{producer.url}}</td>
-					<td><button>Vote</button></td>
-				</router-link>
+					<td>
+						<!--<router-link :to="producer.owner" tag="button" append>Vote</router-link>-->
+						<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">Vote</button>
+					</td>
+				</tr>
 				</tbody>
 			</table>
 		</section>
@@ -48,37 +53,71 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
+import {delegateAll, voteFor} from "@/utils/eos.util";
 
 @Component({
 	components: {},
 	props: {},
-	data(){return {
-		searchTerms:'',
-	}},
-	computed: mapState(["producers", 'chainData']),
+	computed: {
+		...mapState(["producers", 'chainData', 'voter']),
+		...mapGetters(['orderedProducers', 'account'])
+	},
+	mounted(){
+
+	},
 	methods: {
-		filteredProducers(){
-			return this.orderedProducers().filter((bp: any) => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
-		},
-		producerName({url, owner}){
-			if(!url.length) return owner;
-			const baseUrl = url
-				.replace('http://','')
-				.replace('https://','')
-				.replace('www.','').split('/')[0]
-				.split('.');
-			baseUrl.pop();
-			return baseUrl.join('.');
-		},
-		...mapActions([]),
-		...mapGetters(['orderedProducers']),
-		...mapMutations([])
+		...mapActions([])
 	}
 })
 export default class Producers extends Vue {
 	producers!: Array<any>;
+	chainData!:any;
+	voter!:any;
+	orderedProducers!:Array<string>;
+	account!:any;
+
+	searchTerms:string = '';
+	votedFor:Array<string> = [];
+
+	filteredProducers(){
+		return this.orderedProducers
+			.filter((bp:any) => JSON.stringify(bp).toLowerCase().indexOf(this.searchTerms.toLowerCase().trim()) > -1);
+	}
+
+	toggleVoteFor(producerName:string){
+		if(this.votedFor.includes(producerName))
+			this.votedFor.splice(this.votedFor.indexOf(producerName),1);
+		else this.votedFor.push(producerName);
+	}
+
+	hasVotedFor(producerName:string){
+		return this.votedFor.includes(producerName);
+	}
+
+	async vote(){
+		const delegated = await delegateAll(this.account.name);
+		const test = await voteFor(this.account.name, this.votedFor);
+		console.log('test', test);
+	}
+
+	producerName(url:string, owner:string){
+		if(!url || !url.length) return owner;
+		const baseUrl = url
+			.replace('http://','')
+			.replace('https://','')
+			.replace('www.','').split('/')[0]
+			.split('.');
+		baseUrl.pop();
+		return baseUrl.join('.');
+	}
+
+	@Watch('voter')
+	voterChanged(){
+		if(this.voter)		// Breaking reference
+			this.votedFor = JSON.parse(JSON.stringify(this.voter.producers));
+	}
 }
 </script>
 

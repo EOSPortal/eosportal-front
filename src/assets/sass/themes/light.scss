@@ -136,7 +136,7 @@ $flashy: #4068cb;
             color: $dark-blue;
             background:transparent;
 
-            &:hover {
+            &:hover, &.active {
               background: $dark-blue;
               color: $light-gray;
             }

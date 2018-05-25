@@ -8,31 +8,39 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
-    import { mapState, mapActions, mapMutations } from "vuex";
-
-    import ChainNavigation from '../components/ChainNavigation.vue';
-    import {getChainProducers, getChainState} from "@/utils/eos.util";
+    import { Component, Vue, Watch } from "vue-property-decorator";
+    import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
+    import ChainNavigation from '@/components/ChainNavigation.vue';
+    import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
 
     @Component({
         components: {
             ChainNavigation
         },
         props: {},
-        computed: mapState(['chainId', 'producers']),
+        computed: {
+            ...mapState(['producers', 'chainId', 'voter']),
+            ...mapGetters(['account', 'identity'])
+        },
         methods: {
-            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout"])
+            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
         }
     })
+
+
 
     export default class Chain extends Vue {
         producers!: Array<any>;
         chainId!: number;
+        voter!:any;
+        account!:any;
+        identity!:any;
         setChain!: (chainId: number) => void;
         setNetwork!: (networkString:string | null) => void;
         setProducers!: (producers:any[]) => void;
         setChainData!: (chainData:any) => void;
         logout!:() => void;
+        setVoter!:(voter:any) => void;
 
         created() {
             this.setChain(parseInt(this.$route.params.chainId));
@@ -43,15 +51,28 @@
             this.setNetwork(null);
             this.setChainData(null);
             this.setProducers([]);
+            this.setVoter(null);
             this.logout();
         }
 
         async initialize(){
             //TODO: Get chain data from id, bind to state, use api url to build network for Scatter
 
-            this.setNetwork('http://193.93.219.219:8888/');
+            //this.$route.params.chainId
+
+//            this.setNetwork('http://test.eosys.io:8888/');
+//            const test = await getAccount('eosportaltst');
+            this.setNetwork('http://bp.blockgenic.io:8888/');
+//            const test = await getAccount('lioninjungle');
+//            console.log('test', test);
             await this.setChainData(await getChainState());
             await this.setProducers(await getChainProducers());
+        }
+
+        @Watch('account')
+        async accountChanged(){
+            if(this.account)
+                await this.setVoter(await getVoter(this.account.name));
         }
     }
 </script>

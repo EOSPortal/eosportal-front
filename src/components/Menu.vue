@@ -34,9 +34,6 @@
         props: {},
         computed: mapState(["theme"]),
         methods: {
-        	toggleTheme(){
-                this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
-            },
             ...mapActions(['setTheme']),
         }
     })

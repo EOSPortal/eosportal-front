@@ -136,7 +136,7 @@ $flashy:yellow;
                         color:$light-green;
                         background:transparent;
 
-                        &:hover {
+                        &:hover, &.active {
                             background:$light-green;
                             color:$dark-blue;
                         }

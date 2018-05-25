@@ -2,43 +2,13 @@ import config from "../config";
 import { map, range, reduce, concat } from "ramda";
 
 export const baseUrl = `https://${config.domain}`;
-export const chainUrl = (chainId: number) =>
-  `https://${config.domain}/chains/${chainId}`;
 
 export const fetchJson = (url: string) =>
-  fetch(url).then(responds => responds.json()).catch(error => console.error(error));
+    fetch(url)
+        .then(responds => responds.json())
+        .catch(error => console.error(error));
 
-export const getDataForPages = async (
-  resource: string,
-  from: number,
-  to: number
-) => {
-  const fetchPages: (pageIndexes: number[]) => Promise<any>[] = map(index =>
-    fetchJson(resource + "?page=" + index)
-  );
-  const accumulateData: (data: any[]) => any[] = reduce(
-    (acc: any[], { data }) => concat(acc, data),
-    []
-  );
-
-  const promises = fetchPages(range(from)(to + 1));
-  const responses = await Promise.all(promises);
-  return accumulateData(responses);
-};
-
-export const getDataForAllPages = async(resource: string) => {
-    // get first page/list of results
-    const responds = await fetchJson(resource);
-    if (responds.current_page === responds.last_page) {
-      return responds.data;
-    }
-  
-    // if their are more pages get the rest of the pages
-    const headData = responds.data;
-    const tailData = await getDataForPages(
-      resource,
-      responds.current_page + 1,
-      responds.last_page
-    );
-    return concat(headData, tailData);
-}
+export const postJson = (url: string, data:any) =>
+    fetch(url, { method: 'POST', body: JSON.stringify(data), headers:{ 'Content-Type': 'application/json' } })
+        .then(responds => responds.json())
+        .catch(error => console.error(error));
