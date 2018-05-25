@@ -8,6 +8,7 @@ import { concat } from "ramda";
 
 export const getChains = () => getDataForAllPages(`${baseUrl}/chains`);
 
+/* can this be removed now?
 export const getInfo = (chainId: number) =>
   fetchJson(chainUrl(chainId) + "/infos");
 
@@ -25,3 +26,5 @@ export const getAllBlocks = (chainId: number) =>
 
 export const getBlock = (chainId: number, blockId: number) =>
   fetchJson(`${chainUrl(chainId)}/blocks/${blockId}`);
+
+ */

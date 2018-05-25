@@ -19,23 +19,20 @@
             ChainNavigation
         },
         props: {},
-        computed: mapState(['chainId', 'producers']),
+        computed: mapState(['producers']),
         methods: {
-            ...mapActions(["setChain", "setNetwork", "setProducers", "setChainData", "logout"])
+            ...mapActions(["setNetwork", "setProducers", "setChainData", "logout"])
         }
     })
 
     export default class Chain extends Vue {
         producers!: Array<any>;
-        chainId!: number;
-        setChain!: (chainId: number) => void;
         setNetwork!: (networkString:string | null) => void;
         setProducers!: (producers:any[]) => void;
         setChainData!: (chainData:any) => void;
         logout!:() => void;
 
         created() {
-            this.setChain(parseInt(this.$route.params.chainId));
             this.initialize();
         }
 
