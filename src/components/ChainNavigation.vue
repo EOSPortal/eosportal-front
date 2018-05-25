@@ -4,7 +4,7 @@
             <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">Voting Power</router-link>
             <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">Producers</router-link>
             <router-link exact-active-class="active" tag="button" :to="{ name: 'info' }" exact>Chain Info</router-link>
-            <router-link exact-active-class="active" tag="button" :to="{ name: 'blocks' }">Blocks</router-link>
+            <!--<router-link exact-active-class="active" tag="button" :to="{ name: 'blocks' }">Blocks</router-link>-->
         </section>
         <hr/>
     </section>
