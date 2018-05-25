@@ -38,7 +38,7 @@
             </p>
 
             <section class="contain">
-                <h1 id="voting-power">What is voting?</h1>
+                <h1 id="what-is-voting">What is voting?</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -48,7 +48,7 @@
             </section>
 
             <section class="contain">
-                <h1 id="voting-power">Who should vote?</h1>
+                <h1 id="who-should-vote">Who should vote?</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -58,7 +58,7 @@
             </section>
 
             <section class="contain">
-                <h1 id="voting-power">What should I know before voting?</h1>
+                <h1 id="what-to-know">What should I know before voting?</h1>
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
