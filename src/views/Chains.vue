@@ -58,6 +58,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { mapState, mapActions } from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
+import * as api from "@/api";
 import {getChainProducers, getChainState} from "@/utils/eos.util";
 
 @Component({
@@ -91,9 +92,7 @@ export default class Chains extends Vue {
 		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
 			return alert('Could not get chain info');
 
-		//TODO: Chain is validated, should be pushed to the backend
-//		const info = await getChainInfo();
-//		console.log('info', info);
+		api.addChain(this.newChain);
 	}
 }
 </script>
