@@ -29,22 +29,18 @@
 				<tr>
 					<th>Chain ID</th>
 					<th>Chain URL</th>
-					<th>Booted Date</th>
-					<th>Total Voters</th>
-					<th>Vote Percentage</th>
-					<th>Connected BPs</th>
+					<th>Created Date</th>
+					<th>Connected Nodes</th>
 					<th></th>
 				</tr>
 				</thead>
 
 				<tbody>
 					<tr :key="chain.id" v-for="chain in chains">
-						<td>{{chain.chain_id || Math.round(Math.random() * 10000000000 + 1)}}</td>
-						<td>{{chain.api_url.replace('http://', '').replace('https://','')}}</td>
-						<td>{{chain.booted || '2/6/2018'}}</td>
-						<td>{{chain.voters || Math.round(Math.random() * 300000 + 1) | humanNum}}</td>
-						<td>{{chain.percentage || (Math.random() * 100 + 0.1).toFixed(2) + '%'}}</td>
-						<td>{{chain.bp_count || Math.round(Math.random() * 100 + 1)}}</td>
+						<td>{{chain.chainId}}</td>
+						<td>{{chain.url.replace('http://', '').replace('https://','')}}</td>
+						<td>{{new Date(chain.createdAt*1000)}}</td>
+						<td>{{chain.nodes.length}}</td>
 						<td><router-link :to="'chain/'+chain.id.toString()" tag="button">Select Chain</router-link></td>
 					</tr>
 				</tbody>
