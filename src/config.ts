@@ -1,3 +1,3 @@
 export default {
-  domain: "api.eosportal.io"
+  domain: process.env.API_DOMAIN || "api.eosportal.io"
 };
