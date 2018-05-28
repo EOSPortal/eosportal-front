@@ -1,47 +1,40 @@
 <template>
-    <div class="container">
-        <section class="contain">
-			<h3>{{producer.owner}}</h3>
-            <div v-if="bpStandardInfo === false" class="alert alert-warning" role="alert">
-                This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
-            </div>
-			<p>
-				{{bpStandardInfo.description}}
-			</p>
-      
-      <a class="btn btn-primary" :href="'//' + producer.url" role="button" target="_blank">Website</a>
-		</section>
-        <hr/>
-		    <section class="contain">
-          <div class="list-group">
-            <div class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Number of votes</h5>
-              </div>
-              <p class="mb-1">{{parseInt(producer.total_votes)}}</p>
-            </div>
-            <div class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Location</h5>
-              </div>
-              <p class="mb-1">{{producer.location}}</p>
-            </div>
-            <div class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Last produced block</h5>
-              </div>
-              <p class="mb-1">{{timeSinceLastBlock}} ago</p>
-              <small class="text-muted">at {{new Date(producer.last_produced_block_time*1000)}}</small>
-            </div>
-            <div class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">Became active</h5>
-              </div>
-              <p class="mb-1">{{becameActive}} ago</p>
-              <small class="text-muted">at {{new Date(producer.time_became_active*1000)}}</small>
-            </div>
-        </div>
-	  	  </section>
+<div class="container">
+  <section class="contain">
+		<h3>{{producer.owner}}</h3>
+    <div v-if="bpStandardInfo === false" class="alert alert-warning" role="alert">
+      This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
+    </div>
+		<p>
+			{{bpStandardInfo.description}}
+		</p>
+    
+    <a class="btn btn-primary" :href="'//' + producer.url" role="button" target="_blank">Website</a>
+	</section>
+  <hr/>
+	<section class="contain">
+    <ul style="list-style: none;">
+      <li>
+        <h5 class="mb-1">Number of votes</h5>
+        <p>{{parseInt(producer.total_votes)}}</p>
+      </li>
+      <l
+        <h5 class="mb-1">Location</h5>
+        <p>{{producer.location}}</p>
+      </li>
+      <li>
+        <h5 class="mb-1">Last produced block</h5>
+        <p>{{timeSinceLastBlock}} ago</p>
+        <small>at {{new Date(producer.last_produced_block_time*1000)}}</small>
+      </li>
+      <li>
+        <h5>Became active</h5>
+        <p>{{becameActive}} ago</p>
+        <small>at {{new Date(producer.time_became_active*1000)}}</small>
+      </li>
+	  </ul>
+  </section>
+</div>
         <!--
       <section style="margin-top:40px;">
         <h3>Debuging</h3>
@@ -51,7 +44,6 @@
         <pre>{{JSON.stringify(bpStandardInfo, null, " ")}}</pre>
       </section>
       -->
-    </div>
 </template>
 
 <script lang="ts">
