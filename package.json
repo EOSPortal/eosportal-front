@@ -8,7 +8,8 @@
     "test": "vue-cli-service test",
     "e2e": "vue-cli-service e2e",
     "lint": "vue-cli-service lint",
-    "e2e:open": "vue-cli-service e2e:open"
+    "e2e:open": "vue-cli-service e2e:open",
+    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "ajv": "^6.5.0",
