@@ -14,22 +14,35 @@
         <hr/>
 		    <section class="contain">
           <div class="list-group">
-            <div href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+            <div class="list-group-item flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Number of votes</h5>
+              </div>
+              <p class="mb-1">{{parseInt(producer.total_votes)}}</p>
+            </div>
+            <div class="list-group-item flex-column align-items-start">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Location</h5>
+              </div>
+              <p class="mb-1">{{producer.location}}</p>
+            </div>
+            <div class="list-group-item flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Last produced block</h5>
               </div>
               <p class="mb-1">{{timeSinceLastBlock}} ago</p>
               <small class="text-muted">at {{new Date(producer.last_produced_block_time*1000)}}</small>
             </div>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="list-group-item flex-column align-items-start">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Became active</h5>
               </div>
               <p class="mb-1">{{becameActive}} ago</p>
               <small class="text-muted">at {{new Date(producer.time_became_active*1000)}}</small>
-            </a>
+            </div>
         </div>
-	  	</section>
+	  	  </section>
+        <!--
       <section style="margin-top:40px;">
         <h3>Debuging</h3>
          <h5>BP Chain Info:</h5>
@@ -37,6 +50,7 @@
         <h5>BP Standard Info:</h5>
         <pre>{{JSON.stringify(bpStandardInfo, null, " ")}}</pre>
       </section>
+      -->
     </div>
 </template>
 
