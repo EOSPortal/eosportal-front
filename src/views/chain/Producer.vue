@@ -1,16 +1,7 @@
 <template>
 <div class="container">
-  <section class="contain">
-		<h3>{{producer.owner}}</h3>
-    <div v-if="bpStandardInfo === false" class="alert alert-warning" role="alert">
-      This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
-    </div>
-		<p>
-			{{bpStandardInfo.description}}
-		</p>
-	</section>
-  <hr/>
 	<section class="contain">
+		<h3>Block Producer</h3>
 		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;">
 			<tr>
 				<th>Account</th>
@@ -18,30 +9,45 @@
       </tr>
       <tr>
 				<th>URL</th>
-				<td><a :href="'//' + producer.url" >{{producer.url}}</a></td>
-        </tr>
-        <tr>
-					<th>Location</th>
-					<td>{{producer.location}}</td>
-        </tr>
-        <tr>
-					<th>Total Votes %</th>
-					<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
-        </tr>
-				<tr>
-          <th>Number of Votes</th>
-					<td>{{parseInt(producer.total_votes)}}</td>
-				</tr>
-        <tr>
-          <th>Last Produced Block</th>
-					<td>{{(new Date(producer.last_produced_block_time*1000)).toLocaleDateString()}}</td>
-        </tr>
-        <tr>
-					<th>Active Since</th>
-					<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
-        </tr>
+				<td><a :href="'//' + producer.url" target="_blank">{{producer.url}}</a></td>
+      </tr>
+      <tr>
+				<th>Location</th>
+				<td>{{producer.location}}</td>
+      </tr>
+      <tr>
+				<th>Total Votes %</th>
+				<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+      </tr>
+			<tr>
+        <th>Number of Votes</th>
+				<td>{{parseInt(producer.total_votes)}}</td>
+			</tr>
+      <tr>
+        <th>Last Produced Block</th>
+				<td>{{(new Date(producer.last_produced_block_time*1000)).toLocaleDateString()}}</td>
+      </tr>
+      <tr>
+				<th>Active Since</th>
+				<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
+      </tr>
 		</table>
   </section>
+  
+  <hr/>
+  
+  <section v-if="bpStandardInfo === false" class="contain">
+    <small  role="alert">
+      This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
+    </small>
+  </section>
+  
+  <section v-if="bpStandardInfo != false" class="contain">
+		<h3>{{bpStandardInfo.name}}</h3>
+		<p>
+			{{bpStandardInfo.description}}
+		</p>
+	</section>
 </div>
         <!--
       <section style="margin-top:40px;">
