@@ -50,19 +50,19 @@ import { getTimeSince } from "@/utils/date.util";
   computed: {
     ...mapGetters(["getProducerByOwner"]),
     producer() {
-      return this.getProducerByOwner(this.$route.params.producer);
+      return (this as any).getProducerByOwner(this.$route.params.producer);
     },
     timeSinceLastBlock() {
-      return getTimeSince(this.producer.last_produced_block_time);
+      return getTimeSince((this as any).producer.last_produced_block_time);
     },
     becameActive() {
-      return getTimeSince(this.producer.time_became_active);
+      return getTimeSince((this as any).producer.time_became_active);
     }
   },
   methods: {
     getBpStandardInfo() {
-      console.log("url: " + this.producer.url);
-      fetchJson("//" + this.producer.url + "/bp.json")
+      console.log("url: " + (this as any).producer.url);
+      fetchJson("//" + (this as any).producer.url + "/bp.json")
         .then(validateBpInfo)
         .catch(error => {
           console.log(
@@ -73,7 +73,7 @@ import { getTimeSince } from "@/utils/date.util";
         })
         .then(_ => {
           console.log("result " + _);
-          this.bpStandardInfo = _;
+          (this as any).bpStandardInfo = _;
         });
     }
   },
@@ -83,7 +83,7 @@ export default class Producer extends Vue {
   bpStandardInfo: any = {};
 
   mounted() {
-    this.getBpStandardInfo();
+    (this as any).getBpStandardInfo();
   }
 }
 </script>
