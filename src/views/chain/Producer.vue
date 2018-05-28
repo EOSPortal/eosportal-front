@@ -8,31 +8,39 @@
 		<p>
 			{{bpStandardInfo.description}}
 		</p>
-    
-    <a class="btn btn-primary" :href="'//' + producer.url" role="button" target="_blank">Website</a>
 	</section>
   <hr/>
 	<section class="contain">
-    <ul style="list-style: none;">
-      <li>
-        <h5 class="mb-1">Number of votes</h5>
-        <p>{{parseInt(producer.total_votes)}}</p>
-      </li>
-      <l
-        <h5 class="mb-1">Location</h5>
-        <p>{{producer.location}}</p>
-      </li>
-      <li>
-        <h5 class="mb-1">Last produced block</h5>
-        <p>{{timeSinceLastBlock}} ago</p>
-        <small>at {{new Date(producer.last_produced_block_time*1000)}}</small>
-      </li>
-      <li>
-        <h5>Became active</h5>
-        <p>{{becameActive}} ago</p>
-        <small>at {{new Date(producer.time_became_active*1000)}}</small>
-      </li>
-	  </ul>
+		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;">
+			<tr>
+				<th>Account</th>
+				<td>{{producer.owner}}</td>
+      </tr>
+      <tr>
+				<th>URL</th>
+				<td><a :href="'//' + producer.url" >{{producer.url}}</a></td>
+        </tr>
+        <tr>
+					<th>Location</th>
+					<td>{{producer.location}}</td>
+        </tr>
+        <tr>
+					<th>Total Votes %</th>
+					<td>{{(producer.total_votes / chainData.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+        </tr>
+				<tr>
+          <th>Number of Votes</th>
+					<td>{{parseInt(producer.total_votes)}}</td>
+				</tr>
+        <tr>
+          <th>Last Produced Block</th>
+					<td>{{(new Date(producer.last_produced_block_time*1000)).toLocaleDateString()}}</td>
+        </tr>
+        <tr>
+					<th>Active Since</th>
+					<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
+        </tr>
+		</table>
   </section>
 </div>
         <!--
@@ -48,13 +56,14 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { fetchJson } from "@/utils/api.util";
 import { validateBpInfo } from "@/utils/bp-json-validation.util";
 import { getTimeSince } from "@/utils/date.util";
 @Component({
   computed: {
     ...mapGetters(["getProducerByOwner"]),
+    ...mapState(["chainData"]),
     producer() {
       return (this as any).getProducerByOwner(this.$route.params.producer);
     },
