@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
-import {findLast, propEq} from "ramda" 
+import {findLast, propEq} from "ramda"
 
 import Eos from 'eosjs';
 

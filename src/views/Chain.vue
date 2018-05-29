@@ -34,8 +34,10 @@
         account!:any;
         identity!:any;
         setNetwork!: (networkString:string | null) => void;
-        setProducers!: (producers:any[]) => void;
-        setChainData!: (chainData:any) => void;
+        loadProducers!: () => void;
+        removeProducers!: () => void;
+        loadChainData!: () => void;
+        removeChainData!: () => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
         producerTimer:NodeJS.Timer | null = null;
@@ -47,8 +49,8 @@
         beforeDestroy(){
             this.logout();
             this.setNetwork(null);
-            this.setChainData(null);
-            this.setProducers([]);
+            this.removeChainData();
+            this.removeProducers();
             this.setVoter(null);
         }
 

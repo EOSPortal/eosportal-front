@@ -60,19 +60,19 @@ import {addChain} from '@/api'
 @Component({
 	components: {},
 	computed: mapState(["chains"]),
-	methods: mapActions(["getChains"]),
+	methods: mapActions(["loadChains"]),
 	data(){return {
 		newChain:''
 	}}
 })
 export default class Chains extends Vue {
 	chains!: any[];
-	getChains!: () => void;
+	loadChains!: () => void;
 
 	newChain:string = '';
 
 	created() {
-		this.getChains();
+		this.loadChains();
 		this.newChain = '';
 	}
 
