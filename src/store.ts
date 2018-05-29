@@ -2,7 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
-import {findLast, propEq} from "ramda" 
+import {findLast, propEq} from "ramda"
+import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
 
 import Eos from 'eosjs';
 
@@ -55,17 +56,23 @@ export default new Vuex.Store({
     setTheme({ commit }, theme:string) {
       commit("setTheme", theme);
     },
-    async getChains({ commit, state }) {
+    async loadChains({ commit, state }) {
       commit("setChains", await getChains());
     },
-    setChainData({ commit, state }, chainData:any) {
-      commit("setChainData", chainData);
+    async loadChainData({ commit, state }) {
+      commit("setChainData", await getChainState());
+    },
+    removeChainData({ commit, state }) {
+      commit("setChainData", null);
     },
     setScatter({ commit, state }, scatter:any) {
       commit("setScatter", scatter);
     },
-    setProducers({ commit, state }, producers:any[]) {
-      commit("setProducers", producers);
+    async loadProducers({ commit, state }) {
+      commit("setProducers", await getChainProducers());
+    },
+    removeProducers({ commit, state }) {
+      commit("setProducers", []);
     },
     setVoter({ commit, state }, voter:any) {
       commit("setVoter", voter);

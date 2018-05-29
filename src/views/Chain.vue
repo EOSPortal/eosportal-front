@@ -9,7 +9,7 @@
     import { Component, Vue, Watch } from "vue-property-decorator";
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
     import ChainNavigation from '@/components/ChainNavigation.vue';
-    import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
+    import {getAccount, getVoter} from "@/utils/eos.util";
 
     @Component({
         components: {
@@ -21,7 +21,7 @@
             ...mapGetters(['account', 'identity'])
         },
         methods: {
-            ...mapActions(["setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
+            ...mapActions(["setNetwork", "loadProducers", "loadChainData", "removeProducers", "removeChainData", "logout", "setVoter"])
         }
     })
 
@@ -33,8 +33,10 @@
         account!:any;
         identity!:any;
         setNetwork!: (networkString:string | null) => void;
-        setProducers!: (producers:any[]) => void;
-        setChainData!: (chainData:any) => void;
+        loadProducers!: () => void;
+        removeProducers!: () => void;
+        loadChainData!: () => void;
+        removeChainData!: () => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
 
@@ -44,8 +46,8 @@
 
         destroyed(){
             this.setNetwork(null);
-            this.setChainData(null);
-            this.setProducers([]);
+            this.removeChainData();
+            this.removeProducers();
             this.setVoter(null);
 //            this.logout();
         }
@@ -60,8 +62,8 @@
             this.setNetwork('http://bp.blockgenic.io:8888/');
 //            const test = await getAccount('lioninjungle');
 //            console.log('test', test);
-            await this.setChainData(await getChainState());
-            await this.setProducers(await getChainProducers());
+            this.loadChainData();
+            this.loadProducers();
         }
 
         @Watch('account')

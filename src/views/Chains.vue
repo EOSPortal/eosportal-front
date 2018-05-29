@@ -55,24 +55,23 @@ import { mapState, mapActions } from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
 import * as api from "@/api";
-import {getChainProducers, getChainState} from "@/utils/eos.util";
 
 @Component({
 	components: {},
 	computed: mapState(["chains"]),
-	methods: mapActions(["getChains"]),
+	methods: mapActions(["loadChains"]),
 	data(){return {
 		newChain:''
 	}}
 })
 export default class Chains extends Vue {
 	chains!: any[];
-	getChains!: () => void;
+	loadChains!: () => void;
 
 	newChain:string = '';
 
 	created() {
-		this.getChains();
+		this.loadChains();
 		this.newChain = '';
 	}
 
