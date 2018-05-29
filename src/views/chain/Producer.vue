@@ -36,13 +36,13 @@
   
   <hr/>
   
-  <section v-if="bpStandardInfo == null" class="contain">
+  <section v-if="!bpStandardInfo" class="contain">
     <small  role="alert">
       This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
     </small>
   </section>
   
-  <section v-if="bpStandardInfo != null" class="contain">
+  <section v-if="bpStandardInfo" class="contain">
     <small>The information below is provided by the Block Producer.</small>
     <div>
       <img class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
