@@ -6,15 +6,15 @@ import { prop, path } from 'ramda'
 export const getEos = () => {
 	if(!store.state.network) return null;
 	return Eos.Localnet({
-		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`,
-		chainId:store.state.network.chainData.chainId
+		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`
 	});
 };
 
 export const getScatterEos = () => {
+	console.log('chaind', store.getters.chainId);
 	if(!store.state.scatter || !store.state.network) return null;
 	return store.state.scatter.eos( store.state.network, Eos.Localnet, {
-		chainId:store.state.network.chainData.chainId
+		chainId:store.getters.chainId
 	});
 };
 

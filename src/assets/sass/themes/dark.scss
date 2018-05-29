@@ -155,5 +155,14 @@ $flashy:yellow;
             }
         }
     }
-}
 
+    .floater {
+        background:$medium-blue;
+        box-shadow:0 -2px 10px rgba(0,0,0,0.1);
+        color:$light-green;
+
+        .box {
+            border:1px solid $light-blue;
+        }
+    }
+}

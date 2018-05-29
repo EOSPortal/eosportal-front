@@ -1,3 +1,3 @@
 export default {
-  domain: "api.eosportal.io"
+  domain: "eosportal-api.herokuapp.com" // TODO: move to env var
 };

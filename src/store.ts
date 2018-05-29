@@ -12,6 +12,7 @@ export default new Vuex.Store({
   state: {
     chains: [],
     chainData:null,
+    chainState:null,
     theme:'light',
 
     voter:null,
@@ -30,11 +31,18 @@ export default new Vuex.Store({
     setChainData(state:any, chainData:any){
       state.chainData = chainData;
     },
+    setChainState(state:any, chainState:any){
+      state.chainState = chainState;
+    },
     setChains(state: any, chains: any[]) {
       state.chains = chains
     },
     setProducers(state: any, producers: any[]) {
-      state.producers = producers
+      state.producers = producers.map(producer => {
+        const stateProducer = state.producers.find(p => p.owner === producer.owner);
+        if(stateProducer) producer.country_code = stateProducer.country_code;
+        return producer;
+      });
     },
     setVoter(state: any, voter: any) {
       state.voter = voter
@@ -59,8 +67,10 @@ export default new Vuex.Store({
       commit("setChains", await getChains());
     },
     async setChainData({ commit, state }, chainData:any) {
-      console.log('chain data', chainData);
       commit("setChainData", chainData);
+    },
+    async setChainState({ commit, state }, chainState:any) {
+      commit("setChainState", chainState);
     },
     async setScatter({ commit, state }, scatter:any) {
       commit("setScatter", scatter);
@@ -96,6 +106,7 @@ export default new Vuex.Store({
     identity:(state:any) => state.scatter ? state.scatter.identity : null,
     account:(state:any) => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find((account:any) => account.blockchain === 'eos') : null,
     orderedProducers:(state:any) => state.producers.sort((a:any,b:any) => b.total_votes - a.total_votes),
-    getProducerByOwner: state => (owner: string) => findLast(propEq('owner', owner))(state.producers) 
+    getProducerByOwner: state => (owner: string) => findLast(propEq('owner', owner))(state.producers),
+    chainId:state => state.chainData ? state.chainData.chainId : null,
   }
 });

@@ -1,10 +1,10 @@
 import {
   baseUrl,
   fetchJson,
-  postJson
+  postChain
 } from "./utils/api.util";
 
 export const getChains = () => fetchJson(`${baseUrl}/chains`).catch(() => []);
 export const getChain = (chain_id:string) => fetchJson(`${baseUrl}/chains/${chain_id}`).catch(() => null);
-export const addChain = (url:string) => postJson(`${baseUrl}/chain`, {url});
+export const addChain = (chainURL:string) => postChain(`${baseUrl}/chain`, chainURL);
 

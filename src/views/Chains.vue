@@ -28,10 +28,7 @@
 				<thead>
 				<tr>
 					<th>Chain ID</th>
-					<!--<th class="desktop-only">Chain URL</th>-->
 					<th class="desktop-only">Added Date</th>
-					<!--<th>Vote %</th>-->
-					<!--<th>BPs</th>-->
 					<th></th>
 				</tr>
 				</thead>
@@ -40,10 +37,7 @@
 				<tbody>
 					<tr :key="chain.chainId" v-for="chain in chains">
 						<td><b>id:{{chain.id}}</b> - {{chain.chainId.substr(0,15)}}...</td>
-						<!--<td class="desktop-only">{{chain.api_url.replace('http://', '').replace('https://','')}}</td>-->
 						<td class="desktop-only">{{new Date(chain.createdAt*1000).toLocaleDateString()}}</td>
-						<!--<td>{{chain.percentage || (Math.random() * 100 + 0.1).toFixed(2) + '%'}}</td>-->
-						<!--<td>{{chain.bp_count || Math.round(Math.random() * 100 + 1)}}</td>-->
 						<td><router-link :to="'chain/'+chain.id.toString()" tag="a">
 							<button>Select</button>
 						</router-link></td>
@@ -59,6 +53,7 @@
 import { mapState, mapActions } from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
+import * as api from "@/api";
 import {getChainProducers, getChainState} from "@/utils/eos.util";
 import {addChain} from '@/api'
 

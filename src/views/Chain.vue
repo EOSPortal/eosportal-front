@@ -22,7 +22,7 @@
             ...mapGetters(['account', 'identity'])
         },
         methods: {
-            ...mapActions(["setNetwork", "setProducers", "setChainData", "logout", "setVoter"])
+            ...mapActions(["setNetwork", "setProducers", "setChainData", "setChainState", "logout", "setVoter"])
         }
     })
 
@@ -40,34 +40,30 @@
         setVoter!:(voter:any) => void;
         producerTimer:NodeJS.Timer | null = null;
 
-        created() {
+        async created() {
             this.initialize();
         }
 
-        destroyed(){
+        beforeDestroy(){
+            this.logout();
             this.setNetwork(null);
             this.setChainData(null);
             this.setProducers([]);
             this.setVoter(null);
-            this.logout();
         }
 
         async initialize(){
-            //TODO: Get chain data from id, bind to state, use api url to build network for Scatter
-
             await this.bindNetwork();
-
-            // No network found
             if(!this.network) return this.$router.push({path:'/'});
-//
-            await this.setChainData(await getChainState());
-            this.recurseProducers();
-
+            this.setChainState(await getChainState());
+            await this.regenVoter();
+            await this.recurseProducers();
         }
 
         async bindNetwork(chainData:any|null = null){
         	if(!chainData) chainData = await getChain(this.$route.params.chainId);
             if(!chainData) return this.$router.push({path:'/'});
+            this.setChainData(chainData);
 
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
@@ -92,18 +88,42 @@
         async recurseProducers(){
         	if(!this.producerTimer) clearTimeout(this.producerTimer);
             await this.setProducers(await getChainProducers());
+            await this.fillProducerData();
             this.producerTimer = setTimeout(() => this.recurseProducers(), 5000);
+        }
+
+        async fillProducerData(){
+        	const producer = this.producers.filter(p => !p.hasOwnProperty('country_code'))[0] || null;
+        	if(producer){
+                if(!producer.url.length) { producer.country_code = '???';  producer.json = {}; }
+                else {
+                    //TODO: Switch to use BP json's location
+                    const url = producer.url.replace('http://', '').replace('https://', '').split('/')[0];
+                    const location = await fetch(`http://ip.kitpes.com/?id=${Math.round(Math.random() * 10000+1)}&ip=${url}`)
+						.then((res: any) => res.json()).catch(() => null);
+                    producer.country_code = location ? location.country_code : '???';
+
+//                const bpJson = await fetch(producer.url.replace(/\/$/, "")+'/bp.json');
+                }
+            }
+
+            if(this.producers.filter(p => !p.hasOwnProperty('country_code')).length)
+            	setTimeout(async () => await this.fillProducerData(), 5);
         }
 
         destroyed(){
         	clearTimeout(this.producerTimer);
         }
 
-        @Watch('account')
-        async accountChanged(){
+        async regenVoter(){
             if(this.account) setTimeout(async () => {
                 await this.setVoter(await getVoter(this.account.name))
             },1);
+        }
+
+        @Watch('account')
+        async accountChanged(){
+            await this.regenVoter();
         }
     }
 </script>
