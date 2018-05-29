@@ -140,6 +140,12 @@ $flashy:yellow;
                             color:$dark-blue;
                         }
 
+                        &.active {
+                            background:$light-blue;
+                            border:2px solid $light-blue;
+                            color:#fff;
+                        }
+
                         &:active {
                             color:$light-green;
                             background:transparent;

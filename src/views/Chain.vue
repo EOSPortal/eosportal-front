@@ -10,6 +10,7 @@
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
     import ChainNavigation from '@/components/ChainNavigation.vue';
     import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
+    import {getChain} from "@/api";
 
     @Component({
         components: {
@@ -17,7 +18,7 @@
         },
         props: {},
         computed: {
-            ...mapState(['producers', 'voter']),
+            ...mapState(['producers', 'voter', 'network']),
             ...mapGetters(['account', 'identity'])
         },
         methods: {
@@ -37,6 +38,7 @@
         setChainData!: (chainData:any) => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
+        producerTimer:NodeJS.Timer | null = null;
 
         created() {
             this.initialize();
@@ -47,27 +49,61 @@
             this.setChainData(null);
             this.setProducers([]);
             this.setVoter(null);
-//            this.logout();
+            this.logout();
         }
 
         async initialize(){
             //TODO: Get chain data from id, bind to state, use api url to build network for Scatter
 
-            //this.$route.params.chainId
+            await this.bindNetwork();
 
-//            this.setNetwork('http://test.eosys.io:8888/');
-//            const test = await getAccount('eosportaltst');
-            this.setNetwork('http://bp.blockgenic.io:8888/');
-//            const test = await getAccount('lioninjungle');
-//            console.log('test', test);
+            // No network found
+            if(!this.network) return this.$router.push({path:'/'});
+//
             await this.setChainData(await getChainState());
+            this.recurseProducers();
+
+        }
+
+        async bindNetwork(chainData:any|null = null){
+        	if(!chainData) chainData = await getChain(this.$route.params.chainId);
+            if(!chainData) return this.$router.push({path:'/'});
+
+            const originalLength:number = chainData.nodes.length;
+            let network:null | string = null;
+            while(!network && chainData.nodes.length){
+                const node:string = chainData.nodes[0];
+                network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
+                if(!network) chainData.nodes.shift();
+            }
+
+            //TODO: Notify API of stale nodes.
+            if(chainData.nodes.length !== originalLength){
+            }
+
+            //TODO: All networks are stale
+            if(!network){
+                return;
+            }
+
+            this.setNetwork(network);
+        }
+
+        async recurseProducers(){
+        	if(!this.producerTimer) clearTimeout(this.producerTimer);
             await this.setProducers(await getChainProducers());
+            this.producerTimer = setTimeout(() => this.recurseProducers(), 5000);
+        }
+
+        destroyed(){
+        	clearTimeout(this.producerTimer);
         }
 
         @Watch('account')
         async accountChanged(){
-            if(this.account)
-                await this.setVoter(await getVoter(this.account.name));
+            if(this.account) setTimeout(async () => {
+                await this.setVoter(await getVoter(this.account.name))
+            },1);
         }
     }
 </script>

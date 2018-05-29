@@ -6,13 +6,16 @@ import { prop, path } from 'ramda'
 export const getEos = () => {
 	if(!store.state.network) return null;
 	return Eos.Localnet({
-		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`
+		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`,
+		chainId:store.state.network.chainData.chainId
 	});
 };
 
 export const getScatterEos = () => {
 	if(!store.state.scatter || !store.state.network) return null;
-	return store.state.scatter.eos( store.state.network, Eos.Localnet, {});
+	return store.state.scatter.eos( store.state.network, Eos.Localnet, {
+		chainId:store.state.network.chainData.chainId
+	});
 };
 
 const getEosioTable = (table:any, limit:number = 500, index:string = '', table_key:string = '') => {
@@ -71,13 +74,10 @@ export const voteFor = async (userAccountName:string, producersArray:Array<strin
 };
 
 export const delegateAll = async (accountName:string, token:string = 'EOS') => {
-	// const account = await getAccount(accountName);
 	const balances = await getBalances(accountName);
-	console.log('balances', balances);
 	const stakableTokenBalance = balances.find((b:any) => b.split(' ')[1] === token) || `0.0000 ${token}`;
-	console.log('stakableTokenBalance', stakableTokenBalance);
-	const division = stakableTokenBalance.replace(` ${token}`,'')/2;
-	console.log('division', division);
+	const decimals = stakableTokenBalance.replace(` ${token}`,'').split('.')[1].length;
+	const division = (stakableTokenBalance.replace(` ${token}`,'')/2).toFixed(decimals);
 	const half = `${division} ${token}`;
 	return await getScatterEos().delegatebw(accountName, accountName, half, half, 0);
 };

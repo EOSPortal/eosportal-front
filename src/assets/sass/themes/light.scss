@@ -126,7 +126,7 @@ $flashy: #4068cb;
     tbody {
 
       tr {
-        box-shadow:inset 0 -1px 0 $medium-gray;
+        box-shadow:inset 0 -1px 0 $light-blue;
         background:transparent;
 
         td {
@@ -135,9 +135,15 @@ $flashy: #4068cb;
             color: $dark-blue;
             background:transparent;
 
-            &:hover, &.active {
+            &:hover {
               background: $dark-blue;
               color: $light-gray;
+            }
+
+            &.active {
+              background: $flashy;
+              color: $light-gray;
+              border:2px solid $flashy;
             }
 
             &:active {

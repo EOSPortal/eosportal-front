@@ -59,6 +59,7 @@ export default new Vuex.Store({
       commit("setChains", await getChains());
     },
     async setChainData({ commit, state }, chainData:any) {
+      console.log('chain data', chainData);
       commit("setChainData", chainData);
     },
     async setScatter({ commit, state }, scatter:any) {
