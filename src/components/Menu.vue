@@ -8,7 +8,7 @@
 
             <!-- LOGO -->
             <router-link tag="figure" :to="{ name:'chains' }" class="logo">
-                <img src="img/logo.png" />
+                <img src="/img/logo.png" />
                 <span><b>EOS</b>PORTAL</span>
             </router-link>
 
