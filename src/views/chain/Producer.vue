@@ -48,13 +48,20 @@
       <img class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
 		  <h3>{{bpStandardInfo.org.candidate_name}}</h3>
     </div>
-    <a v-if="bpStandardInfo.org.email != null" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
+    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
     <h5>Location</h5>
-    <p v-if="bpStandardInfo.org.location.name != ''">
+    <p v-if="hasProp('org.location.name', bpStandardInfo)">
       {{bpStandardInfo.org.location.name}}, {{bpStandardInfo.org.location.country}}
     </p>
-    <p v-if="bpStandardInfo.org.location.name == ''">
+    <p v-if="!hasProp('org.location.name', bpStandardInfo)">
       Unspecified location.
+    </p>
+    <h5>Code of Conduct</h5>
+    <p v-if="hasProp('org.code_of_conduct', bpStandardInfo)">
+      {{bpStandardInfo.org.code_of_conduct}}
+    </p>
+    <p v-if="!hasProp('org.code_of_conduct', bpStandardInfo)">
+      Unspecified code of conduct.
     </p>
     <h5>Social</h5>
     <ul>
@@ -68,7 +75,6 @@
       <li v-if="hasProp('org.social.telegram', bpStandardInfo)"><a :href="'https://t.me/' + bpStandardInfo.org.social.telegram" target="_blank">Telegram</a></li>
       <li v-if="hasProp('org.social.wechat', bpStandardInfo)"><a :href="'weixin://dl/chat?' + bpStandardInfo.org.social.wechat" target="_blank">WeChat</a></li>
     </ul>
-
 	</section>
 </div>
 </template>
@@ -79,7 +85,7 @@ import { mapGetters, mapState } from "vuex";
 import { fetchJson, getBpStandardInfo } from "@/utils/api.util";
 import { validateBpInfo } from "@/utils/bp-json-validation.util";
 import { getTimeSince } from "@/utils/date.util";
-import { pathOr, split } from "ramda";
+import { pathOr, split, isEmpty } from "ramda";
 
 @Component({
   computed: {
@@ -111,7 +117,7 @@ import { pathOr, split } from "ramda";
         });
     },
     hasProp(path: string, data: any) {
-      return pathOr(false, split(".", path))(data);
+      return !isEmpty(pathOr('', split(".", path))(data));
     }
   },
   components: {}
