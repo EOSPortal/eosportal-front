@@ -1,6 +1,6 @@
 import config from "../config";
 
-export const baseUrl = `http://${config.domain}`;
+export const baseUrl = `//${config.domain}`;
 
 export const fetchJson = (url: string) =>
     fetch(url).then((res: any) => res.json());

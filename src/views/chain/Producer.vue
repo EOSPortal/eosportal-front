@@ -45,8 +45,8 @@
   <section v-if="bpStandardInfo" class="contain">
     <small>The information below is provided by the Block Producer.</small>
     <div>
-      <img class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
-		  <h3>{{bpStandardInfo.org.candidate_name}}</h3>
+      <img v-if="hasProp('org.branding.logo_256', bpStandardInfo)" class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
+		  <h3 v-if="hasProp('org.candidate_name', bpStandardInfo)">{{bpStandardInfo.org.candidate_name}}</h3>
     </div>
     <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
     <h5>Location</h5>
@@ -104,14 +104,14 @@ import { pathOr, split, isEmpty } from "ramda";
   methods: {
     getBpStandardInfo() {
       getBpStandardInfo((this as any).producer.url)
-        .then(validateBpInfo)
+       /* .then(validateBpInfo)
         .catch(error => {
           console.log(
-            "this BP does not have a avalibe valide bp.json at it's url root. Error: "
+            "this BP does not have a available validated bp.json at it's url root. Error: "
           );
           console.log(error);
           return false;
-        })
+        }) */
         .then(bpInfo => {
           (this as any).bpStandardInfo = bpInfo;
         });
