@@ -104,7 +104,7 @@ import { pathOr, split, isEmpty } from "ramda";
   methods: {
     getBpStandardInfo() {
       getBpStandardInfo((this as any).producer.url)
-       /* .then(validateBpInfo)
+      /* .then(validateBpInfo) TODO: fix, its not validating eosrio or metal, perhaps broken schema?
         .catch(error => {
           console.log(
             "this BP does not have a available validated bp.json at it's url root. Error: "

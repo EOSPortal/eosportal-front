@@ -151,9 +151,9 @@ export default class Producers extends Vue {
 	handleScroll(){
 		if(!this.account) return false;
 		const scroll = window.scrollY;
-		this.floatMenu = !this.floatMenu
+		/*this.floatMenu = !this.floatMenu
 			?this.$refs.votebutton.offsetTop-20 < scroll
-			:this.$refs.votebutton.offsetTop+20 < scroll;
+			:this.$refs.votebutton.offsetTop+20 < scroll; TODO: fix, build is broken */
 	}
 
 	@Watch("voter")
