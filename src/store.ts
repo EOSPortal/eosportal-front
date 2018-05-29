@@ -25,7 +25,7 @@ export default new Vuex.Store({
 
 
   mutations: {
-    async setTheme(state:any, theme:string) {
+    setTheme(state:any, theme:string) {
       state.theme = theme;
     },
     setChainData(state:any, chainData:any){
@@ -60,13 +60,13 @@ export default new Vuex.Store({
 
 
   actions: {
-    async setTheme({ commit }, theme:string) {
+    setTheme({ commit }, theme:string) {
       commit("setTheme", theme);
     },
     async getChains({ commit, state }) {
       commit("setChains", await getChains());
     },
-    async setChainData({ commit, state }, chainData:any) {
+    setChainData({ commit, state }, chainData:any) {
       commit("setChainData", chainData);
     },
     async setChainState({ commit, state }, chainState:any) {
@@ -75,10 +75,10 @@ export default new Vuex.Store({
     async setScatter({ commit, state }, scatter:any) {
       commit("setScatter", scatter);
     },
-    async setProducers({ commit, state }, producers:any[]) {
+    setProducers({ commit, state }, producers:any[]) {
       commit("setProducers", producers);
     },
-    async setVoter({ commit, state }, voter:any) {
+    setVoter({ commit, state }, voter:any) {
       commit("setVoter", voter);
     },
 
@@ -95,7 +95,7 @@ export default new Vuex.Store({
       await state.scatter.suggestNetwork(state.network);
       return state.scatter.getIdentity({accounts:[state.network]});
     },
-    async logout({state}){
+    logout({state}){
       if(!state.scatter) return false;
       if(!state.scatter.identity) return false;
       return state.scatter.forgetIdentity();

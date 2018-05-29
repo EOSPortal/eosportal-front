@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="container block-producer">
 	<section class="contain">
 		<h3>Block Producer</h3>
 		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;">
@@ -36,36 +36,57 @@
   
   <hr/>
   
-  <section v-if="bpStandardInfo === false" class="contain">
+  <section v-if="!bpStandardInfo" class="contain">
     <small  role="alert">
       This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
     </small>
   </section>
   
-  <section v-if="bpStandardInfo != false" class="contain">
-		<h3>{{bpStandardInfo.name}}</h3>
-		<p>
-			{{bpStandardInfo.description}}
-		</p>
+  <section v-if="bpStandardInfo" class="contain">
+    <small>The information below is provided by the Block Producer.</small>
+    <div>
+      <img class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
+		  <h3>{{bpStandardInfo.org.candidate_name}}</h3>
+    </div>
+    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
+    <h5>Location</h5>
+    <p v-if="hasProp('org.location.name', bpStandardInfo)">
+      {{bpStandardInfo.org.location.name}}, {{bpStandardInfo.org.location.country}}
+    </p>
+    <p v-if="!hasProp('org.location.name', bpStandardInfo)">
+      Unspecified location.
+    </p>
+    <h5>Code of Conduct</h5>
+    <p v-if="hasProp('org.code_of_conduct', bpStandardInfo)">
+      {{bpStandardInfo.org.code_of_conduct}}
+    </p>
+    <p v-if="!hasProp('org.code_of_conduct', bpStandardInfo)">
+      Unspecified code of conduct.
+    </p>
+    <h5>Social</h5>
+    <ul>
+      <li v-if="hasProp('org.social.steemit', bpStandardInfo)"><a :href="'https://steemit.com/@' + bpStandardInfo.org.social.steemit" target="_blank">Steemit</a></li>
+      <li v-if="hasProp('org.social.twitter', bpStandardInfo)"><a :href="'https://twitter.com/' + bpStandardInfo.org.social.twitter" target="_blank">Twitter</a></li>
+      <li v-if="hasProp('org.social.youtube', bpStandardInfo)"><a :href="'https://www.youtube.com/' + bpStandardInfo.org.social.youtube" target="_blank">YouTube</a></li>
+      <li v-if="hasProp('org.social.facebook', bpStandardInfo)"><a :href="'https://www.facebook.com/' + bpStandardInfo.org.social.facebook" target="_blank">Facebook</a></li>
+      <li v-if="hasProp('org.social.github', bpStandardInfo)"><a :href="'https://github.com/' + bpStandardInfo.org.social.github" target="_blank">GitHub</a></li>
+      <li v-if="hasProp('org.social.reddit', bpStandardInfo)"><a :href="'https://www.reddit.com/r/' + bpStandardInfo.org.social.reddit" target="_blank">Reddit</a></li>
+      <li v-if="hasProp('org.social.keybase', bpStandardInfo)"><a :href="'https://keybase.io/' + bpStandardInfo.org.social.keybase" target="_blank">Keybase</a></li>
+      <li v-if="hasProp('org.social.telegram', bpStandardInfo)"><a :href="'https://t.me/' + bpStandardInfo.org.social.telegram" target="_blank">Telegram</a></li>
+      <li v-if="hasProp('org.social.wechat', bpStandardInfo)"><a :href="'weixin://dl/chat?' + bpStandardInfo.org.social.wechat" target="_blank">WeChat</a></li>
+    </ul>
 	</section>
 </div>
-        <!--
-      <section style="margin-top:40px;">
-        <h3>Debuging</h3>
-         <h5>BP Chain Info:</h5>
-        <pre>{{JSON.stringify(producer, null, " ")}}</pre>
-        <h5>BP Standard Info:</h5>
-        <pre>{{JSON.stringify(bpStandardInfo, null, " ")}}</pre>
-      </section>
-      -->
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { mapGetters, mapState } from "vuex";
-import { fetchJson } from "@/utils/api.util";
+import { fetchJson, getBpStandardInfo } from "@/utils/api.util";
 import { validateBpInfo } from "@/utils/bp-json-validation.util";
 import { getTimeSince } from "@/utils/date.util";
+import { pathOr, split, isEmpty } from "ramda";
+
 @Component({
   computed: {
     ...mapGetters(["getProducerByOwner"]),
@@ -82,8 +103,7 @@ import { getTimeSince } from "@/utils/date.util";
   },
   methods: {
     getBpStandardInfo() {
-      console.log("url: " + (this as any).producer.url);
-      fetchJson("//" + (this as any).producer.url + "/bp.json")
+      getBpStandardInfo((this as any).producer.url)
         .then(validateBpInfo)
         .catch(error => {
           console.log(
@@ -92,10 +112,12 @@ import { getTimeSince } from "@/utils/date.util";
           console.log(error);
           return false;
         })
-        .then(_ => {
-          console.log("result " + _);
-          (this as any).bpStandardInfo = _;
+        .then(bpInfo => {
+          (this as any).bpStandardInfo = bpInfo;
         });
+    },
+    hasProp(path: string, data: any) {
+      return !isEmpty(pathOr('', split(".", path))(data));
     }
   },
   components: {}
