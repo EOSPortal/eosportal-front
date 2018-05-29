@@ -88,9 +88,7 @@ export default class Chains extends Vue {
 		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
 			return alert('Could not get chain info');
 
-		//TODO: Chain is validated, should be pushed to the backend
-		const submitted = await addChain(this.newChain).catch(err => console.log(err));
-		console.log('submitted', submitted);
+		await addChain(this.newChain).catch(err => console.log(err));
 	}
 }
 </script>

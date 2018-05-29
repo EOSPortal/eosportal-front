@@ -33,14 +33,14 @@
         voter!:any;
         account!:any;
         identity!:any;
+        network!:any;
         setNetwork!: (networkString:string | null) => void;
-        loadProducers!: () => void;
-        removeProducers!: () => void;
-        loadChainData!: () => void;
-        removeChainData!: () => void;
+        setProducers!: (producers:Array<any>) => void;
+        setChainData!: (chainData:any) => void;
+        setChainState!: (chainState:any) => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
-        producerTimer:NodeJS.Timer | null = null;
+        producerTimer:any = null;
 
         async created() {
             this.initialize();
@@ -49,9 +49,10 @@
         beforeDestroy(){
             this.logout();
             this.setNetwork(null);
-            this.removeChainData();
-            this.removeProducers();
+            this.setChainData(null);
+            this.setProducers([]);
             this.setVoter(null);
+            clearTimeout(this.producerTimer);
         }
 
         async initialize(){
@@ -111,10 +112,6 @@
 
             if(this.producers.filter(p => !p.hasOwnProperty('country_code')).length)
             	setTimeout(async () => await this.fillProducerData(), 5);
-        }
-
-        destroyed(){
-        	clearTimeout(this.producerTimer);
         }
 
         async regenVoter(){

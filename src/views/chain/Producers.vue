@@ -131,7 +131,7 @@ export default class Producers extends Vue {
 	}
 
 	countryCount(){
-		let locations = [];
+		let locations:Array<string> = [];
 		this.votedFor.map(owner => {
 			const producer = this.producers.filter(p => p.hasOwnProperty('country_code') && p.country_code && p.country_code.length && p.country_code !== '???')
 				.find(p => p.owner === owner);

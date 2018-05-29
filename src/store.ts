@@ -39,7 +39,7 @@ export default new Vuex.Store({
     },
     setProducers(state: any, producers: any[]) {
       state.producers = producers.map(producer => {
-        const stateProducer = state.producers.find(p => p.owner === producer.owner);
+        const stateProducer:any = state.producers.find((p:any) => p.owner === producer.owner);
         if(stateProducer) producer.country_code = stateProducer.country_code;
         return producer;
       });
