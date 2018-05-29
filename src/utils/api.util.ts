@@ -10,4 +10,4 @@ export const postChain = (url: string, chain: string) =>
         .then((res:any) => res.json());
 
 export const getBpStandardInfo = (bpUrl: string) =>
-	fetch(`//${config.domain}/bps/${bpUrl}`).then((res: any) => res.json());
+	fetch(`//${config.domain}/bps/${bpUrl}`).then((res: any) => res.json()).catch(error => {});
