@@ -14,6 +14,10 @@
 
             <!-- LINKS -->
             <section class="links">
+                <select @change="changeLanguage()" v-model="lang">
+                    <option selected value="en">English</option>
+                    <option value="es">Spanish</option>
+                </select>
                 <router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>
                 <router-link class="link" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
                 <section class="switcher" @click="toggleTheme()">
@@ -38,11 +42,16 @@
         }
     })
     export default class Producers extends Vue {
+        lang = "en";
     	theme!:string;
         setTheme!:(theme:string) => void;
 
         toggleTheme(){
             this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
+        }
+
+        changeLanguage(){
+          this.$i18n.locale = this.lang;
         }
     }
 </script>
