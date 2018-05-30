@@ -1,10 +1,10 @@
 <template>
     <section>
         <section class="contain chain-nav">
-            <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">Voting Power</router-link>
-            <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">Producers</router-link>
-            <router-link exact-active-class="active" tag="button" :class="{'full':!canShowScatterButton()}" :to="{ name: 'info' }" exact>Chain Info</router-link>
-            <button v-if="canShowScatterButton()" @click="loginWithScatter">Scatter</button>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">{{ $t('lang.producers') }}</router-link>
+            <router-link exact-active-class="active" tag="button" :class="{'full':!canShowScatterButton()}" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
+            <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ $t('lang.scatter') }}</button>
         </section>
         <hr/>
     </section>

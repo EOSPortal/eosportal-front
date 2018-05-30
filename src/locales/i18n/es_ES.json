@@ -1,0 +1,11 @@
+{
+  "chains": "Cadenas",
+  "help": "Ayuda",
+  "votingPower": "Poder de voto",
+  "producers": "Productores",
+  "chainInfo": "Información de la cadena",
+  "scatter": "Scatter",
+  "submitNewChain": "Enviar una nueva cadena",
+  "addChain": "Añadir cadena",
+  "selectChain": "Selecciona una cadena para empezar a <b>Votar</b>"
+}

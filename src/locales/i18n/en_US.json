@@ -1,0 +1,11 @@
+{
+  "chains": "Chains",
+  "help": "Help",
+  "votingPower": "Voting Power",
+  "producers": "Producers",
+  "chainInfo": "Chain Info",
+  "scatter": "Scatter",
+  "submitNewChain": "Submit a new Chain",
+  "addChain": "Add Chain",
+  "selectChain": "Select a chain to start <b>Voting</b>"
+}
