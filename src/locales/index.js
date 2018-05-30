@@ -19,7 +19,7 @@ Vue.use(VueI18n)
  * Export
  */
 export default new VueI18n({
-		locale: 'es',
+		locale: 'en',
 		messages: {
 				en: {
 						lang: en
