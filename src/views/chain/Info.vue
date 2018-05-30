@@ -74,8 +74,8 @@ import { split, path } from "ramda";
 export default class Info extends Vue {
   firstBlock: any;
   chainInfo: any;
-  allTimeChainHealth: number;
-  lastDayHelth: number;
+  allTimeChainHealth: number| undefined;
+  lastDayHelth: number | undefined;
 
   async created() {
     this.firstBlock = await getBlock(1);
