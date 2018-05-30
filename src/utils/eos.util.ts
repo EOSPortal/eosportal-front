@@ -81,3 +81,7 @@ export const delegateAll = async (accountName:string, token:string = 'EOS') => {
 	const half = `${division} ${token}`;
 	return await getScatterEos().delegatebw(accountName, accountName, half, half, 0);
 };
+
+export const getBlock = (blockNumber: number) => getEos().getBlock({block_num_or_id: blockNumber})
+
+export const getInfo = () => getEos().getInfo({})
