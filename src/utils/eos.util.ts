@@ -40,6 +40,10 @@ export const getChainState = () => {
 		.catch(() => null);
 };
 
+export const getSystemTokenStats = (token:string = 'EOS') => {
+	return getEos().getCurrencyStats('eosio.token', token)
+};
+
 export const getChainProducers = () => {
 	return getEosioTable('producers')
 		.then(prop('rows'))
@@ -73,11 +77,19 @@ export const voteFor = async (userAccountName:string, producersArray:Array<strin
 	return getScatterEos().voteproducer(userAccountName, '', sorted);
 };
 
-export const delegateAll = async (accountName:string, token:string = 'EOS') => {
+export const stakableTokenBalance = async (accountName:string, token:string = 'EOS') => {
 	const balances = await getBalances(accountName);
-	const stakableTokenBalance = balances.find((b:any) => b.split(' ')[1] === token) || `0.0000 ${token}`;
-	const decimals = stakableTokenBalance.replace(` ${token}`,'').split('.')[1].length;
-	const division = (stakableTokenBalance.replace(` ${token}`,'')/2).toFixed(decimals);
+	return balances.find((b:any) => b.split(' ')[1] === token) || `0.0000 ${token}`;
+}
+
+export const delegateAll = async (accountName:string, token:string = 'EOS') => {
+	const stakable = await stakableTokenBalance(accountName, token);
+	const decimals = stakable.replace(` ${token}`,'').split('.')[1].length;
+	const division = (stakable.replace(` ${token}`,'')/2).toFixed(decimals);
 	const half = `${division} ${token}`;
 	return await getScatterEos().delegatebw(accountName, accountName, half, half, 0);
 };
+
+export const delegate = async(accountName:string, net:string, cpu:string) => {
+	return await getScatterEos().delegatebw(accountName, accountName, net, cpu, 0);
+}
