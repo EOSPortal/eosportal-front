@@ -34,8 +34,8 @@
 				<tbody>
 					<tr v-for="producer in filteredProducers()">
 					<td>
-						<router-link tag="b" style="cursor:pointer;" :to="producer.owner" append>
-							<u>{{producerName(producer.url, producer.owner)}}</u>
+						<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
+							<b><u>{{producerName(producer.url, producer.owner)}}</u></b>
 						</router-link>
 					</td>
 					<td class="desktop-only">{{producer.owner}}</td>
