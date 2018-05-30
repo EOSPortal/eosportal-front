@@ -218,6 +218,10 @@ nav {
     transition: all 0.2s ease;
     transition-property: background, color, opacity;
 
+	&:not(:first-child) {
+		margin-left: -2px;
+	}
+
     &.mobile-full {
       @media (max-width:1024px){
         width:100%;
@@ -461,4 +465,3 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #50555C;
 }
-
