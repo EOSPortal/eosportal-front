@@ -27,10 +27,6 @@ h3 {
   text-align:center;
 }
 
-p {
-  font-size:16px;
-}
-
 .desktop-only {
   @media (max-width: 1024px) {
     display:none;
