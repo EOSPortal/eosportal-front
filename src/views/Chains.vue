@@ -6,16 +6,16 @@
 
 		<!--</section>-->
 		<section class="box contain w640 add-new-chain desktop-only">
-			<h2 class="center-text" style="width:100%;">Submit a new Chain</h2>
+			<h2 class="center-text" style="width:100%;">{{ $t('lang.submitNewChain') }}</h2>
 			<section class="input-container">
 				<input placeholder="http://chaindomain.com/" v-model="newChain" />
-				<button @click="addChain">Add Chain</button>
+				<button @click="addChain">{{ $t('lang.addChain') }}</button>
 			</section>
 
 		</section>
 		<hr class="desktop-only" />
 		<section class="contain" style="margin-top:20px;">
-			<h2>Select a chain to start <b>Voting</b></h2>
+			<h2 v-html="$t('lang.selectChain')"></h2>
 			<p>
 				You can vote for 30 producers on each chain for as many chains as you'd like.<br>
 				Once you select a chain you'll see a list of producers for that chain and will be able to vote for them.

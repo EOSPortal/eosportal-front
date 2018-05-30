@@ -14,8 +14,8 @@
 
             <!-- LINKS -->
             <section class="links">
-                <router-link class="link" :to="{ name: 'chains' }">Chains</router-link>
-                <router-link class="link" :to="{ name: 'help' }">Help</router-link>
+                <router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>
+                <router-link class="link" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
                 <section class="switcher" @click="toggleTheme()">
                     <figure class="switch" :class="{'selected':theme === 'dark'}"></figure>
                     <figure class="switch" :class="{'selected':theme === 'light'}"></figure>
