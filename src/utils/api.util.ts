@@ -9,5 +9,9 @@ export const postChain = (url: string, chain: string) =>
     fetch(url, { method: 'POST', body: "url=" + chain, headers:{ 'Content-Type': 'application/x-www-form-urlencoded' } })
         .then((res:any) => res.json());
 
-export const getBpStandardInfo = (bpUrl: string) =>
-	fetch(`//${config.domain}/bps/${bpUrl}`).then((res: any) => res.json()).catch(error => {});
+// Any bp urls which does not return within 500ms is considered to be "holding up the line".
+export const getBpStandardInfo = (bpUrl: string) => Promise.race([
+	new Promise((res, rej) => setTimeout(() => rej(false), 500)),
+	fetch(`//${config.domain}/bps/${bpUrl}`).then((res: any) => res.json()).catch(error => {})
+]);
+

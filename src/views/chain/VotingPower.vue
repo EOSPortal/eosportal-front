@@ -3,36 +3,33 @@
         <section class="contain">
             <h3>Delegating Bandwidth</h3>
             <p>
-                In order to vote you will need to stake some of your tokens for CPU and Bandwidth. This will allow you to use those
+                In order to vote you will need to stake some of your tokens for CPU and Net. This will allow you to use those
                 same staked tokens for voting as well.
             </p>
         </section>
         <hr/>
         <section class="contain" v-if="!scatter || !identity">
             <section v-if="!scatter">
-                <h2 class="flashy">It looks like you don't have <b>Scatter</b></h2>
-                <p>
+                <h1>It looks like you don't have <b>Scatter</b></h1>
+                <h2>
                     In order to vote using this portal you will have to first install Scatter.
-                    Visit the <a href=""><u class="flashy">Chrome Store</u></a> to grab the latest version.
                     <br><br>
-                    [IMAGES]
-                </p>
+                    <b>Visit the <router-link to="/help#setting-up-scatter"><u>Help</u></router-link> page to find out more about installing and setting up Scatter.</b>
+                </h2>
+                <!--<ul>-->
+                    <!--<li><a href="https://chrome.google.com/webstore/detail/ammjpmhgckkpcamddpolhchgomcojkle" target="_blank"><u>Chrome Store</u></a></li>-->
+                    <!--<li><a href="https://addons.mozilla.org/en-US/firefox/addon/scatter/" target="_blank"><u>Mozilla Addons</u></a></li>-->
+                <!--</ul>-->
             </section>
             <section v-if="scatter && !identity">
-                <h2 class="flashy">We need an <b>Identity</b> to use</h2>
-                <p>
+                <h1>We need an <b>Identity</b> to use</h1>
+                <h2>
                     Before you can use <b>EOS</b>Portal with Scatter you need to pair an Identity.
                     <br><br>
-                </p>
-                <section class="cta">
-                    <button @click="pair">Use Identity</button>
-                </section>
+                    Click the <b>"Scatter"</b> button on this chain's sub-menu.
+                </h2>
             </section>
         </section>
-        <section v-else class="contain">
-            Scatter ready
-        </section>
-        <hr/>
         <section class="contain" v-if="voter">
 
             <section class="stake-controller">
@@ -41,14 +38,18 @@
                     <h2>Power: {{toStake}} of {{totalBalance}} {{symbol}}</h2><br>
                 </figure>
 
+                <section class="radial-power">
+
+                </section>
+
                 <figure class="cpu">
-                    <input type="range" v-model="forBandwidth" max="100" min="0" />
-                    <h2>CPU: {{forBandwidth}}%</h2><br>
+                    <input type="range" v-model="forNet" max="100" min="0" />
+                    <h2>CPU: {{forNet}}%</h2><br>
                 </figure>
 
-                <figure class="bandwidth">
+                <figure class="net">
                     <input type="range" style="opacity:0.2;" :value="forCPU()" disabled />
-                    <h2>Bandwidth: {{forCPU()}}%</h2><br>
+                    <h2>Net: {{forCPU()}}%</h2><br>
                 </figure>
 
                 <button @click="delegateBW">Commit Stake</button>
@@ -91,10 +92,10 @@
         eosAccount:any = null;
         totalBalance:number | null = null;
         toStake:number = 0;
-        forBandwidth:number = 50;
+        forNet:number = 50;
 
         forCPU(){
-        	return 100 - this.forBandwidth;
+        	return 100 - this.forNet;
         }
 
         pair(){
@@ -110,7 +111,7 @@
 
                 this.eosAccount = await getAccount(this.voter.owner);
                 console.log(this.eosAccount);
-//                this.forBandwidth = this.voter.
+//                this.forNet = this.voter.
                 this.symbol = this.voter.unstaking.split(' ')[1];
                 this.toStake = this.voter.staked/10000;
                 this.totalBalance = (await stakableTokenBalance(this.voter.owner, this.symbol)
@@ -126,13 +127,13 @@
         }
 
         async delegateBW(){
-        	console.log('delegating', this.totalBalance, this.forBandwidth);
-        	const fix = n => n.toFixed(this.decimals.toString().length);
-        	const symbolWrap = n => `${n} ${this.symbol}`;
-            const net:number = fix(this.toStake * (this.forBandwidth/100));
-        	const cpu:number = fix(this.toStake - net);
+        	console.log('delegating', this.totalBalance, this.forNet);
+        	const fix = (n:number) => parseFloat(n.toFixed(this.decimals.toString().length));
+        	const symbolWrap = (n:number) => `${n} ${this.symbol}`;
+            const net:number = this.toStake * (this.forNet/100);
+        	const cpu:number = this.toStake - net;
         	console.log('netcpu', net, cpu);
-        	await delegate(this.voter.owner, symbolWrap(net), symbolWrap(cpu));
+        	await delegate(this.voter.owner, symbolWrap(fix(net)), symbolWrap(fix(cpu)));
         }
 
         @Watch('voter')

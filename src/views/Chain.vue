@@ -11,6 +11,8 @@
     import ChainNavigation from '@/components/ChainNavigation.vue';
     import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
     import {getChain} from "@/api";
+    import {getBpStandardInfo } from "@/utils/api.util";
+    import { validateBpInfo } from "@/utils/bp-json-validation.util";
 
     @Component({
         components: {
@@ -106,7 +108,10 @@
 						.then((res: any) => res.json()).catch(() => null);
                     producer.country_code = location ? location.country_code : '???';
 
-//                const bpJson = await fetch(producer.url.replace(/\/$/, "")+'/bp.json');
+                    await getBpStandardInfo(producer.url)
+                        .then(res => producer.bpStandardInfo = validateBpInfo(res))
+                        .catch(error => producer.bpStandardInfo = false);
+                    console.log('producer', producer);
                 }
             }
 

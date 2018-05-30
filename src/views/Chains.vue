@@ -88,7 +88,8 @@ export default class Chains extends Vue {
 		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
 			return alert('Could not get chain info');
 
-		await addChain(this.newChain).catch(err => console.log(err));
+		// TODO: Add feedback
+		await addChain(this.newChain);
 	}
 }
 </script>

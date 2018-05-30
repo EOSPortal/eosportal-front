@@ -7,14 +7,15 @@
 				use the EOS network, but also to vote on Producers.
 			</p>
 		</section>
-		<hr/>
-		<section class="contain">
+		<br><br>
+		<br><br>
+		<section class="contain" v-if="filteredProducers().length">
 
 			<section class="input-container big" style="margin-bottom:20px;">
 				<input class="alone" placeholder="Search..." v-model="searchTerms" />
 			</section>
 
-			<section class="chain-nav" ref="votebutton" v-if="account" style="margin-bottom:20px; width:100%; text-align:right;">
+			<section class="chain-nav" id="votebutton" v-if="account" style="margin-bottom:20px; width:100%; text-align:right;">
 				<button class="mobile-full" @click="vote">Vote For Selected Producers ( {{votedFor.length}} / 30 )</button>
 			</section>
 
@@ -49,6 +50,14 @@
 
 				</tbody>
 			</table>
+		</section>
+
+		<section class="contain" v-else>
+			<h1>This chain doesn't have any producers registered yet.</h1>
+			<h2>
+				Some chain launching groups decide to go through a validation period to make sure that the chain is stable and proper before allowing producers to be
+				registered and then voted on. Though this chain is live and you can see your balances, it is not ready to be voted on yet and accepts no transactions.
+			</h2>
 		</section>
 
 		<section class="floater" :class="{'show':floatMenu}">
@@ -149,11 +158,15 @@ export default class Producers extends Vue {
 	destroyed () { window.removeEventListener('scroll', this.handleScroll); }
 	mounted(){ setTimeout(() => this.handleScroll(), 50); }
 	handleScroll(){
-		if(!this.account) return false;
+		if(!this.account) return;
+
+		const votebutton = document.getElementById('votebutton');
+		if(!votebutton) return;
+
 		const scroll = window.scrollY;
-		/*this.floatMenu = !this.floatMenu
-			?this.$refs.votebutton.offsetTop-20 < scroll
-			:this.$refs.votebutton.offsetTop+20 < scroll; TODO: fix, build is broken */
+		this.floatMenu = !this.floatMenu
+			?votebutton.offsetTop-20 < scroll
+			:votebutton.offsetTop+20 < scroll;
 	}
 
 	@Watch("voter")
