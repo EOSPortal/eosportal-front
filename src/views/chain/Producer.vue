@@ -25,11 +25,11 @@
 			</tr>
       <tr>
         <th>Last Produced Block</th>
-				<td>{{(new Date(producer.last_produced_block_time*1000)).toLocaleDateString()}}</td>
+				<td>{{(new Date((producer.last_produced_block_time * 500 + 946684800000))).toLocaleDateString()}}</td>
       </tr>
       <tr>
 				<th>Active Since</th>
-				<td>{{new Date(producer.time_became_active * 1000).toLocaleDateString()}}</td>
+				<td>{{new Date(producer.time_became_active * 500 + 946684800000).toLocaleDateString()}}</td>
       </tr>
 		</table>
   </section>
