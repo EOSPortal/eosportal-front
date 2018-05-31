@@ -2,7 +2,7 @@
 <div class="container block-producer">
 	<section class="contain">
 		<h3>Block Producer</h3>
-		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;">
+		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;" v-if="producer != null">
 			<tr>
 				<th>Account</th>
 				<td>{{producer.owner}}</td>
@@ -36,14 +36,14 @@
   
   <hr/>
   
-  <section v-if="!bpStandardInfo" class="contain">
+  <section v-if="!loadingbBStandardInfo && !bpStandardInfo" class="contain">
     <small  role="alert">
       This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
     </small>
   </section>
   
-  <section v-if="bpStandardInfo" class="contain">
-    <small>The information below is provided by the Block Producer.</small>
+  <section v-if="!loadingbBStandardInfo && bpStandardInfo" class="contain">
+    <small>The information below is provided by the block producer.</small>
     <div>
       <img v-if="hasProp('org.branding.logo_256', bpStandardInfo)" class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
 		  <h3 v-if="hasProp('org.candidate_name', bpStandardInfo)">{{bpStandardInfo.org.candidate_name}}</h3>
@@ -103,12 +103,15 @@ import { pathOr, split, isEmpty } from "ramda";
   },
   methods: {
     getBpStandardInfo() {
+      if ((this as any).producer == null) {
+        return;
+      }
       let url = (this as any).producer.url;
       if (!url) {
         return;
       }
       getBpStandardInfo(url)
-      .then(validateBpInfo)
+        .then(validateBpInfo)
         .catch(error => {
           console.log(
             "this BP does not have a available validated bp.json at it's url root. Error: "
@@ -118,16 +121,23 @@ import { pathOr, split, isEmpty } from "ramda";
         })
         .then(bpInfo => {
           (this as any).bpStandardInfo = bpInfo;
+          (this as any).loadingbBStandardInfo = false;
         });
     },
     hasProp(path: string, data: any) {
-      return !isEmpty(pathOr('', split(".", path))(data));
+      return !isEmpty(pathOr("", split(".", path))(data));
+    }
+  },
+  watch: {
+    producer() {
+      (this as any).getBpStandardInfo();
     }
   },
   components: {}
 })
 export default class Producer extends Vue {
   bpStandardInfo: any = {};
+  loadingbBStandardInfo = true;
 
   mounted() {
     (this as any).getBpStandardInfo();
