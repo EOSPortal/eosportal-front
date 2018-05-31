@@ -46,11 +46,11 @@
 		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
 		   <tr>
 				<th>All time percentage of optimal number of blocks produced</th>
-				<td>{{allTimeChainHealth.toFixed(2)}} %</td>
+				<td>{{isNaN(allTimeChainHealth)? allTimeChainHealth: allTimeChainHealth.toFixed(2)}} %</td>
            </tr>
       		   <tr>
 				<th>Last day percentage of optimal number of blocks produced</th>
-				<td>{{lastDayHelth.toFixed(2)}} %</td>
+				<td>{{isNaN(lastDayHelth) ? lastDayHelth: lastDayHelth.toFixed(2)}} %</td>
            </tr>
 		</table>
 
@@ -75,7 +75,7 @@ export default class Info extends Vue {
   firstBlock: any = {};
   chainInfo: any = {};
   allTimeChainHealth: number | string = "loading...";
-  lastDayHelth: number | string= "loading...";
+  lastDayHelth: number | string = "loading...";
 
   async created() {
     await Promise.all([
