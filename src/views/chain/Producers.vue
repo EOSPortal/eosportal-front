@@ -34,21 +34,20 @@
 
 				<tbody>
 					<tr v-for="producer in filteredProducers()">
-					<td>
-						<img v-if="producer.bpStandardInfo" style="width:50px; height:50px;" :src="producer.bpStandardInfo.org.branding.logo_256" />
-						<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
-							<b><u>{{producerName(producer.url, producer.owner)}}</u></b>
-						</router-link>
-					</td>
-					<td class="desktop-only">{{producer.owner}}</td>
-						<td class="desktop-only">{{producer.country_code}}</td>
-					<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
-					<td class="desktop-only">{{producer.url}}</td>
-					<td>
-						<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">Vote</button>
-					</td>
-				</tr>
-
+						<td>
+							<img v-if="producerImage(producer)" class="bp-logo" :src="producerImage(producer)" />
+							<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
+								<b><u>{{producerName(producer.url, producer.owner)}}</u></b>
+							</router-link>
+						</td>
+						<td class="desktop-only">{{producer.owner}}</td>
+							<td class="desktop-only">{{producer.country_code}}</td>
+						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+						<td class="desktop-only">{{producer.url}}</td>
+						<td>
+							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">Vote</button>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</section>
@@ -101,6 +100,10 @@ export default class Producers extends Vue {
 
 	searchTerms: string = "";
 	votedFor: Array<string> = [];
+
+	producerImage(producer:any){
+		try { return producer.bpStandardInfo.org.branding.logo_256 } catch(e) { return false; };
+	}
 
 	filteredProducers() {
 		return this.orderedProducers.filter(
@@ -179,4 +182,10 @@ export default class Producers extends Vue {
 </script>
 
 <style lang="scss">
+	.bp-logo {
+		width:50px;
+		height:50px;
+		vertical-align: middle;
+		padding-right:20px;
+	}
 </style>

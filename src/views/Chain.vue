@@ -43,7 +43,7 @@
         setChainLoaded!: (loaded:boolean) => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
-        producerTimer:any = null;
+        producerTimer:NodeJS.Timer | any = null;
 
         async created() {
             this.initialize();
@@ -99,6 +99,7 @@
         }
 
         async fillProducerData(){
+            clearTimeout(this.producerTimer);
 //        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
 //        	if(producer){
 //                if(!producer.url.length) producer.bpStandardInfo = false;
@@ -117,7 +118,7 @@
 //            if(this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo')).length)
 //            	setTimeout(async () => await this.fillProducerData(), 5);
 //        	else
-//                setTimeout(() => this.recurseProducers(), 20000);
+            this.producerTimer = setTimeout(() => this.recurseProducers(), 20000);
         }
 
         async regenVoter(){
