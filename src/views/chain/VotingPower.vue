@@ -170,10 +170,12 @@
                 this.toStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
 
                 const tokens:string = await stakableTokenBalance(this.voter.account_name, this.symbol);
-                this.totalBalance =
-                          parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(' ')[0])
+                const delegated = this.voter.delegated_bandwidth ?
+                        parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(' ')[0])
                         + parseFloat(this.voter.delegated_bandwidth.net_weight.split(' ')[0])
-                        + parseFloat(tokens.split(' ')[0]);
+                        : 0;
+
+                this.totalBalance = delegated + parseFloat(tokens.split(' ')[0]);
 
                 const refunding:any = await refundRequest(this.voter.account_name);
                 if(refunding){
