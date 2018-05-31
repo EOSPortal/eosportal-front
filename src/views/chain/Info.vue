@@ -13,7 +13,7 @@
         <section class="contain">
 		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
 		   <tr>
-				<th>How many BPs are connected (producing or not)</th>
+				<th>Number of BPs connected (producing or not)</th>
 				<td>{{producers.length}}</td>
            </tr>
            <tr>
@@ -72,41 +72,48 @@ import { split, path } from "ramda";
   }
 })
 export default class Info extends Vue {
-  firstBlock: any;
-  chainInfo: any;
-  allTimeChainHealth: number| undefined;
-  lastDayHelth: number | undefined;
+  firstBlock: any = {};
+  chainInfo: any = {};
+  allTimeChainHealth: number | string = "loading...";
+  lastDayHelth: number | string= "loading...";
 
   async created() {
-    this.firstBlock = await getBlock(1);
-    this.chainInfo = await getInfo();
-    this.allTimeChainHealth = this.computeAllTimeChainHealth(
+    await Promise.all([
+      getBlock(1).then((block: any) => (this.firstBlock = block)),
+      getInfo().then((info: any) => (this.chainInfo = info))
+    ]);
+    this.computeAllTimeChainHealth(
       Date.now(),
       new Date(this.firstBlock.timestamp).getTime(),
       this.chainInfo.head_block_num
     );
-    this.lastDayHelth = await this.chainHealth(Date.now(), 86400000, this.chainInfo.head_block_num)
+    this.chainHealth(Date.now(), 86400000, this.chainInfo.head_block_num);
   }
 
   computeAllTimeChainHealth(
     timestampNowMs: number,
     timestampBootMs: number,
     numberOfBlocksProduces: number
-  ): number {
+  ): void {
     const optimalNumberOfBlocks = (timestampNowMs - timestampBootMs) / 500;
     const missedBlocks = optimalNumberOfBlocks - numberOfBlocksProduces;
-    return 100 / optimalNumberOfBlocks * numberOfBlocksProduces;
+    this.allTimeChainHealth =
+      100 / optimalNumberOfBlocks * numberOfBlocksProduces;
   }
 
-  async chainHealth(timestampNowMs: number, durationMs: number, headBlockNumber: number): Promise<number> {
-    const optimalNumberOfBlocks = durationMs / 500
-    const blockNumber = headBlockNumber-optimalNumberOfBlocks
-    const optimalTimeOnBlock = timestampNowMs-durationMs
+  async chainHealth(
+    timestampNowMs: number,
+    durationMs: number,
+    headBlockNumber: number
+  ): Promise<void> {
+    const optimalNumberOfBlocks = durationMs / 500;
+    const blockNumber = headBlockNumber - optimalNumberOfBlocks;
+    const optimalTimeOnBlock = timestampNowMs - durationMs;
 
     const block = await getBlock(blockNumber);
-    const timeOnBlock = new Date(block.timestamp).getTime()
-    const delay = optimalTimeOnBlock - timeOnBlock
-    return 100/durationMs*delay
+    const timeOnBlock = new Date(block.timestamp).getTime();
+    const delay = optimalTimeOnBlock - timeOnBlock;
+    this.lastDayHelth = 100 / durationMs * delay;
   }
 }
 </script>
