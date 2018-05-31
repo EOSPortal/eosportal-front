@@ -25,6 +25,29 @@ nav {
   padding:25px 45px;
   overflow: hidden;
 
+  select {
+    height: 48px;
+    line-height: 45px;
+    padding: 0 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 800;
+    display: inline-block;
+    margin-left: 8px;
+    background: transparent;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    -webkit-transition-property: background, color;
+    transition-property: background, color;
+
+    @media (max-width:1024px){
+      width:100%;
+      margin-bottom:10px;
+      margin-left:0;
+    }
+  }
+
   .logo {
     cursor: pointer;
     float:left;
@@ -56,6 +79,12 @@ nav {
 
       transition: all 0.2s ease;
       transition-property: background, color;
+
+      @media (max-width:1024px){
+        width:100%;
+        margin-bottom:10px;
+        margin-left:0 !important;
+      }
     }
   }
 

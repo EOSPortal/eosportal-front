@@ -22,6 +22,12 @@ $flashy: #4068cb;
     color: $dark-blue;
     border-bottom:1px solid $medium-gray;
 
+    select {
+      background: transparent;
+      color: #767676;
+      border: 2px solid #767676;
+    }
+
     .ham {
 
       hr {
