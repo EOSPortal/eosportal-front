@@ -17,6 +17,12 @@ h3 {
   margin-bottom:10px;
 }
 
+// Contextual texts
+.text-info { color: $info-color; }
+.text-success { color: $success-color; }
+.text-notice { color: $notice-color; }
+.text-danger { color: $danger-color; }
+
 .contain {
   max-width:1480px;
   padding:0 20px;
