@@ -45,8 +45,6 @@ to run the production version `python -m http.server` will start a server
 
 ## Dependencies
 
-* [bootstrap 4.0](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
-* [Vue-Bootstrap](https://bootstrap-vue.js.org/docs/)
 * [Ramda](https://ramdajs.com/)
 * [vue](https://vuejs.org/)
 * [vue class component](https://github.com/vuejs/vue-class-component)

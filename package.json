@@ -13,8 +13,6 @@
   },
   "dependencies": {
     "ajv": "^6.5.0",
-    "bootstrap": "^4.1.1",
-    "bootstrap-vue": "^2.0.0-rc.10",
     "bp-info-standard": "github:EOSPortal/bp-info-standard",
     "eosjs": "^13.0.1",
     "express": "^4.16.3",
