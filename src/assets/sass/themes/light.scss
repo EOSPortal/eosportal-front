@@ -1,26 +1,19 @@
 
-
-$light-gray: #f6f0f3;
-$medium-gray: #a8a8a8;
-$light-blue: #f6f0f3;
-$dark-blue: #767676;
-$flashy: #4068cb;
-
 .light {
-  //background: $light-gray;
-  color: $dark-blue;
+  background: $theme-light-background-color;
+  color: $theme-light-primary-color;
 
   .flashy {
-    color:$flashy;
+    color: $theme-light-highlight-color;
   }
 
   hr {
-    background: $medium-gray;
+    background: $theme-light-accent-color;
   }
 
   nav {
-    color: $dark-blue;
-    border-bottom:1px solid $medium-gray;
+    color: $theme-light-primary-color;
+    border-bottom:1px solid $theme-light-accent-color;
 
     select {
       background: transparent;
@@ -31,8 +24,8 @@ $flashy: #4068cb;
     .ham {
 
       hr {
-        background: $dark-blue;
-        box-shadow: 0 1px 2px $dark-blue, 0 -1px 2px $dark-blue;
+        background: $theme-light-primary-color;
+        box-shadow: 0 1px 2px $theme-light-primary-color, 0 -1px 2px $theme-light-primary-color;
       }
     }
 
@@ -47,26 +40,26 @@ $flashy: #4068cb;
 
       .link {
         background:transparent;
-        color: $dark-blue;
-        border: 2px solid $dark-blue;
+        color: $theme-light-primary-color;
+        border: 2px solid $theme-light-primary-color;
 
         &:hover, &.router-link-exact-active {
-          color: $light-gray;
-          background: $dark-blue;
+          color: $theme-light-background-color;
+          background: $theme-light-primary-color;
         }
       }
     }
   }
 
   .box {
-    border:2px solid $medium-gray;
+    border:2px solid $theme-light-accent-color;
   }
 
   .cta {
     button {
-      border:2px solid $dark-blue;
+      border:2px solid $theme-light-primary-color;
       background:transparent;
-      color: $dark-blue;
+      color: $theme-light-primary-color;
       opacity:1;
       box-shadow: 0 0 150px rgba(255,255,255,0.1);
 
@@ -74,13 +67,13 @@ $flashy: #4068cb;
       transition-property: background, color, opacity;
 
       &:hover {
-        background: $dark-blue;
-        color: $light-gray;
+        background: $theme-light-primary-color;
+        color: $theme-light-background-color;
       }
 
       &:active {
         background:transparent;
-        color: $dark-blue;
+        color: $theme-light-primary-color;
       }
     }
   }
@@ -88,19 +81,19 @@ $flashy: #4068cb;
   .chain-nav {
 
     button {
-      border:2px solid $dark-blue;
+      border:2px solid $theme-light-primary-color;
       background:transparent;
-      color: $dark-blue;
+      color: $theme-light-primary-color;
       opacity:1;
 
       &:hover, &.active {
-        background: $dark-blue;
-        color: $light-gray;
+        background: $theme-light-primary-color;
+        color: $theme-light-background-color;
       }
 
       &:active {
         background:transparent;
-        color: $dark-blue;
+        color: $theme-light-primary-color;
       }
     }
   }
@@ -111,49 +104,49 @@ $flashy: #4068cb;
   .input-container {
 
     input {
-      color: $dark-blue;
-      border:2px solid $medium-gray;
+      color: $theme-light-primary-color;
+      border:2px solid $theme-light-accent-color;
       background:transparent;
     }
 
     button {
-      background: $medium-gray;
-      color:$light-blue;
+      background: $theme-light-accent-color;
+      color:$theme-light-secondary-color;
     }
   }
 
   table {
 
     thead {
-      background: $medium-gray;
-      color:$light-blue;
+      background: $theme-light-accent-color;
+      color:$theme-light-secondary-color;
     }
 
     tbody {
 
       tr {
-        box-shadow:inset 0 -1px 0 $light-blue;
+        box-shadow:inset 0 -1px 0 $theme-light-secondary-color;
         background:transparent;
 
         td {
           button {
-            border:2px solid $dark-blue;
-            color: $dark-blue;
+            border:2px solid $theme-light-primary-color;
+            color: $theme-light-primary-color;
             background:transparent;
 
             &:hover {
-              background: $dark-blue;
-              color: $light-gray;
+              background: $theme-light-primary-color;
+              color: $theme-light-background-color;
             }
 
             &.active {
-              background: $flashy;
-              color: $light-gray;
-              border:2px solid $flashy;
+              background: $theme-light-highlight-color;
+              color: $theme-light-background-color;
+              border:2px solid $theme-light-highlight-color;
             }
 
             &:active {
-              color: $dark-blue;
+              color: $theme-light-primary-color;
               background:transparent;
             }
           }
