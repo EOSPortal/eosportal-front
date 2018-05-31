@@ -37,7 +37,7 @@
 						<td>
 							<img v-if="producerImage(producer)" class="bp-logo" :src="producerImage(producer)" />
 							<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
-								<b><u>{{producerName(producer.url, producer.owner)}}</u></b>
+								<b>{{producerName(producer.url, producer.owner)}}</b>
 							</router-link>
 						</td>
 						<td class="desktop-only">{{producer.owner}}</td>
