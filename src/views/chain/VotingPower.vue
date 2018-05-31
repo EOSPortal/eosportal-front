@@ -32,21 +32,83 @@
         </section>
         <section class="contain" v-if="voter">
 
+
+
             <section class="stake-controller">
                 <figure class="total-stake" style="max-width:400px;">
                     <input :max="totalBalance" min="1" v-model="toStake" type="range" />
                     <h2>Power: {{toStake}} of {{totalBalance}} <b>{{symbol}}</b></h2><br>
                 </figure>
 
-                <section class="chain-nav">
-                    <button @click="delegateBW">Commit Stake</button>
+                <section class="chain-nav" style="margin-top:0;">
+                    <button @click="delegateBW">Set Voting Power</button>
                 </section>
             </section>
-            <!--<p>-->
-                <!--{{percentage}}% ( {{voter}} )-->
-            <!--</p>-->
-            <!--<br>-->
-            <!--<input type="range" v-model="percentage" />-->
+
+            <hr />
+
+            <h3>EOS Account Details</h3>
+            <table class="account-details">
+                <tr>
+                    <th>Account</th>
+                    <td>
+                        <ul>
+                            <li>name: {{voter.account_name}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>CPU Limits</th>
+                    <td>
+                        <ul>
+                            <li v-for="key in Object.keys(voter.cpu_limit)">{{key}}: {{voter.cpu_limit[key]}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Net Limits</th>
+                    <td>
+                        <ul>
+                            <li v-for="key in Object.keys(voter.net_limit)">{{key}}: {{voter.net_limit[key]}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Delegated Bandwidth</th>
+                    <td>
+                        <ul>
+                            <li v-for="key in Object.keys(voter.delegated_bandwidth)">{{key}}: {{voter.delegated_bandwidth[key]}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>RAM</th>
+                    <td>
+                        <ul>
+                            <li>Quota - {{voter.ram_quota}}</li>
+                            <li>Usage - {{voter.ram_usage}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Total Resources</th>
+                    <td>
+                        <ul>
+                            <li v-for="key in Object.keys(voter.total_resources)">{{key}}: {{voter.total_resources[key]}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Voter Info</th>
+                    <td>
+                        <ul>
+                            <li v-for="key in Object.keys(voter.voter_info)">{{key}}: {{voter.voter_info[key]}}</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="height:200px;"></div>
 
 
         </section>
@@ -103,6 +165,7 @@
 
         async initialize(){
             if(this.voter) {
+            	console.log('voter', this.voter);
                 this.symbol = this.voter.total_resources.cpu_weight.split(' ')[1];
                 this.toStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
 
@@ -145,5 +208,8 @@
 </script>
 
 <style lang="scss">
-
+    .account-details {
+        text-align: left;
+        max-width:800px;
+    }
 </style>
