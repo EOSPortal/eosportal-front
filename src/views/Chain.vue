@@ -1,7 +1,7 @@
 <template>
     <section>
         <ChainNavigation />
-        <router-view></router-view>
+        <router-view v-if="initDone"></router-view>
     </section>
 </template>
 
@@ -44,9 +44,11 @@
         logout!:() => void;
         setVoter!:(voter:any) => void;
         producerTimer:NodeJS.Timer | any = null;
+        initDone = false;
 
         async created() {
-            this.initialize();
+            await this.initialize();
+            this.initDone = true;
         }
 
         beforeDestroy(){
