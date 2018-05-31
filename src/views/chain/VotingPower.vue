@@ -16,10 +16,6 @@
                     <br><br>
                     <b>Visit the <router-link to="/help#setting-up-scatter"><u>Help</u></router-link> page to find out more about installing and setting up Scatter.</b>
                 </h2>
-                <!--<ul>-->
-                    <!--<li><a href="https://chrome.google.com/webstore/detail/ammjpmhgckkpcamddpolhchgomcojkle" target="_blank"><u>Chrome Store</u></a></li>-->
-                    <!--<li><a href="https://addons.mozilla.org/en-US/firefox/addon/scatter/" target="_blank"><u>Mozilla Addons</u></a></li>-->
-                <!--</ul>-->
             </section>
             <section v-if="scatter && !identity">
                 <h1>We need an <b>Identity</b> to use</h1>
