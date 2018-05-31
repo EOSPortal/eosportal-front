@@ -73,7 +73,7 @@
                         </ul>
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="voter.delegated_bandwidth">
                     <th>Delegated Bandwidth</th>
                     <td>
                         <ul>
