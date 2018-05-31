@@ -3,8 +3,8 @@
         <section class="contain">
             <h3>Delegating Bandwidth</h3>
             <p>
-                In order to vote you will need to stake some of your tokens for CPU and Net. This will allow you to use those
-                same staked tokens for voting as well.
+                In order to vote you will need to delegate some of your tokens to yourself for <u>CPU and Net</u>.
+                This will allow you to use those same staked tokens for voting as well.
             </p>
         </section>
         <hr/>
@@ -26,33 +26,21 @@
                 <h2>
                     Before you can use <b>EOS</b>Portal with Scatter you need to pair an Identity.
                     <br><br>
-                    Click the <b>"Scatter"</b> button on this chain's sub-menu.
+                    Click the <b>"Pair Scatter"</b> button on this chain's sub-menu.
                 </h2>
             </section>
         </section>
         <section class="contain" v-if="voter">
 
             <section class="stake-controller">
-                <figure class="total-stake">
-                    <input :max="totalBalance" min="0" v-model="toStake" type="range" />
-                    <h2>Power: {{toStake}} of {{totalBalance}} {{symbol}}</h2><br>
+                <figure class="total-stake" style="max-width:400px;">
+                    <input :max="totalBalance" min="1" v-model="toStake" type="range" />
+                    <h2>Power: {{toStake}} of {{totalBalance}} <b>{{symbol}}</b></h2><br>
                 </figure>
 
-                <section class="radial-power">
-
+                <section class="chain-nav">
+                    <button @click="delegateBW">Commit Stake</button>
                 </section>
-
-                <figure class="cpu">
-                    <input type="range" v-model="forNet" max="100" min="0" />
-                    <h2>CPU: {{forNet}}%</h2><br>
-                </figure>
-
-                <figure class="net">
-                    <input type="range" style="opacity:0.2;" :value="forCPU()" disabled />
-                    <h2>Net: {{forCPU()}}%</h2><br>
-                </figure>
-
-                <button @click="delegateBW">Commit Stake</button>
             </section>
             <!--<p>-->
                 <!--{{percentage}}% ( {{voter}} )-->
@@ -68,7 +56,14 @@
 <script lang="ts">
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
-    import {getAccount, getSystemTokenStats, stakableTokenBalance, delegate} from "@/utils/eos.util";
+    import {
+        getAccount,
+        getSystemTokenStats,
+        stakableTokenBalance,
+        delegate,
+        undelegate,
+        refundRequest
+    } from "@/utils/eos.util";
 
 
     @Component({
@@ -80,16 +75,16 @@
             ...mapGetters(['identity']),
         },
         methods:{
-            ...mapActions(['login'])
+            ...mapActions(['login', 'setVoter'])
         }
     })
     export default class VotingPower extends Vue {
         login!:() => void;
+        setVoter!:(voter:any) => void;
         voter!:any;
         symbol:string = 'SYS';
         decimals:number = 0;
         percentage:number = 0;
-        eosAccount:any = null;
         totalBalance:number | null = null;
         toStake:number = 0;
         forNet:number = 50;
@@ -108,32 +103,38 @@
 
         async initialize(){
             if(this.voter) {
+                this.symbol = this.voter.total_resources.cpu_weight.split(' ')[1];
+                this.toStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
 
-                this.eosAccount = await getAccount(this.voter.owner);
-                console.log(this.eosAccount);
-//                this.forNet = this.voter.
-                this.symbol = this.voter.unstaking.split(' ')[1];
-                this.toStake = this.voter.staked/10000;
-                this.totalBalance = (await stakableTokenBalance(this.voter.owner, this.symbol)
-                    .then(bal => bal ? parseFloat(bal.split(' ')[0]) : 0)
-                    .catch(() => 0)) + (this.voter.staked / 10000);
+                const tokens:string = await stakableTokenBalance(this.voter.account_name, this.symbol);
+                this.totalBalance =
+                          parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(' ')[0])
+                        + parseFloat(this.voter.delegated_bandwidth.net_weight.split(' ')[0])
+                        + parseFloat(tokens.split(' ')[0]);
 
-                const stats = await getSystemTokenStats(this.symbol);
-                if(!stats) return false;
-                const zeroes = stats[this.symbol].max_supply.split(' ')[0].split('.')[1].length;
+                const refunding:any = await refundRequest(this.voter.account_name);
+                if(refunding){
+                this.totalBalance +=
+                          parseFloat(refunding.cpu_amount.split(' ')[0])
+                        + parseFloat(refunding.net_amount.split(' ')[0])
+                }
+
+                const zeroes = this.voter.total_resources.cpu_weight.split(' ')[0].split('.')[1].length;
                 this.decimals = parseInt(`1${[...Array(zeroes).keys()].map(() => 0).join('')}`);
 
             }
         }
 
         async delegateBW(){
-        	console.log('delegating', this.totalBalance, this.forNet);
         	const fix = (n:number) => parseFloat(n.toFixed(this.decimals.toString().length));
         	const symbolWrap = (n:number) => `${n} ${this.symbol}`;
-            const net:number = this.toStake * (this.forNet/100);
-        	const cpu:number = this.toStake - net;
-        	console.log('netcpu', net, cpu);
-        	await delegate(this.voter.owner, symbolWrap(fix(net)), symbolWrap(fix(cpu)));
+            const previousStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
+        	const delta = this.toStake - previousStake;
+        	if(delta === 0) return false;
+
+            if(delta > 0) await delegate(this.voter.account_name, symbolWrap(fix(delta/2)), symbolWrap(fix(delta/2)));
+            else await undelegate(this.voter.account_name, symbolWrap(fix(Math.abs(delta)/2)), symbolWrap(fix(Math.abs(delta)/2)));
+            await this.setVoter(await getAccount(this.voter.account_name));
         }
 
         @Watch('voter')

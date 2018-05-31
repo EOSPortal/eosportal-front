@@ -4,4 +4,4 @@ const validator = ajv();
 const schema = require("bp-info-standard/schema.json");
 
 export const validateBpInfo = (bpInfo: any) =>
-  validator.validate(schema, bpInfo) ? bpInfo : null;
+  validator.validate(schema, bpInfo) ? bpInfo : false;

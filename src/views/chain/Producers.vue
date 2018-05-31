@@ -35,6 +35,7 @@
 				<tbody>
 					<tr v-for="producer in filteredProducers()">
 					<td>
+						<img v-if="producer.bpStandardInfo" style="width:50px; height:50px;" :src="producer.bpStandardInfo.org.branding.logo_256" />
 						<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
 							<b><u>{{producerName(producer.url, producer.owner)}}</u></b>
 						</router-link>
@@ -52,7 +53,7 @@
 			</table>
 		</section>
 
-		<section class="contain" v-else>
+		<section class="contain" v-if="chainLoaded && !filteredProducers().length">
 			<h1>This chain doesn't have any producers registered yet.</h1>
 			<h2>
 				Some chain launching groups decide to go through a validation period to make sure that the chain is stable and proper before allowing producers to be
@@ -76,13 +77,13 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-import {delegateAll, getVoter, voteFor} from "@/utils/eos.util";
+import {delegateAll, getAccount, voteFor} from "@/utils/eos.util";
 
 @Component({
   components: {},
   props: {},
   computed: {
-    ...mapState(["producers", "chainState", "voter"]),
+    ...mapState(["producers", "chainState", "voter", "chainLoaded"]),
     ...mapGetters(["orderedProducers", "account"])
   },
   methods: {
@@ -124,7 +125,7 @@ export default class Producers extends Vue {
 	async vote() {
 //		const delegated = await delegateAll(this.account.name);
 		await voteFor(this.account.name, this.votedFor);
-		await this.setVoter(await getVoter(this.account.name))
+		await this.setVoter(await getAccount(this.account.name))
 	}
 
 	producerName(url: string, owner: string) {
@@ -153,7 +154,7 @@ export default class Producers extends Vue {
 
 	created () {
 		window.addEventListener('scroll', this.handleScroll);
-		if (this.voter) this.votedFor = JSON.parse(JSON.stringify(this.voter.producers))
+		if (this.voter) this.votedFor = JSON.parse(JSON.stringify(this.voter.voter_info.producers))
 	}
 	destroyed () { window.removeEventListener('scroll', this.handleScroll); }
 	mounted(){ setTimeout(() => this.handleScroll(), 50); }
@@ -172,7 +173,7 @@ export default class Producers extends Vue {
 	@Watch("voter")
 	voterChanged() {
 		if (this.voter)
-			this.votedFor = JSON.parse(JSON.stringify(this.voter.producers))
+			this.votedFor = JSON.parse(JSON.stringify(this.voter.voter_info.producers))
 	}
 }
 </script>

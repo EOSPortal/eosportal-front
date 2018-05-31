@@ -21,12 +21,17 @@ export default new Vuex.Store({
     // Scatter related
     network:null,
     scatter:null,
+
+    chainLoaded:false,
   },
 
 
   mutations: {
     setTheme(state:any, theme:string) {
       state.theme = theme;
+    },
+    setChainLoaded(state:any, loaded:boolean){
+      state.chainLoaded = loaded;
     },
     setChainData(state:any, chainData:any){
       state.chainData = chainData;
@@ -65,6 +70,9 @@ export default new Vuex.Store({
     },
     async getChains({ commit, state }) {
       commit("setChains", await getChains());
+    },
+    setChainLoaded({ commit, state }, loaded:boolean) {
+      commit("setChainLoaded", loaded);
     },
     setChainData({ commit, state }, chainData:any) {
       commit("setChainData", chainData);

@@ -4,7 +4,7 @@
   "votingPower": "Voting Power",
   "producers": "Producers",
   "chainInfo": "Chain Info",
-  "scatter": "Scatter",
+  "scatter": "Pair Scatter",
   "submitNewChain": "Submit a new Chain",
   "addChain": "Add Chain",
   "selectChain": "Select a chain to start <b>Voting</b>"

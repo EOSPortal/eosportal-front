@@ -11,7 +11,6 @@ export const getEos = () => {
 };
 
 export const getScatterEos = () => {
-	console.log('chaind', store.getters.chainId);
 	if(!store.state.scatter || !store.state.network) return null;
 	return store.state.scatter.eos( store.state.network, Eos.Localnet, {
 		chainId:store.getters.chainId
@@ -50,13 +49,6 @@ export const getChainProducers = () => {
 		.catch(() => []);
 };
 
-export const getVoter = async (accountName:string) => {
-	if(!accountName || !accountName.length) return null;
-	return getEosioTable('voters', 1, format.encodeName(accountName, false))
-		.then((res:any) => res.rows[0] || null)
-		.catch(null);
-};
-
 export const getAccount = async (accountName:string) => {
 	if(!accountName || !accountName.length) return null;
 	return getEos().getAccount(accountName);
@@ -93,3 +85,27 @@ export const delegateAll = async (accountName:string, token:string = 'EOS') => {
 export const delegate = async(accountName:string, net:string, cpu:string) => {
 	return await getScatterEos().delegatebw(accountName, accountName, net, cpu, 0);
 }
+
+export const undelegate = async(accountName:string, net:string, cpu:string) => {
+	return await getScatterEos().undelegatebw(accountName, accountName, net, cpu);
+}
+
+export const refundRequest = async(accountName:string) => {
+	return getEos().getTableRows({
+		json:true,
+		code:'eosio',
+		scope:format.encodeName(accountName, false),
+		table:'refunds',
+		limit:500
+	})
+		.then((res:any) => res.rows.length ? res.rows[0] : null)
+		.catch(() => null);
+}
+
+export const refund = async(accountName:string) => {
+	return await getScatterEos().refund(accountName);
+}
+
+export const getBlock = (blockNumber: number) => getEos().getBlock({block_num_or_id: blockNumber})
+
+export const getInfo = () => getEos().getInfo({})

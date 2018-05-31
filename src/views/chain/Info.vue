@@ -11,6 +11,48 @@
         </section>
         <hr/>
         <section class="contain">
+		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
+		   <tr>
+				<th>How many BPs are connected (producing or not)</th>
+				<td>{{producers.length}}</td>
+           </tr>
+           <tr>
+				<th>Booted Date</th>
+				<td>{{new Date(firstBlock.timestamp).toLocaleDateString()}}</td>
+           </tr>
+           <!--
+           <tr>
+				<th>Total Votes</th>
+				<td>{{parseInt(chainState.total_producer_vote_weight)}}</td>
+           </tr>
+           <tr>
+				<th>Voter Percentage</th>
+				<td>??</td>
+           </tr>
+           -->
+		   <tr>
+                <th>Total blocks produced</th>
+				<td>{{chainInfo.head_block_num}}</td>
+		   </tr>
+		</table>
+
+        </section>
+
+
+        <hr/>
+         <section class="contain">
+         <h3>Chain Helth</h3>
+
+		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
+		   <tr>
+				<th>All time percentage of optimal number of blocks produced</th>
+				<td>{{allTimeChainHealth.toFixed(2)}} %</td>
+           </tr>
+      		   <tr>
+				<th>Last day percentage of optimal number of blocks produced</th>
+				<td>{{lastDayHelth.toFixed(2)}} %</td>
+           </tr>
+		</table>
 
         </section>
 
@@ -18,18 +60,56 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import { mapState } from "vuex";
+import { Component, Vue } from "vue-property-decorator";
+import { mapState } from "vuex";
+import { getBlock, getInfo } from "@/utils/eos.util";
+import { split, path } from "ramda";
 
-    @Component({
-        components: {
+@Component({
+  components: {},
+  computed: {
+    ...mapState(["producers", "chainState", "chainData"])
+  }
+})
+export default class Info extends Vue {
+  firstBlock: any;
+  chainInfo: any;
+  allTimeChainHealth: number| undefined;
+  lastDayHelth: number | undefined;
 
-        },
-        computed: mapState([""]),
-    })
-    export default class Info extends Vue {}
+  async created() {
+    this.firstBlock = await getBlock(1);
+    this.chainInfo = await getInfo();
+    this.allTimeChainHealth = this.computeAllTimeChainHealth(
+      Date.now(),
+      new Date(this.firstBlock.timestamp).getTime(),
+      this.chainInfo.head_block_num
+    );
+    this.lastDayHelth = await this.chainHealth(Date.now(), 86400000, this.chainInfo.head_block_num)
+  }
+
+  computeAllTimeChainHealth(
+    timestampNowMs: number,
+    timestampBootMs: number,
+    numberOfBlocksProduces: number
+  ): number {
+    const optimalNumberOfBlocks = (timestampNowMs - timestampBootMs) / 500;
+    const missedBlocks = optimalNumberOfBlocks - numberOfBlocksProduces;
+    return 100 / optimalNumberOfBlocks * numberOfBlocksProduces;
+  }
+
+  async chainHealth(timestampNowMs: number, durationMs: number, headBlockNumber: number): Promise<number> {
+    const optimalNumberOfBlocks = durationMs / 500
+    const blockNumber = headBlockNumber-optimalNumberOfBlocks
+    const optimalTimeOnBlock = timestampNowMs-durationMs
+
+    const block = await getBlock(blockNumber);
+    const timeOnBlock = new Date(block.timestamp).getTime()
+    const delay = optimalTimeOnBlock - timeOnBlock
+    return 100/durationMs*delay
+  }
+}
 </script>
 
 <style lang="scss">
-
 </style>

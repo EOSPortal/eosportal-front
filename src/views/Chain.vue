@@ -9,7 +9,7 @@
     import { Component, Vue, Watch } from "vue-property-decorator";
     import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
     import ChainNavigation from '@/components/ChainNavigation.vue';
-    import {getAccount, getChainProducers, getChainState, getVoter} from "@/utils/eos.util";
+    import {getAccount, getChainProducers, getChainState} from "@/utils/eos.util";
     import {getChain} from "@/api";
     import {getBpStandardInfo } from "@/utils/api.util";
     import { validateBpInfo } from "@/utils/bp-json-validation.util";
@@ -24,7 +24,7 @@
             ...mapGetters(['account', 'identity'])
         },
         methods: {
-            ...mapActions(["setNetwork", "setProducers", "setChainData", "setChainState", "logout", "setVoter"])
+            ...mapActions(["setNetwork", "setProducers", "setChainData", "setChainState", "logout", "setVoter", "setChainLoaded"])
         }
     })
 
@@ -40,6 +40,7 @@
         setProducers!: (producers:Array<any>) => void;
         setChainData!: (chainData:any) => void;
         setChainState!: (chainState:any) => void;
+        setChainLoaded!: (loaded:boolean) => void;
         logout!:() => void;
         setVoter!:(voter:any) => void;
         producerTimer:any = null;
@@ -49,6 +50,7 @@
         }
 
         beforeDestroy(){
+            this.setChainLoaded(false);
             this.logout();
             this.setNetwork(null);
             this.setChainData(null);
@@ -63,6 +65,7 @@
             this.setChainState(await getChainState());
             await this.regenVoter();
             await this.recurseProducers();
+            this.setChainLoaded(true);
         }
 
         async bindNetwork(chainData:any|null = null){
@@ -91,37 +94,35 @@
         }
 
         async recurseProducers(){
-        	if(!this.producerTimer) clearTimeout(this.producerTimer);
             await this.setProducers(await getChainProducers());
             await this.fillProducerData();
-            this.producerTimer = setTimeout(() => this.recurseProducers(), 5000);
         }
 
         async fillProducerData(){
-        	const producer = this.producers.filter(p => !p.hasOwnProperty('country_code'))[0] || null;
-        	if(producer){
-                if(!producer.url.length) { producer.country_code = '???';  producer.json = {}; }
-                else {
-                    //TODO: Switch to use BP json's location
-                    const url = producer.url.replace('http://', '').replace('https://', '').split('/')[0];
-                    const location = await fetch(`http://ip.kitpes.com/?id=${Math.round(Math.random() * 10000+1)}&ip=${url}`)
-						.then((res: any) => res.json()).catch(() => null);
-                    producer.country_code = location ? location.country_code : '???';
-
-                    await getBpStandardInfo(producer.url)
-                        .then(res => producer.bpStandardInfo = validateBpInfo(res))
-                        .catch(error => producer.bpStandardInfo = false);
-                    console.log('producer', producer);
-                }
-            }
-
-            if(this.producers.filter(p => !p.hasOwnProperty('country_code')).length)
-            	setTimeout(async () => await this.fillProducerData(), 5);
+//        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
+//        	if(producer){
+//                if(!producer.url.length) producer.bpStandardInfo = false;
+//                else {
+//                    await getBpStandardInfo(producer.url)
+//                        .then(res => producer.bpStandardInfo = validateBpInfo(res))
+//                        .catch(error => producer.bpStandardInfo = false);
+//
+//                    if(producer.bpStandardInfo)
+//                    	producer.country_code = producer.bpStandardInfo.org.location.country;
+//
+//                    console.log('producer', producer.bpStandardInfo);
+//                }
+//            }
+//
+//            if(this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo')).length)
+//            	setTimeout(async () => await this.fillProducerData(), 5);
+//        	else
+//                setTimeout(() => this.recurseProducers(), 20000);
         }
 
         async regenVoter(){
             if(this.account) setTimeout(async () => {
-                await this.setVoter(await getVoter(this.account.name))
+                await this.setVoter(await getAccount(this.account.name))
             },1);
         }
 
