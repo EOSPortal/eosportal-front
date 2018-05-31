@@ -13,6 +13,7 @@
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
     import {mapActions, mapGetters, mapState} from "vuex";
+    import {getAccount} from "@/utils/eos.util";
     /**
      * Bootstrap-vue components
      */
@@ -44,12 +45,16 @@
             return false;
         }
 
-    	loginWithScatter(){
-    		//TODO: Forward to Scatter help
+    	async loginWithScatter(){
             // User does not have Scatter.
-    		if(!this.scatter) return false;
+    		if(!this.scatter)
+                return this.$router.push('/help#setting-up-scatter');
 
-    		this.login();
+    		await this.login();
+            if(!this.account || !await getAccount(this.account.name)) {
+                alert("There was an issue finding this account on the network. Perhaps it doesn't exist on this chain.");
+                this.$router.push('/');
+            }
         }
     }
 </script>

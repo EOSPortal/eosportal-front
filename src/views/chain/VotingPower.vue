@@ -137,11 +137,10 @@
             ...mapGetters(['identity']),
         },
         methods:{
-            ...mapActions(['login', 'setVoter'])
+            ...mapActions(['setVoter'])
         }
     })
     export default class VotingPower extends Vue {
-        login!:() => void;
         setVoter!:(voter:any) => void;
         voter!:any;
         symbol:string = 'SYS';
@@ -153,10 +152,6 @@
 
         forCPU(){
         	return 100 - this.forNet;
-        }
-
-        pair(){
-            this.login();
         }
 
         mounted(){

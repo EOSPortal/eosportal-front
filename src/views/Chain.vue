@@ -13,6 +13,7 @@
     import {getChain} from "@/api";
     import {getBpStandardInfo } from "@/utils/api.util";
     import { validateBpInfo } from "@/utils/bp-json-validation.util";
+    import * as timezones from '@/timezones/timezones.json'
 
     @Component({
         components: {
@@ -102,6 +103,12 @@
 
         async fillProducerData(){
             clearTimeout(this.producerTimer);
+
+            // Setting location from timezone for now.
+            this.producers.map((producer:any) => {
+            	const zone:any = Object.keys((timezones as any).timezones).find((key:any) => timezones.timezones[key].utcOffset === producer.location);
+            	producer.country_code = zone ? (timezones as any).timezones[zone].name : '';
+            })
 //        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
 //        	if(producer){
 //                if(!producer.url.length) producer.bpStandardInfo = false;
