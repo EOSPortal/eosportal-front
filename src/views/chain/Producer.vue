@@ -37,33 +37,31 @@
   <hr/>
   
   <section v-if="!loadingbBStandardInfo && !bpStandardInfo" class="contain">
-    <small  role="alert">
-	    This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard" target="_blank">EOS BP Information Standard</a>. Therefor, only the data from chain is available.
-    </small>
+    <small  role="alert" v-html="$t('lang.notStandard')"></small>
   </section>
   
   <section v-if="!loadingbBStandardInfo && bpStandardInfo" class="contain">
-    <small>The information below is provided by the block producer.</small>
+    <small>{{ $t('lang.informationProvidedBp') }}</small>
     <div>
       <img v-if="hasProp('org.branding.logo_256', bpStandardInfo)" class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
 		  <h3 v-if="hasProp('org.candidate_name', bpStandardInfo)">{{bpStandardInfo.org.candidate_name}}</h3>
     </div>
-    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
-    <h5>Location</h5>
+    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">{{ $t('lang.email') }}</a>
+    <h5>{{ $t('lang.location') }}</h5>
     <p v-if="hasProp('org.location.name', bpStandardInfo)">
       {{bpStandardInfo.org.location.name}}, {{bpStandardInfo.org.location.country}}
     </p>
     <p v-if="!hasProp('org.location.name', bpStandardInfo)">
-      Unspecified location.
+	    {{ $t('lang.noLocation') }}
     </p>
-    <h5>Code of Conduct</h5>
+    <h5>{{ $t('lang.codeConduct') }}</h5>
     <p v-if="hasProp('org.code_of_conduct', bpStandardInfo)">
       {{bpStandardInfo.org.code_of_conduct}}
     </p>
     <p v-if="!hasProp('org.code_of_conduct', bpStandardInfo)">
-      Unspecified code of conduct.
+	    {{ $t('lang.noConduct') }}
     </p>
-    <h5>Social</h5>
+    <h5>{{ $t('lang.social') }}</h5>
     <ul>
       <li v-if="hasProp('org.social.steemit', bpStandardInfo)"><a :href="'https://steemit.com/@' + bpStandardInfo.org.social.steemit" target="_blank">Steemit</a></li>
       <li v-if="hasProp('org.social.twitter', bpStandardInfo)"><a :href="'https://twitter.com/' + bpStandardInfo.org.social.twitter" target="_blank">Twitter</a></li>
