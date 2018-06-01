@@ -13,7 +13,7 @@
   "addedDate": “Legg til Dato”,
   "select": “Velg”,
   "noChains": “Ingen nettverk som er online nå!",
-  "noChainsInfo": “Nå blokkjedene starter å boote og legger seg til, vil du kunne se deres statistikk og stemme på dem.",
+  "noChainsInfo": “Når blokkjedene starter å boote opp og legger seg til, vil du kunne se deres statistikk og stemme på dem.",
   "chainInformation": "Chain Information",
   "bpsConnected": "Antall BPs koblet til (aktive og ikke)”,
   "bootedDate": "Boot Dato”,
