@@ -13,10 +13,7 @@
 		<section v-if="chains.length">
 			<section class="contain" style="margin-top:20px;">
 				<h2 v-html="$t('lang.selectChain')"></h2>
-				<p>
-					You can vote for 30 producers on each chain for as many chains as you'd like.<br>
-					Once you select a chain you'll see a list of producers for that chain and will be able to vote for them.
-				</p>
+				<p v-html="$t('lang.selectChainHelp')"></p>
 			</section>
 			<hr/>
 
@@ -24,9 +21,9 @@
 				<table>
 					<thead>
 					<tr>
-						<th>Chain ID</th>
-						<th class="desktop-only">Producers</th>
-						<th class="desktop-only">Added Date</th>
+						<th>{{ $t('lang.chainId') }}</th>
+						<th class="desktop-only">{{ $t('lang.producers') }}</th>
+						<th class="desktop-only">{{ $t('lang.addedDate') }}</th>
 						<th></th>
 					</tr>
 					</thead>
@@ -38,7 +35,7 @@
 						<td class="desktop-only">{{getProducerCount(chain)}}</td>
 						<td class="desktop-only">{{new Date(chain.createdAt*1000).toLocaleDateString()}}</td>
 						<td><router-link :to="'chain/'+chain.id.toString()" tag="a">
-							<button>Select</button>
+							<button>{{ $t('lang.select') }}</button>
 						</router-link></td>
 					</tr>
 					</tbody>
@@ -48,8 +45,8 @@
 
 
 		<section class="contain" v-else>
-			<h1>There are no chains live yet!</h1>
-			<h2>Once chains start to boot and add themselves here you will be able to view their stats and vote on them.</h2>
+			<h1>{{ $t('lang.noChains') }}</h1>
+			<h2>{{ $t('lang.noChainsInfo') }}</h2>
 		</section>
     </section>
 </template>

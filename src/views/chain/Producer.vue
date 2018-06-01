@@ -1,34 +1,34 @@
 <template>
 <div class="container block-producer">
 	<section class="contain">
-		<h3>Block Producer</h3>
+		<h3>{{ $t('lang.blockProducer') }}</h3>
 		<table class="table table-striped table-hover" style="text-align: left; max-width:400px;" v-if="producer != null">
 			<tr>
-				<th>Account</th>
+				<th>{{ $t('lang.account') }}</th>
 				<td>{{producer.owner}}</td>
       </tr>
       <tr>
-				<th>URL</th>
+				<th>{{ $t('lang.url') }}</th>
 				<td><a :href="'//' + producer.url" target="_blank">{{producer.url}}</a></td>
       </tr>
       <tr>
-				<th>Location</th>
+				<th>{{ $t('lang.location') }}</th>
 				<td>{{producer.location}}</td>
       </tr>
       <tr>
-				<th>Total Votes %</th>
+				<th>{{ $t('lang.totalVotes') }} %</th>
 				<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
       </tr>
 			<tr>
-        <th>Number of Votes</th>
+        <th>{{ $t('lang.numberOfVotes') }}</th>
 				<td>{{parseInt(producer.total_votes)}}</td>
 			</tr>
       <tr>
-        <th>Last Produced Block</th>
+        <th>{{ $t('lang.lastProducedBlock') }}</th>
 				<td>{{(new Date((producer.last_produced_block_time * 500 + 946684800000))).toLocaleDateString()}}</td>
       </tr>
       <tr>
-				<th>Active Since</th>
+				<th>{{ $t('lang.activeSince') }}</th>
 				<td>{{new Date(producer.time_became_active * 500 + 946684800000).toLocaleDateString()}}</td>
       </tr>
 		</table>
@@ -37,33 +37,31 @@
   <hr/>
   
   <section v-if="!loadingbBStandardInfo && !bpStandardInfo" class="contain">
-    <small  role="alert">
-      This block producer is not following the standard <a href="https://github.com/EOSPortal/bp-info-standard">EOS BP Information Standard. Therefor, only the data from chain is avalible.</a>
-    </small>
+    <small  role="alert" v-html="$t('lang.notStandard')"></small>
   </section>
   
   <section v-if="!loadingbBStandardInfo && bpStandardInfo" class="contain">
-    <small>The information below is provided by the block producer.</small>
+    <small>{{ $t('lang.informationProvidedBp') }}</small>
     <div>
       <img v-if="hasProp('org.branding.logo_256', bpStandardInfo)" class="logo" alt="" :src="bpStandardInfo.org.branding.logo_256"/>
 		  <h3 v-if="hasProp('org.candidate_name', bpStandardInfo)">{{bpStandardInfo.org.candidate_name}}</h3>
     </div>
-    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">Email</a>
-    <h5>Location</h5>
+    <a v-if="hasProp('org.email', bpStandardInfo)" :href="'mailto:' + bpStandardInfo.org.email">{{ $t('lang.email') }}</a>
+    <h5>{{ $t('lang.location') }}</h5>
     <p v-if="hasProp('org.location.name', bpStandardInfo)">
       {{bpStandardInfo.org.location.name}}, {{bpStandardInfo.org.location.country}}
     </p>
     <p v-if="!hasProp('org.location.name', bpStandardInfo)">
-      Unspecified location.
+	    {{ $t('lang.noLocation') }}
     </p>
-    <h5>Code of Conduct</h5>
+    <h5>{{ $t('lang.codeConduct') }}</h5>
     <p v-if="hasProp('org.code_of_conduct', bpStandardInfo)">
       {{bpStandardInfo.org.code_of_conduct}}
     </p>
     <p v-if="!hasProp('org.code_of_conduct', bpStandardInfo)">
-      Unspecified code of conduct.
+	    {{ $t('lang.noConduct') }}
     </p>
-    <h5>Social</h5>
+    <h5>{{ $t('lang.social') }}</h5>
     <ul>
       <li v-if="hasProp('org.social.steemit', bpStandardInfo)"><a :href="'https://steemit.com/@' + bpStandardInfo.org.social.steemit" target="_blank">Steemit</a></li>
       <li v-if="hasProp('org.social.twitter', bpStandardInfo)"><a :href="'https://twitter.com/' + bpStandardInfo.org.social.twitter" target="_blank">Twitter</a></li>
