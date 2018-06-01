@@ -16,7 +16,8 @@
             <section class="links">
                 <select @change="changeLanguage()" v-model="lang">
                     <option selected value="en">English</option>
-                    <option value="es">Spanish</option>
+                    <option value="es">Español</option>
+                    <option value="cn">中文</option>
                 </select>
                 <router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>
                 <router-link class="link" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
@@ -59,4 +60,3 @@
 <style lang="scss">
 
 </style>
-
