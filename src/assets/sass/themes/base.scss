@@ -462,3 +462,49 @@ input[type=range]:focus::-ms-fill-upper {
   background: #50555C;
 }
 
+.help {
+  .contain {
+    &:first-child {
+      margin:40px auto;
+    }
+
+    &:not(:first-child){
+      margin:20px auto 40px;
+    }
+
+    .contain {
+      padding:20px;
+    }
+  }
+
+  ul {
+    li {
+      margin-bottom:5px;
+
+      &.head {
+        font-size:24px;
+        font-weight:800;
+        text-decoration: underline;
+
+        &:not(:first-child){
+          margin-top:20px;
+        }
+      }
+
+      &.link {
+        font-size:18px;
+        font-weight:500;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  hr {
+    margin-bottom:50px;
+    margin-top:50px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}

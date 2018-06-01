@@ -15,7 +15,7 @@
                     <li class="link"><a href="#selecting-a-chain">Selecting a Chain</a></li>
                     <li class="link"><a href="#setting-up-scatter">Setting up Scatter</a></li>
                     <li class="link"><a href="#choosing-producers">Choosing Producers</a></li>
-                    <li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>
+                    <!--<li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>-->
                 </ul>
 
 
@@ -40,7 +40,7 @@
             <section class="contain">
                 <h1 id="what-is-voting">What is voting?</h1>
                 <p>
-                    The EOSIO software utilizes Delegated-proof-of-stake or DPoS as its consensus model. In this model 21 “block producers” are
+                    The EOSIO software utilizes Delegated-proof-of-stake or DPoS as its consensus model. In this model 21 "Block Producers" are
                     elected by token holders to validate transactions and secure the EOS public blockchain. In this way each token holder is a participant in the governance of the blockchain.
                 </p>
             </section>
@@ -55,26 +55,25 @@
             <section class="contain">
                 <h1 id="what-to-know">What should I know before voting?</h1>
                 <section class="contain">
-                    <b>Your tokens will be “staked” for at least three days.</b><br><br>
-                    To vote it means “staking” your EOS tokens. “Staking” is the word used to describe locking-up your tokens for a specific purpose on the EOS network.
-                    Whether it be for securing bandwidth, purchasing RAM, or in this case voting, you will not be able to reclaim your tokens for at least three days from the moment you stake them.
-                    After three days you will be able to request they be unstaked and the full amount of EOS tokens will be returned you.
+                    <b>Your tokens will be "staked" for at least three days.</b><br><br>
+                    To vote means staking your EOS tokens. Staking is the word used to describe locking-up your tokens for a specific purpose on the EOS network.
+                    You will not be able to reclaim your tokens for at least three days from the moment you stake them.
                 </section>
                 <section class="contain">
                     <b>1 Token = up to 30 Votes</b><br><br>
                     You can vote for up to 30 block producers with each token that you own. If you own 10 EOS, then you can vote for 30 block producers 10 times each.
                     You cannot vote for a block producer more than once with each token. Why 30 votes?
-                    Read one explanation here(https://medium.com/@thomas.cox_39839/why-30-stake-weighted-approval-votes-for-eosio-1402b994bf20)
+                    <a href="https://medium.com/@thomas.cox_39839/why-30-stake-weighted-approval-votes-for-eosio-1402b994bf20" target="_blank"><u>Read one explanation here</u></a>
                 </section>
                 <section class="contain">
-                    <b>You can’t “set-it and forget-it”</b><br><br>
+                    <b>You can't "set-it and forget-it"</b><br><br>
                     Your vote decays in weight steadily over time until it is phased out 2 years from the date you originally staked it.
-                    This is to prevent “set-it and forget-it” situations where Block Producers can become complacent from vote totals.
+                    This is to prevent "set-it and forget-it" situations where Block Producers can become complacent from vote totals.
                 </section>
                 <section class="contain">
                     <b>The Golden Rule of Voting</b><br><br>
                     In the EOS constitution sending or receiving anything of value in exchange for a vote is prohibited.
-                    If the criteria for casting a vote is “who paid me the most” than it may not also be “I’m voting for this Block Producer because they are good”.
+                    If the criteria for casting a vote is "who paid me the most" than it may not also be "I'm voting for this Block Producer because they are good".
                     Thoughtful voting leads to prosperity for all.
                 </section>
             </section>
@@ -85,9 +84,6 @@
         <!-- USER VOTING -->
         <section class="contain">
             <h1 id="voting">Voting</h1>
-            <p>
-
-            </p>
 
             <section class="contain">
                 <h1 id="selecting-a-chain">Selecting a Chain</h1>
@@ -95,6 +91,24 @@
                     This voting portal supports any attempted chain launch. In most cases the Block Producers you're already voting for will have given you a link to the chain they are producing for.
                     If that is not the case however, you can see the amount of producers on the chain and within the chain itself you can search for your beloved block producer candidates.
                 </p>
+                <br>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chain ID</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <td><b>id:4</b> - a628a5a6123d6ed...</td>
+                            <td><button>Select</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </section>
 
 
@@ -274,22 +288,17 @@
 
                     <table>
                         <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th></th>
+                            </tr>
                         </thead>
 
-
                         <tbody>
-                        <tr>
-                            <td>
-                                <b><u>BlockProducerName</u></b>
-                            </td>
-                            <td>
-                                <button>Vote</button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><b><u>BlockProducerName</u></b></td>
+                                <td><button>Vote</button></td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -312,24 +321,18 @@
 
 
 
-            <section class="contain">
-                <h1 id="understanding-voting-power">Understanding Voting Power</h1>
-                <p>
-                    Your voting power is based on the bandwidth ( CPU + Net ) you have delegated to yourself, along with any bandwidth others have delegated to you.
-                </p>
-                <section class="contain">
-                    <b>What is CPU?</b><br><br>
-
-                </section>
-                <section class="contain">
-                    <b>What is Net?</b><br><br>
-
-                </section>
-                <section class="contain">
-                    <b>How is my total bandwidth divided?</b><br><br>
-
-                </section>
-            </section>
+            <!--<section class="contain">-->
+                <!--<h1 id="understanding-voting-power">Understanding Voting Power</h1>-->
+                <!--<p>-->
+                    <!--Your voting power is based on the bandwidth ( CPU + Net ) you have delegated to yourself, along with any bandwidth others have delegated to you.-->
+                    <!--Without bandwidth on the network/chain you can not use the network. Think of it like paying your ISP for bandwidth, but only paying once and you have the ability to -->
+                    <!--retract your money when you no longer need the bandwidth.-->
+                <!--</p>-->
+                <!--<section class="contain">-->
+                    <!--<b>How is my total bandwidth divided?</b><br><br>-->
+                    <!---->
+                <!--</section>-->
+            <!--</section>-->
 
 
 
@@ -347,8 +350,9 @@
             <section class="contain">
                 <h1 id="modifying-meta-data">Modifying your Meta-Data</h1>
                 <p>
-                    The EOSIO software utilizes Delegated-proof-of-stake or DPoS as its consensus model. In this model 21 “block producers” are
-                    elected by token holders to validate transactions and secure the EOS public blockchain. In this way each token holder is a participant in the governance of the blockchain.
+                    This voting portal uses a <b>bp.json</b> file to collect meta-data about producers.
+                    <br><br>
+                    To find out more about how to set it up for your producer visit our clone of the <a href="https://github.com/EOSPortal/bp-info-standard" target="_blank"><u>bp-info-standard</u></a>.
                 </p>
             </section>
 
@@ -357,9 +361,24 @@
             <section class="contain">
                 <h1 id="strengthening-chains">Strengthening the Chain</h1>
                 <p>
-                    The EOSIO software utilizes Delegated-proof-of-stake or DPoS as its consensus model. In this model 21 “block producers” are
-                    elected by token holders to validate transactions and secure the EOS public blockchain. In this way each token holder is a participant in the governance of the blockchain.
+                    As a Block Producer or group of block producers there's a few things you can do to help provide a stronger chain for this voting portal as well as a better user experience for voters.
                 </p>
+
+
+                <section class="contain">
+                    <b>Add the chain under multiple endpoints.</b><br><br>
+                    Every time you add a chain to this portal we check the chain_id and if it already exists in our database then we add that new endpoint as a fallback node.
+                    Having multiple fallback nodes makes sure that if one Block Producer goes down, the voting portal isn't affected.
+                </section>
+
+                <section class="contain">
+                    <b>Consider using a Load Balancer.</b><br><br>
+                    Instead of adding one of the Block Producer's api-endpoint you can add the chain first under a Load Balancer and then add the individual endpoints as fallback nodes.
+                    This makes it so that when a user adds that network to Scatter it has a better chance of not needing to be changed in the future and causing a bad user experience.
+                    <br>
+                    <br>
+                    This is primarily an issue only for the boot stages as once there is a live and selected mainnet Scatter will be updated with an <i>endorsed network</i> which it can fall back to.
+                </section>
             </section>
 
 
@@ -384,56 +403,6 @@
 
 <style lang="scss">
 
-    .help {
-        .contain {
-            &:first-child {
-                margin:40px auto;
-            }
 
-            &:not(:first-child){
-                margin:20px auto 40px;
-            }
-
-            .contain {
-                padding:20px;
-                border-left:10px solid rgba(0,0,0,0.1);
-                border-bottom:1px solid rgba(0,0,0,0.05);
-                .contain {
-                    border:1px solid rgba(0,0,0,0.3);
-                }
-            }
-        }
-
-        ul {
-            li {
-                margin-bottom:5px;
-
-                &.head {
-                    font-size:24px;
-                    font-weight:800;
-                    text-decoration: underline;
-
-                    &:not(:first-child){
-                        margin-top:20px;
-                    }
-                }
-
-                &.link {
-                    font-size:18px;
-                    font-weight:500;
-                    text-decoration: underline;
-                }
-            }
-        }
-    }
-
-    hr {
-        margin-bottom:50px;
-        margin-top:50px;
-    }
-
-    img {
-        max-width: 100%;
-    }
 
 </style>
