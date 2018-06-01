@@ -1,0 +1,50 @@
+
+table {
+  width:100%;
+  border-spacing: 0;
+  border-collapse: separate;
+
+  thead {
+    border:0;
+    text-align:left;
+
+    tr {
+      height:40px;
+
+      th {
+        padding:0 10px;
+      }
+    }
+
+  }
+
+  tbody {
+
+    tr {
+      height:100px;
+      background:transparent;
+      transition: background 0.1s ease, transform 0.2s ease;
+
+      td {
+        padding-left:10px;
+        text-align:left;
+
+        &:first-child { text-align:left; }
+        &:last-child { text-align:right; }
+
+        button {
+          outline:0;
+          cursor: pointer;
+          height:50px;
+          border-radius:2px;
+          background:transparent;
+          text-transform: uppercase;
+          padding:0 25px;
+
+          transition: all 0.2s ease;
+          transition-property: background, color;
+        }
+      }
+    }
+  }
+}

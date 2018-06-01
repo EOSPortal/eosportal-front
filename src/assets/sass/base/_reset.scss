@@ -7,11 +7,12 @@ body {
   margin:0;
   overflow-y:scroll;
   word-break: break-word;
-  font-family: 'Raleway', sans-serif;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
 }
 
 a {
-  //display:inherit;
-  text-decoration: inherit;
-  color:inherit;
+  text-decoration: underline;
+  color: inherit;
 }

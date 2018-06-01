@@ -117,7 +117,7 @@
                 <h1 id="setting-up-scatter">Setting up Scatter</h1>
                 <section class="contain">
                     <b>Downloading Scatter</b><br><br>
-                    <b><u style="color:red;">It is extremely important that you download Scatter from only trusted resources, and validate that it has the correct extension id.</u></b>
+                    <b class="text-danger">It is extremely important that you download Scatter from only trusted resources, and validate that it has the correct extension id.</b>
                     <br><br>
                     Depending on your browser, click one of the links below and then follow the steps there for installing Scatter in Chrome or Firefox.
                     <br><br>
@@ -141,7 +141,7 @@
                     <section class="contain">
                         <b>Validating for Firefox</b><br><br>
                         <p>
-                            <b style="color:red;">
+                            <b class="text-danger">
                                 There is no easy way to validate the extension from within Firefox.<br>
                                 If you are worried that you might have gotten the extension from a malicious vendor, please use Chrome instead.
                             </b>
