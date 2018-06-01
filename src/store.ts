@@ -103,8 +103,8 @@ export default new Vuex.Store({
     async login({state}){
       if(!state.scatter) return false;
       if(!state.network) return false;
-      await state.scatter.suggestNetwork(state.network);
-      return state.scatter.getIdentity({accounts:[state.network]});
+      if(await state.scatter.suggestNetwork(state.network).catch(() => false))
+        return state.scatter.getIdentity({accounts:[state.network]});
     },
     logout({state}){
       if(!state.scatter) return false;

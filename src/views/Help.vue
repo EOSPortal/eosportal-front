@@ -14,9 +14,8 @@
                 <ul>
                     <li class="link"><a href="#selecting-a-chain">Selecting a Chain</a></li>
                     <li class="link"><a href="#setting-up-scatter">Setting up Scatter</a></li>
-                    <li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>
                     <li class="link"><a href="#choosing-producers">Choosing Producers</a></li>
-                    <li class="link"><a href="#applying-votes">Applying Votes</a></li>
+                    <li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>
                 </ul>
 
 
@@ -75,7 +74,7 @@
                 <section class="contain">
                     <b>The Golden Rule of Voting</b><br><br>
                     In the EOS constitution sending or receiving anything of value in exchange for a vote is prohibited.
-                    If the criteria for casting a vote is “who paid me the most” than it may not also be “I’m voting for this BP because they are good”.
+                    If the criteria for casting a vote is “who paid me the most” than it may not also be “I’m voting for this Block Producer because they are good”.
                     Thoughtful voting leads to prosperity for all.
                 </section>
             </section>
@@ -93,7 +92,7 @@
             <section class="contain">
                 <h1 id="selecting-a-chain">Selecting a Chain</h1>
                 <p>
-                    This voting portal supports any attempted chain launch. In most cases the BPs you're already voting for will have given you a link to the chain they are producing for.
+                    This voting portal supports any attempted chain launch. In most cases the Block Producers you're already voting for will have given you a link to the chain they are producing for.
                     If that is not the case however, you can see the amount of producers on the chain and within the chain itself you can search for your beloved block producer candidates.
                 </p>
             </section>
@@ -134,20 +133,99 @@
                             </b>
                         </p>
                     </section>
-
                 </section>
 
                 <section class="contain">
                     <b>Importing your keypair</b><br><br>
+                    To import a keypair into Scatter:
+                    <ul>
+                        <li>Copy your private key to your clipboard.</li>
+                        <li>Open Scatter and click the <b>Key Pairs</b> option from the main menu</li>
+                        <li>Then click the <b>New</b> button on the top-right.</li>
+                        <li>Paste your private key into the private key input field.</li>
+                        <li>Give this key a name so that you remember which it is.</li>
+                        <li>Click the <b>Save</b> button to finish importing.</li>
+                    </ul>
 
+                    <br><br>
+
+                    <img src="/img/scatter_keypair.gif" />
+                </section>
+
+                <section class="contain">
+                    <b>Adding chains to your Scatter</b><br><br>
+
+                    <p>
+                        Before you can import your account into Scatter you will need to click the <b>Use Chain</b> button on the chain's sub-menu.
+                        This will popup a prompt asking you to add one of the chain's networks so that Scatter will be able to search the chain for your account name base on the
+                        keypair you imported.
+
+                        <br><br>
+                        <u>
+                            <b>Note:</b> From time to time it might ask to you add a different network. This happens because there is no load balancer on top of the chain yet
+                            and if a producer's node goes down we switch to the next available network.
+                        </u>
+                        <br>
+                        <br>
+                        <section class="chain-nav">
+                            <button>Use Chain</button>
+                        </section>
+                        <br>
+
+                        <img src="/img/scatter_add_network.jpg" />
+
+                        <br>
+                        <br>
+                        You can then check that the network exists in Scatter like so:
+                        <br>
+                        <br>
+                        <img src="/img/scatter_check_network.gif" />
+                    </p>
                 </section>
 
                 <section class="contain">
                     <b>Importing your EOS account</b><br><br>
 
                     <p>
-                        Because there are multiple chains and networks right now due to no selected mainnet, importing your account is a little backwards.
+                        Now that you have your keypair as well as the chain's network inside of Scatter you can import your account.
+
+                        <ul>
+                            <li>Open Scatter and click the <b>Identities</b> option from the main menu</li>
+                            <li>All Scatters start with a randomized Identity. Click the pencil icon to edit it.</li>
+                            <li>Scroll down to the <b>Account</b> section and select the network you just added from the first drop down.</li>
+                            <li>Select the keypair you want to use to search for accounts from the second drop down.</li>
+                            <li>Click the <b>Import</b> button to tell Scatter to search for accounts.</li>
+                            <li>If an account is found it will pop up a prompt allowing you to select the <i>EOS account permission</i>.</li>
+                            <li>Since both your keys are the same right now you can select either, but you should make a habit of only using your <b>active</b> EOS permission.</li>
+                            <li>Once you have selected an account click the <b>Use Selected Account</b> button.</li>
+                            <li>Don't forget to click the <b>Save</b> button on the top-right.</li>
+                        </ul>
+
                         <br><br>
+
+                        <img src="/img/scatter_import_account.gif" />
+
+
+                    </p>
+                </section>
+
+                <section class="contain">
+                    <b>Pairing with Scatter</b><br><br>
+
+
+                    <p>
+                        Now that you have your actual EOS account imported into Scatter and linked to the chain's network you can go ahead and pair your Scatter with the
+                        voting portal and the chain you wish to vote on by clicking the <b>Pair Scatter</b> button in the chain's sub-menu. This will pop up a prompt asking you
+                        to allow <b>eosportal</b> to have access to one of your identities along with it's EOS account.
+
+                        <br><br>
+                        <section class="chain-nav">
+                            <button>Pair Scatter</button>
+                        </section>
+                        <br>
+
+                        <img src="/img/scatter_use_account.gif" />
+
 
                     </p>
                 </section>
@@ -166,6 +244,74 @@
 
 
 
+
+
+            <section class="contain">
+                <h1 id="choosing-producers">Choosing Producers</h1>
+                <p>
+                    There are a few things to always keep in mind when choosing producers to vote for.
+                </p>
+
+                <section class="contain">
+                    <b>Remember, our aim is decentralization.</b><br><br>
+                    Please refrain from voting for too many producers in the same countries. This voting portal will not explicitly prohibit you from voting in a centralized manner
+                    so you must stay alert and aware of the locations that your favorite Block Producers are located in. If any EOS blockchain becomes centralized it will not be the Block Producers' faults,
+                    but the voters'.
+                </section>
+
+                <section class="contain">
+                    <b>Do your research!</b><br><br>
+                    Make sure that the Block Producers that you are voting for have the community and the chain's best interests in mind.
+                    If you click on a Block Producer you will be able to see Meta-Data they have added.
+                </section>
+
+                <section class="contain">
+                    <b>How do I select a block producer to vote?</b><br><br>
+
+                    After you have paired with Scatter a <b>Vote</b> button will appear next to each producer.
+                    <br>
+                    <br>
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        <tr>
+                            <td>
+                                <b><u>BlockProducerName</u></b>
+                            </td>
+                            <td>
+                                <button>Vote</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <br>
+                    <br>
+
+
+                    Select up to 30 block producers and then click the <b>Vote For Selected Producers</b> button at the top of the Block Producer table.
+
+                    <br><br>
+                    <section class="chain-nav">
+                        <button>Vote For Selected Producers ( 30 / 30 )</button>
+                    </section>
+                    <br>
+
+                    <img src="/img/scatter_sign_trx.jpg" />
+                </section>
+            </section>
+
+
+
+
             <section class="contain">
                 <h1 id="understanding-voting-power">Understanding Voting Power</h1>
                 <p>
@@ -181,40 +327,6 @@
                 </section>
                 <section class="contain">
                     <b>How is my total bandwidth divided?</b><br><br>
-
-                </section>
-            </section>
-
-
-
-
-            <section class="contain">
-                <h1 id="choosing-producers">Choosing Producers</h1>
-                <p>
-                    Your voting power is based on the bandwidth ( CPU + Net ) you have delegated to yourself, along with any bandwidth others have delegated to you.
-                </p>
-                <section class="contain">
-                    <b>Who should I be voting for?</b><br><br>
-
-                </section>
-                <section class="contain">
-                    <b>How do I select a block producer to vote?</b><br><br>
-
-                </section>
-            </section>
-
-
-            <section class="contain">
-                <h1 id="applying-votes">Applying Votes</h1>
-                <p>
-                    Your voting power is based on the bandwidth ( CPU + Net ) you have delegated to yourself, along with any bandwidth others have delegated to you.
-                </p>
-                <section class="contain">
-                    <b>Who should I be voting for?</b><br><br>
-
-                </section>
-                <section class="contain">
-                    <b>How do I select a block producer to vote?</b><br><br>
 
                 </section>
             </section>
@@ -318,6 +430,10 @@
     hr {
         margin-bottom:50px;
         margin-top:50px;
+    }
+
+    img {
+        max-width: 100%;
     }
 
 </style>

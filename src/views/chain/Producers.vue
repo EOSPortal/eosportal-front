@@ -19,7 +19,7 @@
 				<button class="mobile-full" @click="vote">Vote For Selected Producers ( {{votedFor.length}} / 30 )</button>
 			</section>
 
-			<table class="table table-striped table-hover">
+			<table>
 				<thead>
 				<tr>
 					<th>Name</th>

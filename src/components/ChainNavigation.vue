@@ -4,7 +4,11 @@
             <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>
             <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">{{ $t('lang.producers') }}</router-link>
             <router-link exact-active-class="active" tag="button" :class="{'full':!canShowScatterButton()}" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
-            <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ $t('lang.scatter') }}</button>
+            <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ suggestingNetwork ? 'Use Chain' : $t('lang.scatter') }}</button>
+
+            <!-- ACTIVATED STAKE ( I think? ) -->
+            <!--<br><br>-->
+            <!--{{(((chainState.total_activated_stake/10000) / '1000000000.0000') * 100).toFixed(4)}}%-->
         </section>
         <hr/>
     </section>
@@ -23,7 +27,7 @@
 
         },
         computed:{
-            ...mapState(["scatter"]),
+            ...mapState(["scatter", 'chainState', 'network']),
             ...mapGetters(['identity', 'account']),
         },
         methods:{
@@ -34,8 +38,10 @@
     export default class ChainNavigation extends Vue {
         scatter!:any;
         identity!:any;
+        network!:any;
         account!:any;
         login!:() => void;
+        suggestingNetwork:boolean = true;
 
         canShowScatterButton(){
         	if(!this.scatter) return true;
@@ -49,6 +55,13 @@
             // User does not have Scatter.
     		if(!this.scatter)
                 return this.$router.push('/help#setting-up-scatter');
+
+    		if(this.suggestingNetwork){
+                this.suggestingNetwork = !await this.scatter.suggestNetwork(this.network).catch(() => false);
+                return;
+            }
+
+
 
     		await this.login();
             if(!this.account || !await getAccount(this.account.name)) {
