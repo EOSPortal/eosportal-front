@@ -9,7 +9,7 @@ import VueI18n from 'vue-i18n'
  */
 import en from './i18n/en_US.json'
 import es from './i18n/es_ES.json'
-
+import cn from './i18n/cn_CN.json'
 /**
  * Config
  */
@@ -26,6 +26,9 @@ export default new VueI18n({
     },
     es: {
       lang: es
+    },
+    cn: {
+      lang: cn
     }
   }
 })

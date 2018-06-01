@@ -1,0 +1,11 @@
+{
+  "chains": "链",
+  "help": "帮助",
+  "votingPower": "投票权力",
+  "producers": "生产者",
+  "chainInfo": "链信息",
+  "scatter": "Scatter对",
+  "submitNewChain": "提交新链",
+  "addChain": "新增链",
+  "selectChain": "请选择一条链 <b>投票</b>"
+}
