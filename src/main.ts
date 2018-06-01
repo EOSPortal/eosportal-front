@@ -5,6 +5,7 @@ import store from './store'
 import './registerServiceWorker'
 import './filters'
 import i18n from './locales/index'
+import Toasted from 'vue-toasted';
 
 Vue.config.productionTip = false;
 
@@ -23,6 +24,8 @@ new Vue({
   i18n,
   render: h => h(App)
 }).$mount('#app');
+
+Vue.use(Toasted)
 
 document.addEventListener('scatterLoaded', () => {
 

@@ -17,6 +17,17 @@ export const getScatterEos = () => {
 	});
 };
 
+export const getProducerCount = (httpEndpoint:string) => {
+	const eos = Eos.Localnet({ httpEndpoint })
+	return eos.getTableRows({
+		json:true,
+		code:'eosio',
+		scope:'eosio',
+		table:'producers',
+		limit:100000
+	}).then((res:any) => res.rows.length).catch(() => 0)
+}
+
 const getEosioTable = (table:any, limit:number = 500, index:string = '', table_key:string = '') => {
 	const eos = getEos();
 	if(!eos) return null;

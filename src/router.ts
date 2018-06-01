@@ -5,7 +5,6 @@ import Help from './views/Help.vue';
 import Chains from './views/Chains.vue';
 import Chain from './views/Chain.vue';
 import VotingPower from './views/chain/VotingPower.vue';
-import Blocks from './views/chain/Blocks.vue';
 import Producer from './views/chain/Producer.vue';
 import Producers from './views/chain/Producers.vue';
 import Info from './views/chain/Info.vue';
@@ -53,11 +52,6 @@ export default new Router({ mode:'history',
                   path: 'info',
                   name: 'info',
                   component: Info
-              },
-              {
-                  path: 'blocks',
-                  name: 'blocks',
-                  component: Blocks
               }
           ]
       },

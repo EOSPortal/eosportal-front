@@ -1,23 +1,17 @@
 <template>
     <section>
         <section class="contain">
-            <h3>Chain Information</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
+            <h3>{{ $t('lang.chainInformation') }}</h3>
         </section>
         <hr/>
         <section class="contain">
 		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
 		   <tr>
-				<th>Number of BPs connected (producing or not)</th>
+				<th>{{ $t('lang.bpsConnected') }}</th>
 				<td>{{producers.length}}</td>
            </tr>
            <tr>
-				<th>Booted Date</th>
+				<th>{{ $t('lang.bootedDate') }}</th>
 				<td>{{new Date(firstBlock.timestamp).toLocaleDateString()}}</td>
            </tr>
            <!--
@@ -31,7 +25,7 @@
            </tr>
            -->
 		   <tr>
-                <th>Total blocks produced</th>
+                <th>{{ $t('lang.totalBlocksProduced') }}</th>
 				<td>{{chainInfo.head_block_num}}</td>
 		   </tr>
 		</table>
@@ -41,15 +35,15 @@
 
         <hr/>
          <section class="contain">
-         <h3>Chain Helth</h3>
+         <h3>{{ $t('lang.chainHealth') }}</h3>
 
 		<table class="table table-striped table-hover" style="text-align: left; max-width:600px;">
 		   <tr>
-				<th>All time percentage of optimal number of blocks produced</th>
+				<th>{{ $t('lang.percentageOptimalBlocks') }}</th>
 				<td>{{isNaN(allTimeChainHealth)? allTimeChainHealth: allTimeChainHealth.toFixed(2)}} %</td>
            </tr>
       		   <tr>
-				<th>Last day percentage of optimal number of blocks produced</th>
+				<th>{{ $t('lang.lastDayPercentageOptimalBlocks') }}</th>
 				<td>{{isNaN(lastDayHelth) ? lastDayHelth: lastDayHelth.toFixed(2)}} %</td>
            </tr>
 		</table>

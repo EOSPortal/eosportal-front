@@ -19,7 +19,7 @@
 				<button class="mobile-full" @click="vote">Vote For Selected Producers ( {{votedFor.length}} / 30 )</button>
 			</section>
 
-			<table class="table table-striped table-hover">
+			<table>
 				<thead>
 				<tr>
 					<th>Name</th>
@@ -76,7 +76,8 @@
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-import {delegateAll, getAccount, voteFor} from "@/utils/eos.util";
+import { delegateAll, getAccount, voteFor } from "@/utils/eos.util";
+import { pathOr } from "ramda";
 
 @Component({
   components: {},
@@ -90,102 +91,153 @@ import {delegateAll, getAccount, voteFor} from "@/utils/eos.util";
   }
 })
 export default class Producers extends Vue {
-	producers!: Array<any>;
-	chainState!: any;
-	voter!: any;
-	orderedProducers!: Array<string>;
-	account!: any;
-	setVoter!:(voter:any) => void;
-	floatMenu:boolean = false;
+  producers!: Array<any>;
+  chainState!: any;
+  voter!: any;
+  orderedProducers!: Array<string>;
+  account!: any;
+  setVoter!: (voter: any) => void;
+  floatMenu: boolean = false;
 
-	searchTerms: string = "";
-	votedFor: Array<string> = [];
+  searchTerms: string = "";
+  votedFor: Array<string> = [];
 
-	producerImage(producer:any){
-		try { return producer.bpStandardInfo.org.branding.logo_256 } catch(e) { return false; };
-	}
+  producerImage(producer: any) {
+    try {
+      return producer.bpStandardInfo.org.branding.logo_256;
+    } catch (e) {
+      return false;
+    }
+  }
 
-	filteredProducers() {
-		return this.orderedProducers.filter(
-				(bp: any) =>
-				JSON.stringify(bp)
-					.toLowerCase()
-					.indexOf(this.searchTerms.toLowerCase().trim()) > -1
-		);
-	}
+  filteredProducers() {
+    return this.orderedProducers.filter(
+      (bp: any) =>
+        JSON.stringify(bp)
+          .toLowerCase()
+          .indexOf(this.searchTerms.toLowerCase().trim()) > -1
+    );
+  }
 
-	toggleVoteFor(producerName: string) {
-		if(this.votedFor.length >= 30 && !this.votedFor.includes(producerName)) return false;
-		if (this.votedFor.includes(producerName))
-			this.votedFor.splice(this.votedFor.indexOf(producerName), 1);
-		else this.votedFor.push(producerName);
-	}
+  toggleVoteFor(producerName: string) {
+    if (this.votedFor.length >= 30 && !this.votedFor.includes(producerName))
+      return false;
+    if (this.votedFor.includes(producerName))
+      this.votedFor.splice(this.votedFor.indexOf(producerName), 1);
+    else this.votedFor.push(producerName);
+  }
 
-	hasVotedFor(producerName: string) {
-		return this.votedFor.includes(producerName);
-	}
+  hasVotedFor(producerName: string) {
+    return this.votedFor.includes(producerName);
+  }
 
-	async vote() {
-//		const delegated = await delegateAll(this.account.name);
-		await voteFor(this.account.name, this.votedFor);
-		await this.setVoter(await getAccount(this.account.name))
-	}
+  async vote() {
+    console.log("call vote!");
+    //		const delegated = await delegateAll(this.account.name);
+    await voteFor(this.account.name, this.votedFor)
+      .catch(error => {
+        let errorJson = error;
+        try {
+          errorJson = JSON.parse(error);
+        } catch (e) {}
+        console.log("error: " + errorJson);
+        (this as any).$toasted.error(
+          "Voting failed: " +
+            pathOr(
+              pathOr("unknown errror", ["message"], errorJson),
+              ["error", "what"],
+              errorJson
+            ),
+          {
+            theme: "primary",
+            position: "top-center",
+            duration: 5000
+          }
+        );
+        throw Error("Voting failed");
+      })
+      .then(responds => {
+        console.log("sucsess: " + JSON.stringify(responds));
+        (this as any).$toasted.success("Voting succesfull", {
+          theme: "primary",
+          position: "top-center",
+          duration: 3000
+        });
+      });
 
-	producerName(url: string, owner: string) {
-		if (!url || !url.length) return owner;
-		const baseUrl = url
-			.replace("http://", "")
-			.replace("https://", "")
-			.replace("www.", "")
-			.split("/")[0]
-			.split(".");
-		baseUrl.pop();
-		return baseUrl.join(".");
-	}
+    await this.setVoter(await getAccount(this.account.name));
+  }
 
-	countryCount(){
-		let locations:Array<string> = [];
-		this.votedFor.map(owner => {
-			const producer = this.producers.filter(p => p.hasOwnProperty('country_code') && p.country_code && p.country_code.length && p.country_code !== '???')
-				.find(p => p.owner === owner);
-			if(producer && !locations.includes(producer.country_code.toUpperCase()))
-				locations.push(producer.country_code.toUpperCase())
-		});
-		return locations.length;
-	}
+  producerName(url: string, owner: string) {
+    if (!url || !url.length) return owner;
+    const baseUrl = url
+      .replace("http://", "")
+      .replace("https://", "")
+      .replace("www.", "")
+      .split("/")[0]
+      .split(".");
+    baseUrl.pop();
+    return baseUrl.join(".");
+  }
 
+  countryCount() {
+    let locations: Array<string> = [];
+    this.votedFor.map(owner => {
+      const producer = this.producers
+        .filter(
+          p =>
+            p.hasOwnProperty("country_code") &&
+            p.country_code &&
+            p.country_code.length &&
+            p.country_code !== "???"
+        )
+        .find(p => p.owner === owner);
+      if (producer && !locations.includes(producer.country_code.toUpperCase()))
+        locations.push(producer.country_code.toUpperCase());
+    });
+    return locations.length;
+  }
 
-	created () {
-		window.addEventListener('scroll', this.handleScroll);
-		if (this.voter) this.votedFor = JSON.parse(JSON.stringify(this.voter.voter_info.producers))
-	}
-	destroyed () { window.removeEventListener('scroll', this.handleScroll); }
-	mounted(){ setTimeout(() => this.handleScroll(), 50); }
-	handleScroll(){
-		if(!this.account) return;
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+    if (this.voter)
+      this.votedFor = JSON.parse(
+        JSON.stringify(this.voter.voter_info.producers)
+      );
+  }
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  mounted() {
+    setTimeout(() => this.handleScroll(), 50);
+  }
+  handleScroll() {
+    if (!this.account) return;
 
-		const votebutton = document.getElementById('votebutton');
-		if(!votebutton) return;
+    const votebutton = document.getElementById("votebutton");
+    if (!votebutton) return;
 
-		const scroll = window.scrollY;
-		this.floatMenu = !this.floatMenu
-			?votebutton.offsetTop-20 < scroll
-			:votebutton.offsetTop+20 < scroll;
-	}
+    const scroll = window.scrollY;
+    this.floatMenu = !this.floatMenu
+      ? votebutton.offsetTop - 20 < scroll
+      : votebutton.offsetTop + 20 < scroll;
+  }
 
-	@Watch("voter")
-	voterChanged() {
-		if (this.voter)
-			this.votedFor = JSON.parse(JSON.stringify(this.voter.voter_info.producers))
-	}
+  @Watch("voter")
+  voterChanged() {
+    if (this.voter)
+      this.votedFor = JSON.parse(
+        JSON.stringify(this.voter.voter_info.producers)
+      );
+  }
 }
 </script>
 
 <style lang="scss">
-	.bp-logo {
-		width:50px;
-		height:50px;
-		vertical-align: middle;
-		padding-right:20px;
-	}
+.bp-logo {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  padding-right: 20px;
+}
 </style>

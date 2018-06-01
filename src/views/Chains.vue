@@ -1,10 +1,5 @@
 <template>
     <section>
-		<!--<section class="contain center-text cta" style="margin-top:30px;">-->
-			<!--<h1>Select a chain to start <b>Voting</b></h1>-->
-			<!--<button>Or go to the top voted chain</button>-->
-
-		<!--</section>-->
 		<section class="box contain w640 add-new-chain desktop-only">
 			<h2 class="center-text" style="width:100%;">{{ $t('lang.submitNewChain') }}</h2>
 			<section class="input-container">
@@ -14,36 +9,44 @@
 
 		</section>
 		<hr class="desktop-only" />
-		<section class="contain" style="margin-top:20px;">
-			<h2 v-html="$t('lang.selectChain')"></h2>
-			<p>
-				You can vote for 30 producers on each chain for as many chains as you'd like.<br>
-				Once you select a chain you'll see a list of producers for that chain and will be able to vote for them.
-			</p>
-		</section>
-		<hr/>
 
-		<section class="contain">
-			<table>
-				<thead>
-				<tr>
-					<th>Chain ID</th>
-					<th class="desktop-only">Added Date</th>
-					<th></th>
-				</tr>
-				</thead>
+		<section v-if="chains.length">
+			<section class="contain" style="margin-top:20px;">
+				<h2 v-html="$t('lang.selectChain')"></h2>
+				<p v-html="$t('lang.selectChainHelp')"></p>
+			</section>
+			<hr/>
+
+			<section class="contain">
+				<table>
+					<thead>
+					<tr>
+						<th>{{ $t('lang.chainId') }}</th>
+						<th class="desktop-only">{{ $t('lang.producers') }}</th>
+						<th class="desktop-only">{{ $t('lang.addedDate') }}</th>
+						<th></th>
+					</tr>
+					</thead>
 
 
-				<tbody>
+					<tbody>
 					<tr :key="chain.chainId" v-for="chain in chains">
 						<td><b>id:{{chain.id}}</b> - {{chain.chainId.substr(0,15)}}...</td>
+						<td class="desktop-only">{{getProducerCount(chain)}}</td>
 						<td class="desktop-only">{{new Date(chain.createdAt*1000).toLocaleDateString()}}</td>
 						<td><router-link :to="'chain/'+chain.id.toString()" tag="a">
-							<button>Select</button>
+							<button>{{ $t('lang.select') }}</button>
 						</router-link></td>
 					</tr>
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</section>
+		</section>
+
+
+		<section class="contain" v-else>
+			<h1>{{ $t('lang.noChains') }}</h1>
+			<h2>{{ $t('lang.noChainsInfo') }}</h2>
 		</section>
     </section>
 </template>
@@ -54,7 +57,7 @@ import { mapState, mapActions } from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
 import * as api from "@/api";
-import {getChainProducers, getChainState} from "@/utils/eos.util";
+	import {getChainProducers, getChainState, getProducerCount} from "@/utils/eos.util";
 import {addChain} from '@/api'
 
 @Component({
@@ -68,6 +71,7 @@ import {addChain} from '@/api'
 export default class Chains extends Vue {
 	chains!: any[];
 	getChains!: () => void;
+	producerCounts:Array<{chainId:string, count:number}> = [];
 
 	newChain:string = '';
 
@@ -90,6 +94,19 @@ export default class Chains extends Vue {
 
 		// TODO: Add feedback
 		await addChain(this.newChain);
+	}
+
+	getProducerCount(chain:any){
+		const count:any = this.producerCounts.find((x:any) => x.chainId === chain.chainId);
+		return count ? count.count : 0;
+	}
+
+	@Watch('chains')
+	async chainsChanged(){
+		this.chains.map(async chain => {
+			const producers:number = await getProducerCount(chain.url);
+			this.producerCounts.push({chainId:chain.chainId, count:producers});
+		})
 	}
 }
 </script>

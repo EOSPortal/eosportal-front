@@ -16,10 +16,6 @@
                     <br><br>
                     <b>Visit the <router-link to="/help#setting-up-scatter"><u>Help</u></router-link> page to find out more about installing and setting up Scatter.</b>
                 </h2>
-                <!--<ul>-->
-                    <!--<li><a href="https://chrome.google.com/webstore/detail/ammjpmhgckkpcamddpolhchgomcojkle" target="_blank"><u>Chrome Store</u></a></li>-->
-                    <!--<li><a href="https://addons.mozilla.org/en-US/firefox/addon/scatter/" target="_blank"><u>Mozilla Addons</u></a></li>-->
-                <!--</ul>-->
             </section>
             <section v-if="scatter && !identity">
                 <h1>We need an <b>Identity</b> to use</h1>
@@ -73,7 +69,7 @@
                         </ul>
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="voter.delegated_bandwidth">
                     <th>Delegated Bandwidth</th>
                     <td>
                         <ul>
@@ -116,100 +112,147 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue, Watch} from 'vue-property-decorator';
-    import {mapState, mapActions, mapMutations, mapGetters} from "vuex";
-    import {
-        getAccount,
-        getSystemTokenStats,
-        stakableTokenBalance,
-        delegate,
-        undelegate,
-        refundRequest
-    } from "@/utils/eos.util";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import {
+  getAccount,
+  getSystemTokenStats,
+  stakableTokenBalance,
+  delegate,
+  undelegate,
+  refundRequest
+} from "@/utils/eos.util";
+import { pathOr } from "ramda";
 
+@Component({
+  components: {},
+  computed: {
+    ...mapState(["scatter", "voter", "chainState"]),
+    ...mapGetters(["identity"])
+  },
+  methods: {
+    ...mapActions(["setVoter"])
+  }
+})
+export default class VotingPower extends Vue {
+  setVoter!: (voter: any) => void;
+  voter!: any;
+  symbol: string = "SYS";
+  decimals: number = 0;
+  percentage: number = 0;
+  totalBalance: number | null = null;
+  toStake: number = 0;
+  forNet: number = 50;
 
-    @Component({
-        components: {
+  forCPU() {
+    return 100 - this.forNet;
+  }
 
-        },
-        computed:{
-            ...mapState(["scatter", "voter", 'chainState']),
-            ...mapGetters(['identity']),
-        },
-        methods:{
-            ...mapActions(['login', 'setVoter'])
-        }
-    })
-    export default class VotingPower extends Vue {
-        login!:() => void;
-        setVoter!:(voter:any) => void;
-        voter!:any;
-        symbol:string = 'SYS';
-        decimals:number = 0;
-        percentage:number = 0;
-        totalBalance:number | null = null;
-        toStake:number = 0;
-        forNet:number = 50;
+  mounted() {
+    this.initialize();
+  }
 
-        forCPU(){
-        	return 100 - this.forNet;
-        }
+  async initialize() {
+    if (this.voter) {
+      console.log("voter", this.voter);
+      this.symbol = this.voter.total_resources.cpu_weight.split(" ")[1];
+      this.toStake = this.voter.voter_info
+        ? this.voter.voter_info.staked / 10000
+        : 0;
 
-        pair(){
-            this.login();
-        }
+      const tokens: string = await stakableTokenBalance(
+        this.voter.account_name,
+        this.symbol
+      );
+      const delegated = this.voter.delegated_bandwidth
+        ? parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(" ")[0]) +
+          parseFloat(this.voter.delegated_bandwidth.net_weight.split(" ")[0])
+        : 0;
 
-        mounted(){
-            this.initialize();
-        }
+      this.totalBalance = delegated + parseFloat(tokens.split(" ")[0]);
 
-        async initialize(){
-            if(this.voter) {
-            	console.log('voter', this.voter);
-                this.symbol = this.voter.total_resources.cpu_weight.split(' ')[1];
-                this.toStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
+      const refunding: any = await refundRequest(this.voter.account_name);
+      if (refunding) {
+        this.totalBalance +=
+          parseFloat(refunding.cpu_amount.split(" ")[0]) +
+          parseFloat(refunding.net_amount.split(" ")[0]);
+      }
 
-                const tokens:string = await stakableTokenBalance(this.voter.account_name, this.symbol);
-                this.totalBalance =
-                          parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(' ')[0])
-                        + parseFloat(this.voter.delegated_bandwidth.net_weight.split(' ')[0])
-                        + parseFloat(tokens.split(' ')[0]);
-
-                const refunding:any = await refundRequest(this.voter.account_name);
-                if(refunding){
-                this.totalBalance +=
-                          parseFloat(refunding.cpu_amount.split(' ')[0])
-                        + parseFloat(refunding.net_amount.split(' ')[0])
-                }
-
-                const zeroes = this.voter.total_resources.cpu_weight.split(' ')[0].split('.')[1].length;
-                this.decimals = parseInt(`1${[...Array(zeroes).keys()].map(() => 0).join('')}`);
-
-            }
-        }
-
-        async delegateBW(){
-        	const fix = (n:number) => parseFloat(n.toFixed(this.decimals.toString().length));
-        	const symbolWrap = (n:number) => `${n} ${this.symbol}`;
-            const previousStake = this.voter.voter_info ? this.voter.voter_info.staked/10000 : 0;
-        	const delta = this.toStake - previousStake;
-        	if(delta === 0) return false;
-
-            if(delta > 0) await delegate(this.voter.account_name, symbolWrap(fix(delta/2)), symbolWrap(fix(delta/2)));
-            else await undelegate(this.voter.account_name, symbolWrap(fix(Math.abs(delta)/2)), symbolWrap(fix(Math.abs(delta)/2)));
-            await this.setVoter(await getAccount(this.voter.account_name));
-        }
-
-        @Watch('voter')
-        voterChanged(){
-            this.initialize();
-        }
+      const zeroes = this.voter.total_resources.cpu_weight
+        .split(" ")[0]
+        .split(".")[1].length;
+      this.decimals = parseInt(
+        `1${[...Array(zeroes).keys()].map(() => 0).join("")}`
+      );
     }
+  }
+
+  async delegateBW() {
+    const fix = (n: number) =>
+      parseFloat(n.toFixed(this.decimals.toString().length));
+    const symbolWrap = (n: number) => `${n} ${this.symbol}`;
+    const previousStake = this.voter.voter_info
+      ? this.voter.voter_info.staked / 10000
+      : 0;
+    const delta = this.toStake - previousStake;
+    if (delta === 0) return false;
+
+    const delegationPromise =
+      delta > 0
+        ? delegate(
+            this.voter.account_name,
+            symbolWrap(fix(delta / 2)),
+            symbolWrap(fix(delta / 2))
+          )
+        : undelegate(
+            this.voter.account_name,
+            symbolWrap(fix(Math.abs(delta) / 2)),
+            symbolWrap(fix(Math.abs(delta) / 2))
+          );
+
+    await delegationPromise
+      .catch(error => {
+        let errorJson = error;
+        try {
+          errorJson = JSON.parse(error);
+        } catch (e) {}
+        console.log("error: " + errorJson);
+        (this as any).$toasted.error(
+          "Delegation failed: " +
+            pathOr(
+              pathOr("unknown errror", ["message"], errorJson),
+              ["error", "what"],
+              errorJson
+            ),
+          {
+            theme: "primary",
+            position: "top-center",
+            duration: 5000
+          }
+        );
+        throw Error("Delegation failed");
+      })
+      .then(responds => {
+        console.log("sucsess: " + JSON.stringify(responds));
+        (this as any).$toasted.success("Delagation succesfull", {
+          theme: "primary",
+          position: "top-center",
+          duration: 3000
+        });
+      });
+    await this.setVoter(await getAccount(this.voter.account_name));
+  }
+
+  @Watch("voter")
+  voterChanged() {
+    this.initialize();
+  }
+}
 </script>
 
 <style lang="scss">
-    .account-details {
-        text-align: left;
-        max-width:800px;
-    }
+.account-details {
+  text-align: left;
+  max-width: 800px;
+}
 </style>
