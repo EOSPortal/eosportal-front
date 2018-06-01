@@ -7,5 +7,11 @@
   "scatter": "Pair Scatter",
   "submitNewChain": "Submit a new Chain",
   "addChain": "Add Chain",
-  "selectChain": "Select a chain to start <b>Voting</b>"
+  "selectChain": "Select a chain to start <b>Voting</b>",
+  "selectChainInfo": "You can vote for 30 producers on each chain for as many chains as you'd like.<br>Once you select a chain you'll see a list of producers for that chain and will be able to vote for them.",
+  "chainId": "Chain ID",
+  "addedDate": "Added Date",
+  "select": "Select",
+  "noChains": "There are no chains live yet!",
+  "noChainsInfo": "Once chains start to boot and add themselves here you will be able to view their stats and vote on them."
 }
