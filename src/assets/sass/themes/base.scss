@@ -10,7 +10,6 @@ $radius:5px;
 }
 
 body {
-  font-family:'Raleway', sans-serif;
   min-height:100%;
 }
 
@@ -71,6 +70,7 @@ nav {
       padding: 0 30px;
       border-radius: 5px;
       text-transform: uppercase;
+	  text-decoration: none;
       font-size: 13px;
       font-weight: 800;
       display: inline-block;
@@ -218,6 +218,10 @@ nav {
     transition: all 0.2s ease;
     transition-property: background, color, opacity;
 
+	&:not(:first-child) {
+		margin-left: -2px;
+	}
+
     &.mobile-full {
       @media (max-width:1024px){
         width:100%;
@@ -276,56 +280,6 @@ $input-height: 40px;
       font-size:22px;
       font-weight:500;
       height:60px;
-    }
-  }
-}
-
-table {
-  width:100%;
-  border-spacing: 0;
-  border-collapse: separate;
-
-  thead {
-    border:0;
-    text-align:left;
-
-    tr {
-      height:40px;
-
-      th {
-        padding:0 10px;
-      }
-    }
-
-  }
-
-  tbody {
-
-    tr {
-      height:100px;
-      background:transparent;
-      transition: background 0.1s ease, transform 0.2s ease;
-
-      td {
-        padding-left:10px;
-        text-align:left;
-
-        &:first-child { text-align:left; }
-        &:last-child { text-align:right; }
-
-        button {
-          outline:0;
-          cursor: pointer;
-          height:50px;
-          border-radius:2px;
-          background:transparent;
-          text-transform: uppercase;
-          padding:0 25px;
-
-          transition: all 0.2s ease;
-          transition-property: background, color;
-        }
-      }
     }
   }
 }

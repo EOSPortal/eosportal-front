@@ -6,8 +6,10 @@
 // Variables
 @import "variables";
 
-@import "layout/reset";
-@import "layout/global";
+@import "base/reset";
+@import "base/global";
+
+@import "layout/tables";
 
 @import "themes/base";
 @import "themes/light";
