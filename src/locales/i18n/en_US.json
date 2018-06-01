@@ -29,7 +29,7 @@
   "numberOfVotes": "Number of Votes",
   "lastProducedBlock": "Last Produced Block",
   "activeSince": "Active Since",
-  "notStandard": "This block producer is not following the standard <a href='https://github.com/EOSPortal/bp-info-standard' target='_blank'>EOS BP Information Standard</a>. Therefor, only the data from chain is available.",,
+  "notStandard": "This block producer is not following the standard <a href='https://github.com/EOSPortal/bp-info-standard' target='_blank'>EOS BP Information Standard</a>. Therefor, only the data from chain is available.",
   "informationProvidedBp": "The information below is provided by the block producer.",
   "email": "Email",
   "noLocation": "Unspecified location.",
