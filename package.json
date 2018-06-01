@@ -14,11 +14,11 @@
   "dependencies": {
     "ajv": "^6.5.0",
     "bp-info-standard": "github:EOSPortal/bp-info-standard",
-    "eosjs": "^13.0.1",
+    "eosjs": "^13.1.0",
     "express": "^4.16.3",
     "npm": "^6.1.0",
     "ramda": "^0.25.0",
-    "register-service-worker": "^1.3.0",
+    "register-service-worker": "^1.4.0",
     "serve-static": "^1.13.2",
     "vue": "^2.5.16",
     "vue-class-component": "^6.0.0",
