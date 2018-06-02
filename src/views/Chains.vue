@@ -52,70 +52,94 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapState, mapActions } from "vuex";
-import Eos from 'eosjs';
+import Eos from "eosjs";
 import * as urlUtils from "@/utils/url.util";
 import * as api from "@/api";
-import {getChainProducers, getChainState, getProducerCount} from "@/utils/eos.util";
-import {addChain} from '@/api'
+import {
+  getChainProducers,
+  getChainState,
+  getProducerCount
+} from "@/utils/eos.util";
+import { addChain } from "@/api";
+import { AssertionError } from "assert";
 
 @Component({
-	components: {},
-	computed: mapState(["chains"]),
-	methods: mapActions(["getChains"]),
-	data(){return {
-		newChain:''
-	}}
+  components: {},
+  computed: mapState(["chains"]),
+  methods: mapActions(["getChains"]),
+  data() {
+    return {
+      newChain: ""
+    };
+  }
 })
 export default class Chains extends Vue {
-	chains!: any[];
-	getChains!: () => void;
-	producerCounts:Array<{chainId:string, count:number}> = [];
+  chains!: any[];
+  getChains!: () => void;
+  producerCounts: Array<{ chainId: string; count: number }> = [];
 
-	newChain:string = '';
+  newChain: string = "";
 
-	created() {
-		this.getChains();
-		this.newChain = '';
-	}
+  created() {
+    this.getChains();
+    this.newChain = "";
+  }
 
-	async addChain(){
-		if(this.newChain.indexOf('http://') != 0 && this.newChain.indexOf('https://') != 0)
-			return alert('Malformed EOSIO node URL');
+  async addChain() {
+    if (
+      this.newChain.indexOf("http://") != 0 &&
+      this.newChain.indexOf("https://") != 0
+    )
+      (this as any).$toasted.error("Malformed EOSIO node URL", {
+        theme: "primary",
+        position: "top-center",
+        duration: 5000
+      });
 
-		const eos = Eos({httpEndpoint: this.newChain});
-		const info = await eos.getInfo({}).catch(() => null);
+    const eos = Eos({ httpEndpoint: this.newChain });
+    const info = await eos.getInfo({}).catch(() => null);
 
-		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
-			return alert('Could not get chain info');
+    if (
+      !info ||
+      typeof info !== "object" ||
+      !info.hasOwnProperty("head_block_num")
+    )
+      return (this as any).$toasted.error("Could not get chain info", {
+        theme: "primary",
+        position: "top-center",
+        duration: 5000
+      });
 
-		// TODO: Add feedback
-		await addChain(this.newChain);
-	}
+    // TODO: Add feedback
+    await addChain(this.newChain);
+  }
 
-	getProducerCount(chain:any){
-		const count:any = this.producerCounts.find((x:any) => x.chainId === chain.chainId);
-		return count ? count.count : 0;
-	}
+  getProducerCount(chain: any) {
+    const count: any = this.producerCounts.find(
+      (x: any) => x.chainId === chain.chainId
+    );
+    return count ? count.count : 0;
+  }
 
-	@Watch('chains')
-	async chainsChanged(){
-		this.chains.map(async chain => {
-			const producers:number = await getProducerCount(chain.url);
-			this.producerCounts.push({chainId:chain.chainId, count:producers});
-		})
-	}
+  @Watch("chains")
+  async chainsChanged() {
+    this.chains.map(async chain => {
+      const producers: number = await getProducerCount(chain.url);
+      this.producerCounts.push({ chainId: chain.chainId, count: producers });
+    });
+  }
 }
 </script>
 
 <style lang="scss">
-	.add-new-chain {
-		margin:50px auto;
-		/*box-shadow: inset 0 0 150px rgba(0,0,0,0.3);*/
+.add-new-chain {
+  margin: 50px auto;
+  /*box-shadow: inset 0 0 150px rgba(0,0,0,0.3);*/
 
-		.input-container {
-			margin-top:15px;
-		}
-	}
+  .input-container {
+    margin-top: 15px;
+  }
+}
 </style>
