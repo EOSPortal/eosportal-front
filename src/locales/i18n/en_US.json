@@ -9,6 +9,7 @@
   "addChain": "Add Chain",
   "selectChain": "Select a chain to start <b>Voting</b>",
   "selectChainInfo": "You can vote for 30 producers on each chain for as many chains as you'd like.<br>Once you select a chain you'll see a list of producers for that chain and will be able to vote for them.",
+  "selectChainHelp": "Before you can start voting you need to select a chain. In most cases you've probably gotten a link from the producers you want to vote for, if not check to see where they are.",
   "chainId": "Chain ID",
   "addedDate": "Added Date",
   "select": "Select",

@@ -30,7 +30,7 @@
 
 
 					<tbody>
-					<tr :key="chain.chainId" v-for="chain in chains">
+					<tr :key="chain.chainId" v-for="chain in sortedChains()">
 						<td><b>id:{{chain.id}}</b> - {{chain.chainId.substr(0,15)}}...</td>
 						<td class="desktop-only">{{getProducerCount(chain)}}</td>
 						<td class="desktop-only">{{new Date(chain.createdAt*1000).toLocaleDateString()}}</td>
@@ -53,7 +53,7 @@
 
 <script lang="ts">
 	import {Component, Vue, Watch} from "vue-property-decorator";
-import { mapState, mapActions } from "vuex";
+	import {mapState, mapActions} from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
 import * as api from "@/api";
@@ -78,6 +78,17 @@ export default class Chains extends Vue {
 	created() {
 		this.getChains();
 		this.newChain = '';
+	}
+
+	sortedChains(){
+		if(!this.producerCounts.length) return this.chains;
+
+		const prodCount = (c:any) => {
+			const found = this.producerCounts.find((x:any) => x.chainId === c.chainId);
+			return found ? found.count : 0
+		};
+
+		return this.chains.concat().sort((a:any, b:any) => prodCount(b) - prodCount(a))
 	}
 
 	async addChain(){
@@ -107,6 +118,8 @@ export default class Chains extends Vue {
 			const producers:number = await getProducerCount(chain.url);
 			this.producerCounts.push({chainId:chain.chainId, count:producers});
 		})
+
+
 	}
 }
 </script>
