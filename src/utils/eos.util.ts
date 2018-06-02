@@ -6,7 +6,7 @@ import { prop, path } from 'ramda'
 export const getEos = () => {
 	if(!store.state.network) return null;
 	return Eos({
-		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`
+		httpEndpoint:`//${store.state.network.host}:${store.state.network.port}`
 	});
 };
 
