@@ -23,14 +23,6 @@
         <th>{{ $t('lang.numberOfVotes') }}</th>
 				<td>{{parseInt(producer.total_votes)}}</td>
 			</tr>
-      <tr>
-        <th>{{ $t('lang.lastProducedBlock') }}</th>
-				<td>{{(new Date((producer.last_produced_block_time * 500 + 946684800000))).toLocaleDateString()}}</td>
-      </tr>
-      <tr>
-				<th>{{ $t('lang.activeSince') }}</th>
-				<td>{{new Date(producer.time_became_active * 500 + 946684800000).toLocaleDateString()}}</td>
-      </tr>
 		</table>
   </section>
   
