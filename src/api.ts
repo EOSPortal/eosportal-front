@@ -6,7 +6,7 @@ export const getChains = () => {
 
   return fetchJson(`${baseUrl}/chains`)
     .then(
-      reduce((acc: any[], chain) => {
+      reduce((acc: any, chain: any) => {
         chain.url =
           protocol === "https:"
             ? find((node: string) => node.indexOf("https") !== -1)(chain.nodes)
