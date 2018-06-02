@@ -136,7 +136,7 @@
         async regenVoter(){
             if(this.account) setTimeout(async () => {
                 await this.setVoter(await getAccount(this.account.name))
-            },1);
+            },100);
         }
 
         @Watch('account')
