@@ -19,8 +19,8 @@
                     <option value="es">Español</option>
                     <option value="cn">中文</option>
                 </select>
-                <router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>
-                <router-link class="link" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
+                <!--<router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>-->
+                <router-link class="link important" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
                 <section class="switcher" @click="toggleTheme()">
                     <figure class="switch" :class="{'selected':theme === 'dark'}"></figure>
                     <figure class="switch" :class="{'selected':theme === 'light'}"></figure>

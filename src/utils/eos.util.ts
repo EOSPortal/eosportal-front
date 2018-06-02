@@ -24,8 +24,12 @@ export const getScatterEos = () => {
   });
 };
 
-export const getProducerCount = (httpEndpoint: string) => {
-  const eos = Eos({ httpEndpoint });
+export const getChainId = (httpEndpoint:string) => {
+    return Eos({httpEndpoint}).getInfo({}).then((res:any) => res.chain_id).catch(() => '0000000000');
+}
+
+export const getProducerCount = async (httpEndpoint: string) => {
+  const eos = Eos({ httpEndpoint, chainId:await getChainId(httpEndpoint) });
   return eos
     .getTableRows({
       json: true,
