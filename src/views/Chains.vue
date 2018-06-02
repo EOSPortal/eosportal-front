@@ -86,7 +86,7 @@ export default class Chains extends Vue {
 
 		const {host, port} = urlUtils.urlToHostPort(this.newChain);
 
-		const eos = Eos.Localnet({httpEndpoint:`http://${host}:${port}`});
+		const eos = Eos({httpEndpoint:`http://${host}:${port}`});
 		const info = await eos.getInfo({}).catch(() => null);
 
 		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
