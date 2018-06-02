@@ -76,11 +76,14 @@
             if(!chainData) return this.$router.push({path:'/'});
             this.setChainData(chainData);
 
+            const protocol = location.protocol.substring(0, location.protocol.length - 1);
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
-                network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
+                if (node.indexOf(protocol) === 0) {
+                    network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
+                }
                 if(!network) chainData.nodes.shift();
             }
 
