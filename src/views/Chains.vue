@@ -52,12 +52,12 @@
 </template>
 
 <script lang="ts">
-	import {Component, Vue, Watch} from "vue-property-decorator";
+import {Component, Vue, Watch} from "vue-property-decorator";
 import { mapState, mapActions } from "vuex";
 import Eos from 'eosjs';
 import * as urlUtils from "@/utils/url.util";
 import * as api from "@/api";
-	import {getChainProducers, getChainState, getProducerCount} from "@/utils/eos.util";
+import {getChainProducers, getChainState, getProducerCount} from "@/utils/eos.util";
 import {addChain} from '@/api'
 
 @Component({

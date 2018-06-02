@@ -7,10 +7,10 @@ export const getChains = () => {
   return fetchJson(`${baseUrl}/chains`)
     .then(
       reduce((acc: any, chain: any) => {
-        chain.url = find((node: string) => node.indexOf(protocol) !== -1)(
+        chain.url = find((nodeUrl: string) => nodeUrl.indexOf(protocol) !== -1)(
           chain.nodes
         );
-        return chain.url !== null ? append(chain, acc) : acc;
+        return chain.url != null ? append(chain, acc) : acc;
       }, [])
     )
     .catch(() => []);
