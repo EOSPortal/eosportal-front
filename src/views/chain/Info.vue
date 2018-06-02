@@ -103,7 +103,10 @@ export default class Info extends Vue {
     const optimalNumberOfBlocks = durationMs / 500;
     const blockNumber = headBlockNumber - optimalNumberOfBlocks;
     const optimalTimeOnBlock = timestampNowMs - durationMs;
-
+    if (blockNumber < headBlockNumber) {
+      this.lastDayHelth = "TBD";
+      return;
+    }
     const block = await getBlock(blockNumber);
     const timeOnBlock = new Date(block.timestamp).getTime();
     const delay = optimalTimeOnBlock - timeOnBlock;
