@@ -84,9 +84,7 @@ export default class Chains extends Vue {
 		if(this.newChain.indexOf('http://') != 0 && this.newChain.indexOf('https://') != 0)
 			return alert('Malformed EOSIO node URL');
 
-		const {host, port} = urlUtils.urlToHostPort(this.newChain);
-
-		const eos = Eos({httpEndpoint:`http://${host}:${port}`});
+		const eos = Eos({httpEndpoint: this.newChain});
 		const info = await eos.getInfo({}).catch(() => null);
 
 		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
