@@ -4,8 +4,6 @@ import {getChains} from "./api";
 import * as urlUtils from "@/utils/url.util";
 import {findLast, propEq} from "ramda"
 
-import Eos from 'eosjs';
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
