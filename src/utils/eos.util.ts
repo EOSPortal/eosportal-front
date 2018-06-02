@@ -5,20 +5,20 @@ import { prop, path } from 'ramda'
 
 export const getEos = () => {
 	if(!store.state.network) return null;
-	return Eos.Localnet({
+	return Eos({
 		httpEndpoint:`http://${store.state.network.host}:${store.state.network.port}`
 	});
 };
 
 export const getScatterEos = () => {
 	if(!store.state.scatter || !store.state.network) return null;
-	return store.state.scatter.eos( store.state.network, Eos.Localnet, {
+	return store.state.scatter.eos( store.state.network, Eos, {
 		chainId:store.getters.chainId
 	});
 };
 
 export const getProducerCount = (httpEndpoint:string) => {
-	const eos = Eos.Localnet({ httpEndpoint })
+	const eos = Eos({ httpEndpoint })
 	return eos.getTableRows({
 		json:true,
 		code:'eosio',
