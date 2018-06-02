@@ -2,16 +2,14 @@ import { baseUrl, fetchJson, postChain } from "./utils/api.util";
 import { reduce, find, append } from "ramda";
 
 export const getChains = () => {
-  const protocol = location.protocol;
+  const protocol = location.protocol.substring(0, location.protocol.length - 1);
 
   return fetchJson(`${baseUrl}/chains`)
     .then(
       reduce((acc: any, chain: any) => {
-        chain.url =
-          protocol === "https:"
-            ? find((node: string) => node.indexOf("https") !== -1)(chain.nodes)
-            : chain.nodes[0];
-
+        chain.url = find((node: string) => node.indexOf(protocol) !== -1)(
+          chain.nodes
+        );
         return chain.url !== null ? append(chain, acc) : acc;
       }, [])
     )
