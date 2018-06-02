@@ -1,60 +1,51 @@
 <template>
     <div class="container">
         <section class="contain">
-            <h3>Delegating Bandwidth</h3>
-            <p>
-                In order to vote you will need to delegate some of your tokens to yourself for <u>CPU and Net</u>.
-                This will allow you to use those same staked tokens for voting as well.
-            </p>
+            <h3>{{ $t('lang.delegatingBandwidth') }}</h3>
+            <p v-html="$t('lang.delegatingBandwidthInfo')"></p>
         </section>
         <hr/>
         <section class="contain" v-if="!scatter || !identity">
             <section v-if="!scatter">
-                <h1>It looks like you don't have <b>Scatter</b></h1>
+                <h1 v-html="$t('lang.noScatter')"></h1>
                 <h2>
-                    In order to vote using this portal you will have to first install Scatter.
+                    {{ $t('lang.noScatterInfo') }}
                     <br><br>
                     <b>Visit the <router-link to="/help#setting-up-scatter"><u>Help</u></router-link> page to find out more about installing and setting up Scatter.</b>
                 </h2>
             </section>
             <section v-if="scatter && !identity">
-                <h1>We need an <b>Identity</b> to use</h1>
-                <h2>
-                    Before you can use <b>EOS</b>Portal with Scatter you need to pair an Identity.
-                    <br><br>
-                    Click the <b>"Pair Scatter"</b> button on this chain's sub-menu.
-                </h2>
+                <h1 v-html="$t('lang.noIdentity')"></h1>
+                <h2 v-html="$t('lang.noIdentityInfo')"></h2>
             </section>
         </section>
         <section class="contain" v-if="voter">
 
-
-
             <section class="stake-controller">
                 <figure class="total-stake" style="max-width:400px;">
                     <input :max="totalBalance" min="1" v-model="toStake" type="range" />
-                    <h2>Power: {{toStake}} of {{totalBalance}} <b>{{symbol}}</b></h2><br>
+                    <h2>{{ $t('lang.power') }}: {{toStake}} {{ $t('lang.of') }} {{totalBalance}} <b>{{symbol}}</b></h2><br>
                 </figure>
 
                 <section class="chain-nav" style="margin-top:0;">
-                    <button @click="delegateBW">Set Voting Power</button>
+                    <button @click="delegateBW">{{ $t('lang.setVotingPower') }}</button>
                 </section>
             </section>
 
             <hr />
 
-            <h3>EOS Account Details</h3>
+            <h3>{{ $t('lang.eosAccountDetails') }}</h3>
             <table class="account-details">
                 <tr>
-                    <th>Account</th>
+                    <th>{{ $t('lang.account') }}</th>
                     <td>
                         <ul>
-                            <li>name: {{voter.account_name}}</li>
+                            <li>{{ $t('lang.name') }}: {{voter.account_name}}</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
-                    <th>CPU Limits</th>
+                    <th>{{ $t('lang.cpuLimits') }}</th>
                     <td>
                         <ul>
                             <li v-for="key in Object.keys(voter.cpu_limit)">{{key}}: {{voter.cpu_limit[key]}}</li>
@@ -62,7 +53,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Net Limits</th>
+                    <th>{{ $t('lang.netLimits') }}</th>
                     <td>
                         <ul>
                             <li v-for="key in Object.keys(voter.net_limit)">{{key}}: {{voter.net_limit[key]}}</li>
@@ -70,7 +61,7 @@
                     </td>
                 </tr>
                 <tr v-if="voter.delegated_bandwidth">
-                    <th>Delegated Bandwidth</th>
+                    <th>{{ $t('lang.delegatedBandwidth') }}</th>
                     <td>
                         <ul>
                             <li v-for="key in Object.keys(voter.delegated_bandwidth)">{{key}}: {{voter.delegated_bandwidth[key]}}</li>
@@ -78,16 +69,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>RAM</th>
+                    <th>{{ $t('lang.ram') }}</th>
                     <td>
                         <ul>
-                            <li>Quota - {{voter.ram_quota}}</li>
-                            <li>Usage - {{voter.ram_usage}}</li>
+                            <li>{{ $t('lang.quota') }} - {{voter.ram_quota}}</li>
+                            <li>{{ $t('lang.usage') }} - {{voter.ram_usage}}</li>
                         </ul>
                     </td>
                 </tr>
                 <tr>
-                    <th>Total Resources</th>
+                    <th>{{ $t('lang.totalResources') }}</th>
                     <td>
                         <ul>
                             <li v-for="key in Object.keys(voter.total_resources)">{{key}}: {{voter.total_resources[key]}}</li>
@@ -95,7 +86,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Voter Info</th>
+                    <th>{{ $t('lang.voterInfo') }}</th>
                     <td>
                         <ul>
                             <li v-for="key in Object.keys(voter.voter_info)">{{key}}: {{voter.voter_info[key]}}</li>
