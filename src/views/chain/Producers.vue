@@ -1,10 +1,9 @@
 <template>
     <div class="container">
 		<section class="contain">
-			<h3>Voting on Producers</h3>
+			<h3>{{ $t('lang.votingProducers') }}</h3>
 			<p>
-				In order to vote you need to delegate tokens to Bandwidth and CPU resources. This allows you not only to
-				use the EOS network, but also to vote on Producers.
+				{{ $t('lang.votingProducersInfo') }}
 			</p>
 		</section>
 		<br><br>
@@ -16,17 +15,17 @@
 			</section>
 
 			<section class="chain-nav" id="votebutton" v-if="account" style="margin-bottom:20px; width:100%; text-align:right;">
-				<button class="mobile-full" @click="vote">Vote For Selected Producers ( {{votedFor.length}} / 30 )</button>
+				<button class="mobile-full" @click="vote">{{ $t('lang.voteSelectedProducers') }} ( {{votedFor.length}} / 30 )</button>
 			</section>
 
 			<table>
 				<thead>
 				<tr>
-					<th>Name</th>
-					<th class="desktop-only">Account</th>
-					<th class="desktop-only">Location</th>
+					<th>{{ $t('lang.name') }}</th>
+					<th class="desktop-only">{{ $t('lang.account') }}</th>
+					<th class="desktop-only">{{ $t('lang.location') }}</th>
 					<th>Votes</th>
-					<th class="desktop-only">URL</th>
+					<th class="desktop-only">{{ $t('lang.url') }}</th>
 					<th></th>
 				</tr>
 				</thead>
@@ -45,7 +44,7 @@
 						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
 						<td class="desktop-only">{{producer.url}}</td>
 						<td>
-							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">Vote</button>
+							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>
 						</td>
 					</tr>
 				</tbody>
@@ -53,21 +52,20 @@
 		</section>
 
 		<section class="contain" v-if="chainLoaded && !filteredProducers().length">
-			<h1>This chain doesn't have any producers registered yet.</h1>
+			<h1>{{ $t('lang.chainNoProducers') }}</h1>
 			<h2>
-				Some chain launching groups decide to go through a validation period to make sure that the chain is stable and proper before allowing producers to be
-				registered and then voted on. Though this chain is live and you can see your balances, it is not ready to be voted on yet and accepts no transactions.
+				{{ $t('lang.chainNoProducersInfo') }}
 			</h2>
 		</section>
 
 		<section class="floater" :class="{'show':floatMenu}">
 			<section class="box">
 				<figure class="num">{{votedFor.length}}</figure>
-				<figure class="label">BPs</figure>
+				<figure class="label">{{ $t('lang.bps') }}</figure>
 			</section>
 			<section class="box">
 				<figure class="num">{{countryCount()}}</figure>
-				<figure class="label">Countries</figure>
+				<figure class="label">{{ $t('lang.countries') }}</figure>
 			</section>
 		</section>
     </div>

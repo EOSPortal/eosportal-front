@@ -13,7 +13,7 @@
 		<section v-if="chains.length">
 			<section class="contain" style="margin-top:20px;">
 				<h2 v-html="$t('lang.selectChain')"></h2>
-				<p v-html="$t('lang.selectChainHelp')"></p>
+				<p v-html="$t('lang.selectChainInfo')"></p>
 			</section>
 			<hr/>
 
