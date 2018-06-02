@@ -81,7 +81,7 @@ import { pathOr } from "ramda";
   components: {},
   props: {},
   computed: {
-    ...mapState(["producers", "chainState", "voter", "chainLoaded"]),
+    ...mapState(["producers", "chainState", "voter", "chainLoaded", 'network']),
     ...mapGetters(["orderedProducers", "account"])
   },
   methods: {
@@ -92,6 +92,7 @@ export default class Producers extends Vue {
   producers!: Array<any>;
   chainState!: any;
   voter!: any;
+  network!: any;
   orderedProducers!: Array<string>;
   account!: any;
   setVoter!: (voter: any) => void;
@@ -221,12 +222,21 @@ export default class Producers extends Vue {
       : votebutton.offsetTop + 20 < scroll;
   }
 
+  setVotedFor(attempts:number = 0):any{
+  	if(attempts > 10) return null;
+  	if(!this.network) {
+  		setTimeout(() => this.setVotedFor(attempts+1), 500);
+		return null;
+	}
+    if (this.voter) this.votedFor = JSON.parse(
+  	  JSON.stringify(this.voter.voter_info.producers)
+    );
+
+  }
+
   @Watch("voter")
   voterChanged() {
-    if (this.voter)
-      this.votedFor = JSON.parse(
-        JSON.stringify(this.voter.voter_info.producers)
-      );
+    this.setVotedFor();
   }
 }
 </script>

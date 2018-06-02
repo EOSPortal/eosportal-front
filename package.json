@@ -14,7 +14,7 @@
   "dependencies": {
     "ajv": "^6.5.0",
     "bp-info-standard": "github:EOSPortal/bp-info-standard",
-    "eosjs": "^14.0.0",
+    "eosjs": "^14.1.0",
     "express": "^4.16.3",
     "npm": "^6.1.0",
     "ramda": "^0.25.0",

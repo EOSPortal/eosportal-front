@@ -3,18 +3,19 @@ import Eos from "eosjs";
 const { format } = Eos.modules;
 import { prop, path } from "ramda";
 
+
+export const getChainId = (httpEndpoint:string) => {
+    return Eos({httpEndpoint}).getInfo({}).then((res:any) => res.chain_id).catch(() => '0000000000');
+}
+
 export const getEos = () => {
   if (!store.state.network) return null;
 
-  if (store.state.network.port !== 80) {
-    return Eos({
-      httpEndpoint: `//${store.state.network.host}:${store.state.network.port}`
-    });
-  } else {
-    return Eos({
-      httpEndpoint: `//${store.state.network.host}`
-    });
-  }
+  const httpEndpoint = store.state.network.port !== 80
+        ? `//${store.state.network.host}:${store.state.network.port}`
+        : `//${store.state.network.host}`
+
+  return Eos({ httpEndpoint, chainId:store.getters.chainId });
 };
 
 export const getScatterEos = () => {
@@ -24,13 +25,9 @@ export const getScatterEos = () => {
   });
 };
 
-export const getChainId = (httpEndpoint:string) => {
-    return Eos({httpEndpoint}).getInfo({}).then((res:any) => res.chain_id).catch(() => '0000000000');
-}
-
 export const getProducerCount = async (httpEndpoint: string) => {
   const eos = Eos({ httpEndpoint, chainId:await getChainId(httpEndpoint) });
-  return eos
+  return await eos
     .getTableRows({
       json: true,
       code: "eosio",
