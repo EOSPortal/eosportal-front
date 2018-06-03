@@ -18,6 +18,7 @@
                     <option selected value="en">English</option>
                     <option value="es">Español</option>
                     <option value="cn">中文</option>
+                    <option value="de">Deutsch</option>
                 </select>
                 <!--<router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>-->
                 <router-link class="link important" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
