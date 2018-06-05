@@ -2,17 +2,17 @@
   {
   "chains": "链",
   "help": "帮助",
-  "votingPower”:"投票权力",
-  "producers“: "生产者",
-  "chainInfo”:"链信息",
+  "votingPower":"投票权力",
+  "producers": "生产者",
+  "chainInfo":"链信息",
   "scatter":"Scatter对",
-  "submitNewChain”："提交新链",
-  "addChain”:"新增链",
+  "submitNewChain":"提交新链",
+  "addChain":"新增链",
   "selectChain" :"请选择一条链<b>投票 </ b>",
   "selectChainInfo" :"您可以为每个链上的30个生产者投票，以获得尽可能多的链。<br>一旦您选择一个链，您将看到该链的生产者列表，并且能够投票支持他们",
   "chainId":"链ID",
   "addedDate":"添加日期",
-  "select": "Select" "选择",
+  "select": "选择",
   "noChains":"没有活的链子”,
   "noChainsInfo":"一旦链条开始启动并在这里添加自己，您将能够查看其统计数据并对它们进行投票。",
   "chainInformation":"链条信息”,
@@ -23,13 +23,13 @@
   "percentageOptimalBlocks":"所有时间百分比的最佳生产块数",
   "lastDayPercentageOptimalBlocks":"最后一天产生的最佳块数百分比",
   "blockProducer": "块生产者",
-  "账户":"账户", /////------CORRECT
+  "account":"账户", 
   "url":"URL",
   "location":"位置",
   "totalVotes":"总票数",
   "numberOfVotes":"票数",
   "lastProducedBlock": "Last Produced Block",
-  "activeSince": "Active Since",
+  "activeSince": "从...开始活跃",
   "notStandard": "此块生产者未遵循标准<a href='https://github.com/EOSPortal/bp-info-standard' target='_blank'> EOS BP信息标准</a>。因此，只有来自连锁店的数据可用。"，
   "informationProvidedBp":"以下信息由块生产者提供",
   "email":"电子邮件",
@@ -38,63 +38,31 @@
   "noconduct":"未指定的行为准则",
   "social”:“社交”,
   "votingProducers": "生产者投票",
-  "votingProducersInfo":"为了进行投票，您需要将令牌委托给带宽和CPU资源，这样您不仅可以使用EOS网络，还可以对生产者进行投票",
- "chainNoProducers":"这个链条没有任何生产者注册",
+  "votingProducersInfo":"选民信息" : "为了进行投票，您需要将令牌委托给带宽和CPU资源，这样您不仅可以使用EOS网络，还可以对生产者进行投票",
  "voteSelectedProducers": "为选定的制片人投票", 
-  "name": "名称"，
-  "vote":"投票"，
+  "name": "名称",
+  "vote":"投票",
   "chainNoProducers": "些连锁发布团队决定通过验证期，以确保链条稳定和适当，然后允许生产者注册并投票。虽然这条链条是实时的，你可以看到你的余额，但它尚未准备好接受投票并且不接受任何交易。“
   "chainNoProducersInfo”：“一些连锁发布团队决定通过验证期，以确保链条稳定和适当，然后允许生产者注册并投票。虽然这条链条是实时的，你可以看到你的余额，但它尚未准备好接受投票并且不接受任何交易。“，
   "BP": " 区块链候选人者/ 节点",
-  "Country":"国家"，
+  "Country":"国家",
   "delegatingBandwidth": "委托带宽",
-  "delegatingBandwidthInfo"："为了进行投票，你需要将你的一些代币委托给你自己，用于处理<u> CPU和Net </u>,这样你可以使用这些相同的代币进行投票。",
+  "delegatingBandwidthInfo" "委托带宽信息" :"为了进行投票，你需要将你的一些代币委托给你自己，用于处理<u> CPU和Net </u>,这样你可以使用这些相同的代币进行投票。",
   "noScatter":"看起来你没有<b> Scatter </ b>"，
   "noScatterInfo":"为了使用此门户进行投票，您必须首先安装Scatter。”,
-  "noIdentity"："我们需要一个<b>身份</ b>使用"，
+  "noIdentity":"我们需要一个<b>身份</ b>使用"，
   "noIdentityInfo":"在您可以使用带有Scatter的 <b> EOS </ b>门户之前，您需要配对身份。<br> <br>点击此链上的<b>'Pair Scatter'</ b>子菜单。“
-  “权力”：“权力”，------<> Correct
-  “，
-  "setVotingPower":"设置投票权",
+  "power":"权力"
+  "of" : "于"
+  "setVotingPower":"设置投票权",
   "eosAccountDetails":"EOS帐户详情",
   "cpuLimits":"CPU限制",
   "netLimits":"网络限制",
-  “委托带宽”：“委托带宽”，------------<>Correct
+  "dedicated bandwidth":"委托带宽"
   "ram":"RAM",
   "quota":"配额",
-  "用法":"用法",
-  "totalResources”：“资源总量”,
+  "usage":"用法",
+  "totalResources” : “资源总量”,
   "voterInfo":"选民信息",
-  "votingProducers": 生产者投票“，
-  "votingProducersInfo": "生产者投票":“为了进行投票，您需要将令牌委托给带宽和CPU资源，这样您不仅可以使用EOS网络，还可以对生产者进行投票"
-  "chainNoProducers":"这个链条没有任何生产者注册",
-  "voteSelectedProducers":"为选定的制片人投票",
-  "name": "名称"，
-  "vote":"投票"，
-  "chainNoProducers": "一些连锁发布团队决定通过验证期，以确保链条稳定和适当，然后允许生产者注册并投票。虽然这条链条是实时的，你可以看到你的余额，但它尚未准备好接受投票并且不接受任何交易。",
-  "chainNoProducersInfo"："一些连锁发布团队决定通过验证期，以确保链条稳定和适当，然后允许生产者注册并投票。虽然这条链条是实时的，你可以看到你的余额，但它尚未准备好接受投票并且不接受任何交易。",
-  "BP" : "区块链候选人者/ 节点",
-  "Country": "国家",
-  "delegatingBandwidth"”：“委托带宽”，¨
-  
-  PArtially complete:
-  
-  “delegatingBandwidthInfo”：In order to vote you will need to delegate some of your tokens to yourself for <u>CPU and Net</u>. This will allow you to use those same staked tokens for voting as well.",委托带宽消息:“为了进行投票，你需要将你的一些代币委托给你自己，用于处理<u> CPU和Net </ u>，这样你可以使用这些相同的代币进行投票。”，
-  “noScatter”：“看起来你没有<b> Scatter </ b>”，
-  “noScatterInfo”："In order to vote using this portal you will have to first install Scatter. noScatterInfo:“为了使用此门户进行投票，您必须首先安装Scatter。”，
-  “noIdentity”：“我们需要一个<b>身份</ b>使用”，
-  “noIdentityInfo”：“在您可以使用带有Scatter的<b> EOS </ b>门户之前，您需要配对身份。<br> <br>点击此链上的<b>'Pair Scatter'</ b>子菜单。“
-  “权力”：“权力”，
-  “，
-  “setVotingPower”：“设置投票权”，
-  “eosAccountDetails”：“EOS帐户详情”，
-  “cpuLimits”：“CPU限制"，
-  “netLimits”：“网络限制”，
-  “委托带宽”：“委托带宽”，
-  “ram”：“RAM”，
-  "quota"：“配额”，
-  “用法”：“用法”，
-  “totalResources”：“资源总量”，
-  “voterInfo”：“选民信息”
 }
 }
