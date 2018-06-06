@@ -1,5 +1,4 @@
 {
-  {
   "chains": "链",
   "help": "帮助",
   "votingPower":"投票权力",
@@ -39,7 +38,7 @@
   "social”:“社交”,
   "votingProducers": "生产者投票",
   "votingProducersInfo":"选民信息" : "为了进行投票，您需要将令牌委托给带宽和CPU资源，这样您不仅可以使用EOS网络，还可以对生产者进行投票",
- "voteSelectedProducers": "为选定的制片人投票", 
+  "voteSelectedProducers": "为选定的制片人投票", 
   "name": "名称",
   "vote":"投票",
   "chainNoProducers": "些连锁发布团队决定通过验证期，以确保链条稳定和适当，然后允许生产者注册并投票。虽然这条链条是实时的，你可以看到你的余额，但它尚未准备好接受投票并且不接受任何交易。“
@@ -63,6 +62,5 @@
   "quota":"配额",
   "usage":"用法",
   "totalResources” : “资源总量”,
-  "voterInfo":"选民信息",
-}
+  "voterInfo":"选民信息"
 }
