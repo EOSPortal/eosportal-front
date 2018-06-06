@@ -1,5 +1,4 @@
 {
-  {
   "chains": "Kedja",
   "help": "Hjälp",
   "votingPower": "Röst Kraft",
@@ -64,5 +63,4 @@
   "usage": "Användning",
   "totalResources": "Totala Resurser",
   "voterInfo": "Röstar Information"
-}
 }
