@@ -1,5 +1,4 @@
 {
-  {
   "chains": "Chains",
   "help": "Hjelp”,
   "votingPower": “Stemnekraft",
@@ -64,5 +63,4 @@
   "usage": “Bruk”,
   "totalResources": "Totale resurser",
   "voterInfo": “Stemmegiver info"
-}
 }
