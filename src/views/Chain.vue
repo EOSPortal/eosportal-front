@@ -13,7 +13,7 @@
     import {getChain} from "@/api";
     import {getBpStandardInfo } from "@/utils/api.util";
     import { validateBpInfo } from "@/utils/bp-json-validation.util";
-    import * as timezones from '@/timezones/timezones.json'
+    import * as timezones from '@/timezones/country.json'
 
     @Component({
         components: {
@@ -76,11 +76,14 @@
             if(!chainData) return this.$router.push({path:'/'});
             this.setChainData(chainData);
 
+            const protocol = location.protocol.substring(0, location.protocol.length - 1);
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
-                network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
+                if (node.indexOf(protocol) === 0) {
+                    network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
+                }
                 if(!network) chainData.nodes.shift();
             }
 
@@ -106,8 +109,7 @@
 
             // Setting location from timezone for now.
             this.producers.map((producer:any) => {
-            	const zone:any = Object.keys((timezones as any).timezones).find((key:any) => (timezones as any).timezones[key].utcOffset === producer.location);
-            	producer.country_code = zone ? (timezones as any).timezones[zone].name : '';
+              producer.country_code = (producer.location && timezones.default[producer.location.toString()]) ? timezones.default[producer.location.toString()] : '';
             })
 //        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
 //        	if(producer){
@@ -133,7 +135,7 @@
         async regenVoter(){
             if(this.account) setTimeout(async () => {
                 await this.setVoter(await getAccount(this.account.name))
-            },1);
+            },100);
         }
 
         @Watch('account')

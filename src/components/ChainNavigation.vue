@@ -15,63 +15,65 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
-    import {mapActions, mapGetters, mapState} from "vuex";
-    import {getAccount} from "@/utils/eos.util";
-    /**
-     * Bootstrap-vue components
-     */
+import { Component, Vue } from "vue-property-decorator";
+import { mapActions, mapGetters, mapState } from "vuex";
+import { getAccount } from "@/utils/eos.util";
+/**
+ * Bootstrap-vue components
+ */
 
-    @Component({
-        components: {
+@Component({
+  components: {},
+  computed: {
+    ...mapState(["scatter", "chainState", "network"]),
+    ...mapGetters(["identity", "account"])
+  },
+  methods: {
+    ...mapActions(["login"])
+  }
+})
+export default class ChainNavigation extends Vue {
+  scatter!: any;
+  identity!: any;
+  network!: any;
+  account!: any;
+  login!: () => void;
+  suggestingNetwork: boolean = true;
 
-        },
-        computed:{
-            ...mapState(["scatter", 'chainState', 'network']),
-            ...mapGetters(['identity', 'account']),
-        },
-        methods:{
-            ...mapActions(['login'])
-        }
-    })
+  canShowScatterButton() {
+    if (!this.scatter) return true;
+    if (!this.identity) return true;
+    if (!this.account) return true;
+    //        	if(this.account) return true;
+    return false;
+  }
 
-    export default class ChainNavigation extends Vue {
-        scatter!:any;
-        identity!:any;
-        network!:any;
-        account!:any;
-        login!:() => void;
-        suggestingNetwork:boolean = true;
+  async loginWithScatter() {
+    // User does not have Scatter.
+    if (!this.scatter) return this.$router.push("/help#setting-up-scatter");
 
-        canShowScatterButton(){
-        	if(!this.scatter) return true;
-        	if(!this.identity) return true;
-        	if(!this.account) return true;
-//        	if(this.account) return true;
-            return false;
-        }
-
-    	async loginWithScatter(){
-            // User does not have Scatter.
-    		if(!this.scatter)
-                return this.$router.push('/help#setting-up-scatter');
-
-    		if(this.suggestingNetwork){
-                this.suggestingNetwork = !await this.scatter.suggestNetwork(this.network).catch(() => false);
-                return;
-            }
-
-
-
-    		await this.login();
-            if(!this.account || !await getAccount(this.account.name)) {
-                alert("There was an issue finding this account on the network. Perhaps it doesn't exist on this chain.");
-                this.$router.push('/');
-            }
-        }
+    if (this.suggestingNetwork) {
+      this.suggestingNetwork = !await this.scatter
+        .suggestNetwork(this.network)
+        .catch(() => false);
+      return;
     }
+
+    await this.login();
+    if (!this.account || !await getAccount(this.account.name)) {
+      (this as any).$toasted.error(
+        "There was an issue finding this account on the network. Perhaps it doesn't exist on this chain.",
+        {
+          theme: "primary",
+          position: "top-center",
+          duration: 5000
+        }
+      );
+      this.$router.push("/");
+    }
+  }
+}
 </script>
 
 <style lang="scss">
-
 </style>

@@ -83,7 +83,15 @@
 
         <!-- USER VOTING -->
         <section class="contain">
+
             <h1 id="voting">Voting</h1>
+
+            <h3>
+                If you'd rather watch a video here is a short 5 minute video explaining the entire process.
+            </h3>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/_hWRAjLKa8w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+            <br><br>
 
             <section class="contain">
                 <h1 id="selecting-a-chain">Selecting a Chain</h1>

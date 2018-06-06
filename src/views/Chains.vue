@@ -13,7 +13,7 @@
 		<section v-if="chains.length">
 			<section class="contain" style="margin-top:20px;">
 				<h2 v-html="$t('lang.selectChain')"></h2>
-				<p v-html="$t('lang.selectChainHelp')"></p>
+				<p v-html="$t('lang.selectChainInfo')"></p>
 			</section>
 			<hr/>
 
@@ -30,7 +30,7 @@
 
 
 					<tbody>
-					<tr :key="chain.chainId" v-for="chain in chains">
+					<tr :key="chain.chainId" v-for="chain in sortedChains()">
 						<td><b>id:{{chain.id}}</b> - {{chain.chainId.substr(0,15)}}...</td>
 						<td class="desktop-only">{{getProducerCount(chain)}}</td>
 						<td class="desktop-only">{{new Date(chain.createdAt*1000).toLocaleDateString()}}</td>
@@ -53,71 +53,105 @@
 
 <script lang="ts">
 	import {Component, Vue, Watch} from "vue-property-decorator";
-import { mapState, mapActions } from "vuex";
-import Eos from 'eosjs';
-import * as urlUtils from "@/utils/url.util";
-import * as api from "@/api";
-	import {getChainProducers, getChainState, getProducerCount} from "@/utils/eos.util";
-import {addChain} from '@/api'
+	import {mapState, mapActions} from "vuex";
+	import Eos from 'eosjs';
+	import * as urlUtils from "@/utils/url.util";
+	import * as api from "@/api";
+	import {
+		getChainProducers,
+		getChainState,
+		getProducerCount
+	} from "@/utils/eos.util";
+	import { addChain } from "@/api";
+	import { AssertionError } from "assert";
 
-@Component({
-	components: {},
-	computed: mapState(["chains"]),
-	methods: mapActions(["getChains"]),
-	data(){return {
-		newChain:''
-	}}
-})
-export default class Chains extends Vue {
-	chains!: any[];
-	getChains!: () => void;
-	producerCounts:Array<{chainId:string, count:number}> = [];
+	@Component({
+		components: {},
+		computed: mapState(["chains"]),
+		methods: mapActions(["getChains"]),
+		data() {
+			return {
+				newChain: ""
+			};
+		}
+	})
 
-	newChain:string = '';
+	export default class Chains extends Vue {
+		chains!: any[];
+		getChains!: () => void;
+		producerCounts: Array<{ chainId: string; count: number }> = [];
 
-	created() {
-		this.getChains();
-		this.newChain = '';
+		newChain: string = "";
+
+		created() {
+			this.getChains();
+			this.newChain = "";
+		}
+
+		sortedChains(){
+			if(!this.producerCounts.length) return this.chains;
+
+			const prodCount = (c:any) => {
+				const found = this.producerCounts.find((x:any) => x.chainId === c.chainId);
+				return found ? found.count : 0
+			};
+
+			return this.chains.concat().sort((a:any, b:any) => prodCount(b) - prodCount(a))
+		}
+
+		async addChain() {
+			if (
+					this.newChain.indexOf("http://") != 0 &&
+					this.newChain.indexOf("https://") != 0
+			)
+				(this as any).$toasted.error("Malformed EOSIO node URL", {
+					theme: "primary",
+					position: "top-center",
+					duration: 5000
+				});
+
+			const eos = Eos({ httpEndpoint: this.newChain });
+			const info = await eos.getInfo({}).catch(() => null);
+
+			if (
+					!info ||
+					typeof info !== "object" ||
+					!info.hasOwnProperty("head_block_num")
+			)
+				return (this as any).$toasted.error("Could not get chain info", {
+					theme: "primary",
+					position: "top-center",
+					duration: 5000
+				});
+
+			// TODO: Add feedback
+			await addChain(this.newChain);
+		}
+
+		getProducerCount(chain: any) {
+			const count: any = this.producerCounts.find(
+					(x: any) => x.chainId === chain.chainId
+			);
+			return count ? count.count : 0;
+		}
+
+		@Watch("chains")
+		async chainsChanged() {
+			this.chains.map(async chain => {
+				const producers: number = await getProducerCount(chain.url);
+				this.producerCounts.push({ chainId: chain.chainId, count: producers });
+			});
+		}
 	}
-
-	async addChain(){
-		if(this.newChain.indexOf('http://') != 0 && this.newChain.indexOf('https://') != 0)
-			return alert('Malformed EOSIO node URL');
-
-		const {host, port} = urlUtils.urlToHostPort(this.newChain);
-
-		const eos = Eos.Localnet({httpEndpoint:`http://${host}:${port}`});
-		const info = await eos.getInfo({}).catch(() => null);
-
-		if(!info || typeof info !== 'object' || !info.hasOwnProperty('head_block_num'))
-			return alert('Could not get chain info');
-
-		// TODO: Add feedback
-		await addChain(this.newChain);
-	}
-
-	getProducerCount(chain:any){
-		const count:any = this.producerCounts.find((x:any) => x.chainId === chain.chainId);
-		return count ? count.count : 0;
-	}
-
-	@Watch('chains')
-	async chainsChanged(){
-		this.chains.map(async chain => {
-			const producers:number = await getProducerCount(chain.url);
-			this.producerCounts.push({chainId:chain.chainId, count:producers});
-		})
-	}
-}
 </script>
 
 <style lang="scss">
-	.add-new-chain {
-		margin:50px auto;
-		/*box-shadow: inset 0 0 150px rgba(0,0,0,0.3);*/
+.add-new-chain {
+  margin: 50px auto;
+  /*box-shadow: inset 0 0 150px rgba(0,0,0,0.3);*/
 
-		.input-container {
-			margin-top:15px;
-		}
-	}
+  .input-container {
+    margin-top: 15px;
+  }
+}
 </style>

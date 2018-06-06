@@ -14,7 +14,7 @@
   "dependencies": {
     "ajv": "^6.5.0",
     "bp-info-standard": "github:EOSPortal/bp-info-standard",
-    "eosjs": "^13.1.0",
+    "eosjs": "^14.1.0",
     "express": "^4.16.3",
     "npm": "^6.1.0",
     "ramda": "^0.25.0",
@@ -22,7 +22,7 @@
     "serve-static": "^1.13.2",
     "vue": "^2.5.16",
     "vue-class-component": "^6.0.0",
-    "vue-i18n": "^7.7.0",
+    "vue-i18n": "^7.8.0",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1",
     "vue-toasted": "^1.1.24",
