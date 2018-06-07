@@ -11,6 +11,9 @@ import en from './i18n/en_US.json'
 import es from './i18n/es_ES.json'
 import cn from './i18n/cn_CN.json'
 import de from './i18n/de_DE.json'
+import kr from './i18n/kr_KOR.json'
+import no from './i18n/no_NO.json'
+import se from './i18n/se_SE.json'
 /**
  * Config
  */
@@ -34,5 +37,14 @@ export default new VueI18n({
     de: {
       lang: de
     },
+    kr: {
+      lang: kr
+    },
+    no: {
+      lang: no
+    },
+    se: {
+      lang: se
+    }
   }
 })
