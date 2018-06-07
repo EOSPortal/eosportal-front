@@ -141,6 +141,7 @@
                         <b>Validating for Chrome</b><br><br>
                         <ul>
                             <li>Navigate to <u>chrome://extensions/</u> in your browser by copy pasting that URL into the URL bar.</li>
+                            <li>On the top right side of the Extensions Page you should see a switch for "Developer Mode". Switch it on.</li>
                             <li>Find the Scatter extension among your installed extensions</li>
                             <li>There will be an <b>ID</b> property there. Make sure that it is exactly equal to: <u><b>ammjpmhgckkpcamddpolhchgomcojkle</b></u></li>
                         </ul>
