@@ -22,6 +22,7 @@
                     <option value="de">Deutsch</option>
                     <option value="no">Norsk</option>
                     <option value="se">Svenska</option>
+					<option value="fr">French</option>
                 </select>
                 <!--<router-link class="link" :to="{ name: 'chains' }">{{ $t('lang.chains') }}</router-link>-->
                 <router-link class="link important" :to="{ name: 'help' }">{{ $t('lang.help') }}</router-link>
