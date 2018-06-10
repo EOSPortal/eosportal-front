@@ -76,10 +76,10 @@
             if(!chainData) return this.$router.push({path:'/'});
 
             chainData.nodes = [
-                "http://185.109.149.236:8888",
+                "http://node2.liquideos.com:8888",
                 "https://api.eosmetal.io:18890",
                 "http://185.109.149.236:8888",
-                "http://nodes.eos42.io:80",
+                "http://nodes.eos42.io:80"
             ];
 
             console.log('chain data', chainData)
