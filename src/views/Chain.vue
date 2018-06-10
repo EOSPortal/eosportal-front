@@ -84,6 +84,7 @@
                 if (node.indexOf(protocol) === 0) {
                     network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
                 }
+                if(network.indexOf(':8888') === -1) network = null;
                 if(!network) chainData.nodes.shift();
             }
 
