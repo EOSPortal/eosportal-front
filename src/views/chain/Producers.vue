@@ -42,7 +42,9 @@
 						<td class="desktop-only">{{producer.owner}}</td>
 							<td class="desktop-only">{{producer.country_code}}</td>
 						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
-						<td class="desktop-only">{{producer.url}}</td>
+						<td class="desktop-only">
+              <a :href="producer.url" target="_blank">{{producer.url}}</a>
+            </td>
 						<td>
 							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>
 						</td>
