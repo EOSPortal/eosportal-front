@@ -74,6 +74,13 @@
         async bindNetwork(chainData:any|null = null){
         	if(!chainData) chainData = await getChain(this.$route.params.chainId);
             if(!chainData) return this.$router.push({path:'/'});
+
+            chainData.nodes = [
+                "http://185.109.149.236:8888",
+                "https://api.eosmetal.io:18890",
+                "http://185.109.149.236:8888"
+            ];
+
             this.setChainData(chainData);
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
@@ -81,7 +88,6 @@
             let network:null | string = null;
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
-                if(node.indexOf('8888') !== -1)
                 if (node.indexOf(protocol) === 0) {
                     network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
                 }
