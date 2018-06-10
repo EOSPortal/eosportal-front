@@ -81,6 +81,8 @@
                 "http://185.109.149.236:8888"
             ];
 
+            console.log('chain data', chainData)
+
             this.setChainData(chainData);
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
