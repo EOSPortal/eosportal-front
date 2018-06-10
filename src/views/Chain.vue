@@ -78,7 +78,8 @@
             chainData.nodes = [
                 "http://185.109.149.236:8888",
                 "https://api.eosmetal.io:18890",
-                "http://185.109.149.236:8888"
+                "http://185.109.149.236:8888",
+                "http://nodes.eos42.io:80",
             ];
 
             console.log('chain data', chainData)
