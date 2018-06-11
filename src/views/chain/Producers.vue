@@ -47,7 +47,7 @@
 						</td>
 							<td class="desktop-only">{{producer.country_code}}</td>
 						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(3)}}%</td>
-						<td>{{((chainState.total_activated_stake/10000) * (producer.total_votes / chainState.total_producer_vote_weight * 100) / 100).toFixed(0)}}</td>
+						<td>{{(producer.total_votes  / calculateVoteWeight() / 10000).toFixed(0)}}</td>
 						<td class="desktop-only">{{producer.url}}</td>
 						<td>
 							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>
@@ -134,6 +134,21 @@ export default class Producers extends Vue {
 
   hasVotedFor(producerName: string) {
     return this.votedFor.includes(producerName);
+  }
+
+  // Kudos to CryptoLions
+  calculateVoteWeight() {
+
+    //time epoch:
+    //https://github.com/EOSIO/eos/blob/master/contracts/eosiolib/time.hpp#L160
+
+    //stake to vote
+    //https://github.com/EOSIO/eos/blob/master/contracts/eosio.system/voting.cpp#L105-L109
+
+    let timestamp_epoch = 946684800000;
+    let dates_ = (Date.now() / 1000) - (timestamp_epoch / 1000);
+    let weight_ = parseInt(dates_ / (86400 * 7)) / 52;  //86400 = seconds per day 24*3600
+    return Math.pow(2, weight_);
   }
 
   async vote() {
