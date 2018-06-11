@@ -145,9 +145,9 @@ export default class Producers extends Vue {
     //stake to vote
     //https://github.com/EOSIO/eos/blob/master/contracts/eosio.system/voting.cpp#L105-L109
 
-    let timestamp_epoch = 946684800000;
-    let dates_ = (Date.now() / 1000) - (timestamp_epoch / 1000);
-    let weight_ = parseInt(dates_ / (86400 * 7)) / 52;  //86400 = seconds per day 24*3600
+    let timestamp_epoch:number = 946684800000;
+    let dates_:number = (Date.now() / 1000) - (timestamp_epoch / 1000);
+    let weight_:number = parseInt(dates_ / (86400 * 7)) / 52;  //86400 = seconds per day 24*3600
     return Math.pow(2, weight_);
   }
 
