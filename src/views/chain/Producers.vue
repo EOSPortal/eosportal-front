@@ -5,6 +5,10 @@
 			<p>
 				{{ $t('lang.votingProducersInfo') }}
 			</p>
+			<br>
+			<p>
+				Actual EOS Votes: <b>{{(chainState.total_activated_stake/10000)}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
+			</p>
 		</section>
 		<br><br>
 		<br><br>
@@ -18,12 +22,13 @@
 				<button class="mobile-full" @click="vote">{{ $t('lang.voteSelectedProducers') }} ( {{votedFor.length}} / 30 )</button>
 			</section>
 
-			<table>
+			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
-					<th>{{ $t('lang.name') }}</th>
-					<th class="desktop-only">{{ $t('lang.account') }}</th>
+					<th>#</th>
+					<th>{{ $t('lang.account') }}</th>
 					<th class="desktop-only">{{ $t('lang.location') }}</th>
+					<th>Votes %</th>
 					<th>Votes</th>
 					<th class="desktop-only">{{ $t('lang.url') }}</th>
 					<th></th>
@@ -32,16 +37,17 @@
 
 
 				<tbody>
-					<tr v-for="producer in filteredProducers()">
+					<tr v-for="(producer, key) in filteredProducers()">
+						<td>{{key + 1}}</td>
 						<td>
 							<img v-if="producerImage(producer)" class="bp-logo" :src="producerImage(producer)" />
 							<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
-								<b>{{producerName(producer.url, producer.owner)}}</b>
+								<b>{{producer.owner}}</b>
 							</router-link>
 						</td>
-						<td class="desktop-only">{{producer.owner}}</td>
 							<td class="desktop-only">{{producer.country_code}}</td>
-						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(3)}}%</td>
+						<td>{{((chainState.total_activated_stake/10000) * (producer.total_votes / chainState.total_producer_vote_weight * 100) / 100).toFixed(0)}}</td>
 						<td class="desktop-only">{{producer.url}}</td>
 						<td>
 							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>

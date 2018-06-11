@@ -12,7 +12,6 @@
 
                 <li class="head"><a href="#voting">Voting</a></li>
                 <ul>
-                    <li class="link"><a href="#selecting-a-chain">Selecting a Chain</a></li>
                     <li class="link"><a href="#setting-up-scatter">Setting up Scatter</a></li>
                     <li class="link"><a href="#choosing-producers">Choosing Producers</a></li>
                     <!--<li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>-->
@@ -92,33 +91,6 @@
             <iframe width="560" height="315" src="https://www.youtube.com/embed/_hWRAjLKa8w" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
             <br><br>
-
-            <section class="contain">
-                <h1 id="selecting-a-chain">Selecting a Chain</h1>
-                <p>
-                    This voting portal supports any attempted chain launch. In most cases the Block Producers you're already voting for will have given you a link to the chain they are producing for.
-                    If that is not the case however, you can see the amount of producers on the chain and within the chain itself you can search for your beloved block producer candidates.
-                </p>
-                <br>
-                <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Chain ID</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-
-                    <tbody>
-                        <tr>
-                            <td><b>id:4</b> - a628a5a6123d6ed...</td>
-                            <td><button>Select</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
 
 
             <section class="contain">
