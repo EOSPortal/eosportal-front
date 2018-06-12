@@ -7,6 +7,12 @@
 			</p>
 			<br>
 			<p>
+				<b>
+					By voting you are accepting the
+					<a href="https://github.com/EOS-Mainnet/governance/blob/master/eosio.system/eosio.system-clause-constitution-rc.md" target="_blank"><u>EOS Constitution</u></a>
+					. Make sure you have read it!
+				</b>
+				<br><br>
 				Actual EOS Votes: <b>{{(chainState.total_activated_stake/10000)}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
 			</p>
 		</section>
