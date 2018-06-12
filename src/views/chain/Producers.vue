@@ -7,7 +7,7 @@
 			</p>
 			<br>
 			<p>
-				Actual EOS Votes: <b>{{(chainState.total_activated_stake/10000)}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
+				Actual EOS Votes: <b>{{numberWithCommas((chainState.total_activated_stake/10000).toFixed(0))}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
 			</p>
 		</section>
 		<br><br>
@@ -47,7 +47,7 @@
 						</td>
 							<td class="desktop-only">{{producer.country_code}}</td>
 						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(3)}}%</td>
-						<td>{{(producer.total_votes  / calculateVoteWeight() / 10000).toFixed(0)}}</td>
+						<td>{{numberWithCommas((producer.total_votes  / calculateVoteWeight() / 10000).toFixed(0))}}</td>
 						<td class="desktop-only">{{producer.url}}</td>
 						<td>
 							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>
@@ -149,6 +149,14 @@ export default class Producers extends Vue {
     let dates_:number = (Date.now() / 1000) - (timestamp_epoch / 1000);
     let weight_:number = (dates_ / (86400 * 7)) / 52;  //86400 = seconds per day 24*3600
     return Math.pow(2, weight_);
+  }
+
+  numberWithCommas(x: any) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+      x = x.replace(pattern, "$1,$2");
+    return x;
   }
 
   async vote() {
