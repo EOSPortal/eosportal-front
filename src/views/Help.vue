@@ -366,8 +366,6 @@
 
         </section>
 
-        <hr/>
-
     </section>
 </template>
 
