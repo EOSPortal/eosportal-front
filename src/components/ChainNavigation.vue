@@ -75,7 +75,7 @@ export default class ChainNavigation extends Vue {
   }
 
   async logoutScatter(){
-      this.logout();
+      this.scatter.logout();
   }
 }
 </script>
