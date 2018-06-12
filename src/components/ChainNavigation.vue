@@ -3,8 +3,9 @@
         <section class="contain chain-nav">
             <!--<router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>-->
             <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">{{ $t('lang.producers') }}</router-link>
-            <router-link exact-active-class="active" tag="button" :class="{'full':!canShowScatterButton()}" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
             <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ suggestingNetwork ? 'Use Chain' : $t('lang.scatter') }}</button>
+            <button v-if="!canShowScatterButton()" @click="logoutScatter">Logout</button>
 
             <!-- ACTIVATED STAKE ( I think? ) -->
             <!--<br><br>-->
@@ -29,7 +30,7 @@ import { getAccount } from "@/utils/eos.util";
     ...mapGetters(["identity", "account"])
   },
   methods: {
-    ...mapActions(["login"])
+    ...mapActions(["login", "logout"])
   }
 })
 export default class ChainNavigation extends Vue {
@@ -71,6 +72,10 @@ export default class ChainNavigation extends Vue {
       );
       this.$router.push("/");
     }
+  }
+
+  async logoutScatter(){
+      this.logout();
   }
 }
 </script>
