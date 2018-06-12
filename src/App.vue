@@ -3,7 +3,7 @@
     <div id="app" :class="theme">
         <section class="app-container">
             <Menu></Menu>
-            <router-view/>
+            <router-view class="content"/>
         </section>
     </div>
 </template>
