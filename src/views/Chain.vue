@@ -85,13 +85,13 @@
 
             // Discards slow networks. ( > 2 sec )
             const raceNetwork = (endpoint:string) => Promise.race([
-            	new Promise((res, rej) => setTimeout(() => res(null), 2000)).catch(() => null),
+            	new Promise((res, rej) => setTimeout(() => res(), 2000)).catch(() => null),
                 fetch(`${endpoint}/v1/chain/get_info`).then(() => endpoint).catch(() => null)
             ]);
 
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
-                if (node.indexOf(protocol) === 0) network = await raceNetwork(node);
+                if (node.indexOf(protocol) === 0) network = (await raceNetwork(node)) as string | null;
                 if(!network) chainData.nodes.shift();
             }
 
