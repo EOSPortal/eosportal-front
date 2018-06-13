@@ -7,14 +7,16 @@
 			</p>
 			<br>
 			<p>
-				<b>
+				Actual EOS Votes: <b>{{numberWithCommas((chainState.total_activated_stake/10000).toFixed(0))}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
+			</p>
+
+			<figure style="border:1px solid red; padding:20px; margin:20px 0; clear:both;">
+				<b style="font-size:20px; color:red;">
 					By voting you are accepting the
 					<a href="https://github.com/EOS-Mainnet/governance/blob/master/eosio.system/eosio.system-clause-constitution-rc.md" target="_blank"><u>EOS Constitution</u></a>
 					. Make sure you have read it!
 				</b>
-				<br><br>
-				Actual EOS Votes: <b>{{numberWithCommas((chainState.total_activated_stake/10000).toFixed(0))}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
-			</p>
+			</figure>
 		</section>
 		<br><br>
 		<br><br>

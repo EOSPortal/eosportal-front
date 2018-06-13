@@ -51,7 +51,7 @@
       {{bpStandardInfo.org.code_of_conduct}}
     </p>
     <p v-if="!hasProp('org.code_of_conduct', bpStandardInfo)">
-	    {{ $t('lang.noConduct') }}
+	  {{ $t('lang.noConduct') }}
     </p>
     <h5>{{ $t('lang.social') }}</h5>
     <ul>
