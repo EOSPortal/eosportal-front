@@ -85,15 +85,16 @@
 
             <h1 id="voting">Voting</h1>
 
-            <h3>
+            <h2>
                 If you'd rather watch a video here is a short 5 minute video explaining the entire process.
-            </h3>
+            </h2>
+            <br><br><br>
 
-            <b>Are you an advanced user? Watch this 80 second video to learn how to vote.</b>
+            <b>Are you an advanced user? Watch this 80 second video to learn how to vote.</b><br><br>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/16Lgs3LQMHg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-            <br><br>
-            <b>Are you **NOT** an advanced user? Watch this slower video to learn all about it.</b>
+            <br><br><br><br>
+            <b>Are you **NOT** an advanced user? Watch this slower video to learn all about it.</b><br><br>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/DClG2S0XLT0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 
