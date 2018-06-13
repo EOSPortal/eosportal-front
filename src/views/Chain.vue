@@ -79,15 +79,18 @@
             this.setChainData(chainData);
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
+
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
-//            chainData.nodes.shift();
+
+            const raceNetwork = (endpoint:string) => Promise.race([
+            	new Promise((res, rej) => setTimeout(() => res(null), 2000)).catch(() => null),
+                fetch(`${endpoint}/v1/chain/get_info`).then(() => endpoint).catch(() => null)
+            ]);
+
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
-                if (node.indexOf(protocol) === 0) {
-                    network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
-                }
-                console.log('network', network);
+                if (node.indexOf(protocol) === 0) network = await raceNetwork(node);
                 if(!network) chainData.nodes.shift();
             }
 
@@ -111,28 +114,10 @@
         async fillProducerData(){
             clearTimeout(this.producerTimer);
 
-            // Setting location from timezone for now.
             this.producers.map((producer:any) => {
               producer.country_code = (producer.location && timezones.default[producer.location.toString()]) ? timezones.default[producer.location.toString()] : '';
             })
-//        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
-//        	if(producer){
-//                if(!producer.url.length) producer.bpStandardInfo = false;
-//                else {
-//                    await getBpStandardInfo(producer.url)
-//                        .then(res => producer.bpStandardInfo = validateBpInfo(res))
-//                        .catch(error => producer.bpStandardInfo = false);
-//
-//                    if(producer.bpStandardInfo)
-//                    	producer.country_code = producer.bpStandardInfo.org.location.country;
-//
-//                    console.log('producer', producer.bpStandardInfo);
-//                }
-//            }
-//
-//            if(this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo')).length)
-//            	setTimeout(async () => await this.fillProducerData(), 5);
-//        	else
+
             this.producerTimer = setTimeout(() => this.recurseProducers(), 20000);
         }
 

@@ -6,23 +6,24 @@ import { prop, path } from "ramda";
 
 export const getChainId = (httpEndpoint:string) => {
     return Eos({httpEndpoint}).getInfo({}).then((res:any) => res.chain_id).catch(() => '0000000000');
-}
+};
 
 export const getEos = () => {
   if (!store.state.network) return null;
-
+  const protocol = location.protocol.substring(0, location.protocol.length - 1);
   const httpEndpoint = store.state.network.port !== 80
-        ? `//${store.state.network.host}:${store.state.network.port}`
-        : `//${store.state.network.host}`
+        ? `${protocol}://${store.state.network.host}:${store.state.network.port}`
+        : `${protocol}://${store.state.network.host}`;
 
   return Eos({ httpEndpoint, chainId:store.getters.chainId });
 };
 
 export const getScatterEos = () => {
+  const protocol = location.protocol.substring(0, location.protocol.length - 1);
   if (!store.state.scatter || !store.state.network) return null;
   return store.state.scatter.eos(store.state.network, Eos, {
     chainId: store.getters.chainId
-  });
+  }, protocol);
 };
 
 export const getProducerCount = async (httpEndpoint: string) => {

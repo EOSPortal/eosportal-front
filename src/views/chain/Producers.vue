@@ -168,8 +168,9 @@ export default class Producers extends Vue {
   }
 
   async vote() {
-    console.log("call vote!");
-    //		const delegated = await delegateAll(this.account.name);
+  	// Fix for producers who are no longer active
+    this.votedFor = this.votedFor.filter(owner => !!this.producers.find(producer => producer.owner === owner));
+
     await voteFor(this.account.name, this.votedFor)
       .catch(error => {
         let errorJson = error;
