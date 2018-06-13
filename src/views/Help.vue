@@ -12,7 +12,6 @@
 
                 <li class="head"><a href="#voting">Voting</a></li>
                 <ul>
-                    <li class="link"><a href="#selecting-a-chain">Selecting a Chain</a></li>
                     <li class="link"><a href="#setting-up-scatter">Setting up Scatter</a></li>
                     <li class="link"><a href="#choosing-producers">Choosing Producers</a></li>
                     <!--<li class="link"><a href="#understanding-voting-power">Understanding Voting Power</a></li>-->
@@ -93,33 +92,6 @@
 
             <br><br>
 
-            <section class="contain">
-                <h1 id="selecting-a-chain">Selecting a Chain</h1>
-                <p>
-                    This voting portal supports any attempted chain launch. In most cases the Block Producers you're already voting for will have given you a link to the chain they are producing for.
-                    If that is not the case however, you can see the amount of producers on the chain and within the chain itself you can search for your beloved block producer candidates.
-                </p>
-                <br>
-                <br>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Chain ID</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-
-                    <tbody>
-                        <tr>
-                            <td><b>id:4</b> - a628a5a6123d6ed...</td>
-                            <td><button>Select</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-
 
             <section class="contain">
                 <h1 id="setting-up-scatter">Setting up Scatter</h1>
@@ -141,6 +113,7 @@
                         <b>Validating for Chrome</b><br><br>
                         <ul>
                             <li>Navigate to <u>chrome://extensions/</u> in your browser by copy pasting that URL into the URL bar.</li>
+                            <li>On the top right side of the Extensions Page you should see a switch for "Developer Mode". Switch it on.</li>
                             <li>Find the Scatter extension among your installed extensions</li>
                             <li>There will be an <b>ID</b> property there. Make sure that it is exactly equal to: <u><b>ammjpmhgckkpcamddpolhchgomcojkle</b></u></li>
                         </ul>

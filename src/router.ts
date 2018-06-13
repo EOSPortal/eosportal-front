@@ -17,7 +17,7 @@ export default new Router({ mode:'history',
       {
           path: '/',
           name: 'chains',
-          component: Chains
+          redirect: '/chain/12/producers'
       },
       {
           path: '/help',

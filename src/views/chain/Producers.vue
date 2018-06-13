@@ -5,6 +5,16 @@
 			<p>
 				{{ $t('lang.votingProducersInfo') }}
 			</p>
+			<br>
+			<p>
+				<b>
+					By voting you are accepting the
+					<a href="https://github.com/EOS-Mainnet/governance/blob/master/eosio.system/eosio.system-clause-constitution-rc.md" target="_blank"><u>EOS Constitution</u></a>
+					. Make sure you have read it!
+				</b>
+				<br><br>
+				Actual EOS Votes: <b>{{numberWithCommas((chainState.total_activated_stake/10000).toFixed(0))}}</b> EOS (<b>{{(chainState.total_activated_stake/10000/1000011818*100).toFixed(3)}} %</b>)
+			</p>
 		</section>
 		<br><br>
 		<br><br>
@@ -18,12 +28,13 @@
 				<button class="mobile-full" @click="vote">{{ $t('lang.voteSelectedProducers') }} ( {{votedFor.length}} / 30 )</button>
 			</section>
 
-			<table>
+			<table class="table table-striped table-hover">
 				<thead>
 				<tr>
-					<th>{{ $t('lang.name') }}</th>
-					<th class="desktop-only">{{ $t('lang.account') }}</th>
+					<th>#</th>
+					<th>{{ $t('lang.account') }}</th>
 					<th class="desktop-only">{{ $t('lang.location') }}</th>
+					<th>Votes %</th>
 					<th>Votes</th>
 					<th class="desktop-only">{{ $t('lang.url') }}</th>
 					<th></th>
@@ -32,16 +43,17 @@
 
 
 				<tbody>
-					<tr v-for="producer in filteredProducers()">
+					<tr v-for="(producer, key) in filteredProducers()">
+						<td>{{key + 1}}</td>
 						<td>
 							<img v-if="producerImage(producer)" class="bp-logo" :src="producerImage(producer)" />
 							<router-link tag="a" style="cursor:pointer;" :to="producer.owner" append>
-								<b>{{producerName(producer.url, producer.owner)}}</b>
+								<b>{{producer.owner}}</b>
 							</router-link>
 						</td>
-						<td class="desktop-only">{{producer.owner}}</td>
 							<td class="desktop-only">{{producer.country_code}}</td>
-						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(5)}}%</td>
+						<td>{{(producer.total_votes / chainState.total_producer_vote_weight * 100).toFixed(3)}}%</td>
+						<td>{{numberWithCommas((producer.total_votes  / calculateVoteWeight() / 10000).toFixed(0))}}</td>
 						<td class="desktop-only">{{producer.url}}</td>
 						<td>
 							<button @click="toggleVoteFor(producer.owner)" v-if="account" :class="{'active':hasVotedFor(producer.owner)}">{{ $t('lang.vote') }}</button>
@@ -128,6 +140,29 @@ export default class Producers extends Vue {
 
   hasVotedFor(producerName: string) {
     return this.votedFor.includes(producerName);
+  }
+
+  // Kudos to CryptoLions
+  calculateVoteWeight() {
+
+    //time epoch:
+    //https://github.com/EOSIO/eos/blob/master/contracts/eosiolib/time.hpp#L160
+
+    //stake to vote
+    //https://github.com/EOSIO/eos/blob/master/contracts/eosio.system/voting.cpp#L105-L109
+
+    let timestamp_epoch:number = 946684800000;
+    let dates_:number = (Date.now() / 1000) - (timestamp_epoch / 1000);
+    let weight_:number = (dates_ / (86400 * 7)) / 52;  //86400 = seconds per day 24*3600
+    return Math.pow(2, weight_);
+  }
+
+  numberWithCommas(x: any) {
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+      x = x.replace(pattern, "$1,$2");
+    return x;
   }
 
   async vote() {

@@ -114,7 +114,7 @@ export default new Vuex.Store({
     identity:(state:any) => state.scatter ? state.scatter.identity : null,
     account:(state:any) => state.scatter && state.scatter.identity ? state.scatter.identity.accounts.find((account:any) => account.blockchain === 'eos') : null,
     orderedProducers:(state:any) => state.producers.sort((a:any,b:any) => b.total_votes - a.total_votes),
-    getProducerByOwner: state => (owner: string) => findLast(propEq('owner', owner))(state.producers),
-    chainId:state => state.chainData ? state.chainData.chainId : null,
+    getProducerByOwner: (state:any) => (owner: string) => findLast(propEq('owner', owner))(state.producers),
+    chainId:(state:any) => state.chainData ? state.chainData.chainId : null,
   }
 });

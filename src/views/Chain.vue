@@ -13,7 +13,7 @@
     import {getChain} from "@/api";
     import {getBpStandardInfo } from "@/utils/api.util";
     import { validateBpInfo } from "@/utils/bp-json-validation.util";
-    import * as timezones from '@/timezones/timezones.json'
+    import * as timezones from '@/timezones/country.json'
 
     @Component({
         components: {
@@ -74,6 +74,15 @@
         async bindNetwork(chainData:any|null = null){
         	if(!chainData) chainData = await getChain(this.$route.params.chainId);
             if(!chainData) return this.$router.push({path:'/'});
+
+            chainData.nodes = [
+                "http://node2.liquideos.com:8888",
+                "https://api.eosmetal.io:18890",
+                "http://185.109.149.236:8888"
+            ];
+
+            console.log('chain data', chainData)
+
             this.setChainData(chainData);
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
@@ -109,8 +118,7 @@
 
             // Setting location from timezone for now.
             this.producers.map((producer:any) => {
-            	const zone:any = Object.keys((timezones as any).timezones).find((key:any) => (timezones as any).timezones[key].utcOffset === producer.location);
-            	producer.country_code = zone ? (timezones as any).timezones[zone].name : '';
+              producer.country_code = (producer.location && timezones.default[producer.location.toString()]) ? timezones.default[producer.location.toString()] : '';
             })
 //        	const producer = this.producers.filter(p => !p.hasOwnProperty('bpStandardInfo'))[0] || null;
 //        	if(producer){

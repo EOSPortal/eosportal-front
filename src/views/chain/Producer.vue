@@ -9,7 +9,7 @@
       </tr>
       <tr>
 				<th>{{ $t('lang.url') }}</th>
-				<td><a :href="'//' + producer.url" target="_blank">{{producer.url}}</a></td>
+				<td><a :href="producer.url" target="_blank">{{producer.url}}</a></td>
       </tr>
       <tr>
 				<th>{{ $t('lang.location') }}</th>
