@@ -89,7 +89,7 @@ export const getChainProducers = () => {
 
 export const getAccount = async (accountName: string) => {
   if (!accountName || !accountName.length) return null;
-  return getEos().getAccount(accountName);
+  if(getEos()) return getEos().getAccount(accountName);
 };
 
 export const getBalances = async (accountName: string) => {
