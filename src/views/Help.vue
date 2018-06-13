@@ -147,47 +147,47 @@
                     <img src="/img/scatter_keypair.gif" />
                 </section>
 
-                <section class="contain">
-                    <b>Adding chains to your Scatter</b><br><br>
+                <!--<section class="contain">-->
+                    <!--<b>Adding chains to your Scatter</b><br><br>-->
 
-                    <p>
-                        Before you can import your account into Scatter you will need to click the <b>Use Chain</b> button on the chain's sub-menu.
-                        This will popup a prompt asking you to add one of the chain's networks so that Scatter will be able to search the chain for your account name base on the
-                        keypair you imported.
+                    <!--<p>-->
+                        <!--Before you can import your account into Scatter you will need to click the <b>Use Chain</b> button on the chain's sub-menu.-->
+                        <!--This will popup a prompt asking you to add one of the chain's networks so that Scatter will be able to search the chain for your account name base on the-->
+                        <!--keypair you imported.-->
 
-                        <br><br>
-                        <u>
-                            <b>Note:</b> From time to time it might ask to you add a different network. This happens because there is no load balancer on top of the chain yet
-                            and if a producer's node goes down we switch to the next available network.
-                        </u>
-                        <br>
-                        <br>
-                        <section class="chain-nav">
-                            <button>Use Chain</button>
-                        </section>
-                        <br>
+                        <!--<br><br>-->
+                        <!--<u>-->
+                            <!--<b>Note:</b> From time to time it might ask to you add a different network. This happens because there is no load balancer on top of the chain yet-->
+                            <!--and if a producer's node goes down we switch to the next available network.-->
+                        <!--</u>-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<section class="chain-nav">-->
+                            <!--<button>Use Chain</button>-->
+                        <!--</section>-->
+                        <!--<br>-->
 
-                        <img src="/img/scatter_add_network.jpg" />
+                        <!--<img src="/img/scatter_add_network.jpg" />-->
 
-                        <br>
-                        <br>
-                        You can then check that the network exists in Scatter like so:
-                        <br>
-                        <br>
-                        <img src="/img/scatter_check_network.gif" />
-                    </p>
-                </section>
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--You can then check that the network exists in Scatter like so:-->
+                        <!--<br>-->
+                        <!--<br>-->
+                        <!--<img src="/img/scatter_check_network.gif" />-->
+                    <!--</p>-->
+                <!--</section>-->
 
                 <section class="contain">
                     <b>Importing your EOS account</b><br><br>
 
                     <p>
-                        Now that you have your keypair as well as the chain's network inside of Scatter you can import your account.
+                        We're going to import your account into an Identity under a catch-all chain linked to the mainnet "chain id".
 
                         <ul>
                             <li>Open Scatter and click the <b>Identities</b> option from the main menu</li>
                             <li>All Scatters start with a randomized Identity. Click the pencil icon to edit it.</li>
-                            <li>Scroll down to the <b>Account</b> section and select the network you just added from the first drop down.</li>
+                            <li>Scroll down to the <b>Account</b> section and select the <u>eos:chain:aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906</u> option from the drop down.</li>
                             <li>Select the keypair you want to use to search for accounts from the second drop down.</li>
                             <li>Click the <b>Import</b> button to tell Scatter to search for accounts.</li>
                             <li>If an account is found it will pop up a prompt allowing you to select the <i>EOS account permission</i>.</li>

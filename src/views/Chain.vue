@@ -75,24 +75,19 @@
         	if(!chainData) chainData = await getChain(this.$route.params.chainId);
             if(!chainData) return this.$router.push({path:'/'});
 
-            chainData.nodes = [
-                "http://node2.liquideos.com:8888",
-                "https://api.eosmetal.io:18890",
-                "http://185.109.149.236:8888"
-            ];
-
-            console.log('chain data', chainData)
 
             this.setChainData(chainData);
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
+//            chainData.nodes.shift();
             while(!network && chainData.nodes.length){
                 const node:string = chainData.nodes[0];
                 if (node.indexOf(protocol) === 0) {
                     network = await fetch(`${node}/v1/chain/get_info`).then(() => node).catch(() => null);
                 }
+                console.log('network', network);
                 if(!network) chainData.nodes.shift();
             }
 
