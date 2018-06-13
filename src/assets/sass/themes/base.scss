@@ -5,8 +5,17 @@ $radius:5px;
 }
 
 #app {
-  min-height:1024px;
   transition:background 0.5s ease;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1 0 auto;
 }
 
 body {
@@ -56,7 +65,7 @@ nav {
     img {
       height: 46px;
       vertical-align: top;
-      filter: brightness(70%) hue-rotate(180deg);
+      filter: $logo-color;
       margin-right:20px;
     }
   }
