@@ -93,16 +93,15 @@ export default new Vuex.Store({
 
     // Scatter related
     // -----------------------------------------
-    setNetwork({ commit }, networkString:string | null){
+    setNetwork({ commit, state }, networkString:string | null){
       if(networkString === null) return commit('setNetwork', null);
       const {host, port} = urlUtils.urlToHostPort(networkString);
-      commit('setNetwork', { blockchain:'eos', host, port});
+      commit('setNetwork', { blockchain:'eos', host, port, chainId:state.chainData.chainId});
     },
     async login({state}){
       if(!state.scatter) return false;
       if(!state.network) return false;
-      if(await state.scatter.suggestNetwork(state.network).catch(() => false))
-        return state.scatter.getIdentity({accounts:[state.network]});
+      return state.scatter.getIdentity({accounts:[state.network]})
     },
     logout({state}){
       if(!state.scatter) return false;

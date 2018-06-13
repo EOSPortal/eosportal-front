@@ -4,7 +4,7 @@
             <!--<router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>-->
             <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">{{ $t('lang.producers') }}</router-link>
             <router-link exact-active-class="active" tag="button" :class="{'full':!canShowScatterButton()}" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
-            <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ suggestingNetwork ? 'Use Chain' : $t('lang.scatter') }}</button>
+            <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ $t('lang.scatter') }}</button>
 
             <!-- ACTIVATED STAKE ( I think? ) -->
             <!--<br><br>-->
@@ -38,7 +38,6 @@ export default class ChainNavigation extends Vue {
   network!: any;
   account!: any;
   login!: () => void;
-  suggestingNetwork: boolean = true;
 
   canShowScatterButton() {
     if (!this.scatter) return true;
@@ -51,13 +50,6 @@ export default class ChainNavigation extends Vue {
   async loginWithScatter() {
     // User does not have Scatter.
     if (!this.scatter) return this.$router.push("/help#setting-up-scatter");
-
-    if (this.suggestingNetwork) {
-      this.suggestingNetwork = !await this.scatter
-        .suggestNetwork(this.network)
-        .catch(() => false);
-      return;
-    }
 
     await this.login();
     if (!this.account || !await getAccount(this.account.name)) {
