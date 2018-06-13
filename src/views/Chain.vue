@@ -83,6 +83,7 @@
             const originalLength:number = chainData.nodes.length;
             let network:null | string = null;
 
+            // Discards slow networks. ( > 2 sec )
             const raceNetwork = (endpoint:string) => Promise.race([
             	new Promise((res, rej) => setTimeout(() => res(null), 2000)).catch(() => null),
                 fetch(`${endpoint}/v1/chain/get_info`).then(() => endpoint).catch(() => null)
