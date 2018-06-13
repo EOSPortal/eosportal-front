@@ -39,6 +39,7 @@ export default class ChainNavigation extends Vue {
   network!: any;
   account!: any;
   login!: () => void;
+  logout!: () => void;
 
   canShowScatterButton() {
     if (!this.scatter) return true;
@@ -67,7 +68,7 @@ export default class ChainNavigation extends Vue {
   }
 
   async logoutScatter(){
-      this.scatter.logout();
+      this.logout();
   }
 }
 </script>
