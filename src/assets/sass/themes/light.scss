@@ -29,13 +29,6 @@
       }
     }
 
-    .logo {
-
-      img {
-        filter: brightness(70%) hue-rotate(180deg);
-      }
-    }
-
     .links {
 
       .link {
@@ -172,5 +165,8 @@
       }
     }
   }
-}
 
+  .footer {
+    border-top: solid 1px $theme-light-accent-color;
+  }
+}

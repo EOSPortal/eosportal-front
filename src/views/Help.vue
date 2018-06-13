@@ -373,8 +373,6 @@
 
         </section>
 
-        <hr/>
-
     </section>
 </template>
 
