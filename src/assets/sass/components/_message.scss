@@ -1,0 +1,46 @@
+/**
+ * The message component should be used to highlight
+ * important text or other content.
+ *
+ * It will give a nice border around the text and padding to
+ * make it different from elements around it.
+ */
+.message {
+	margin-top: 1em;
+	padding: .8em 1.2em;
+	border-radius: 4px;
+
+	// The default message.
+	// ---------------------------
+	&-default {
+		@include message-variant($message-color-light);
+
+		// Dark theme.
+		.dark & {
+			@include message-variant($message-color-dark);
+		}
+	}
+
+	// Color Variants
+	// ---------------------------
+	&-info {
+		@include message-variant($info-color);
+	}
+
+	&-success {
+		@include message-variant($success-color);
+	}
+
+	&-notice {
+		@include message-variant($notice-color);
+  }
+
+	&-danger {
+		@include message-variant($danger-color);
+	}
+
+	// Size
+	&-large {
+		font-size: $font-size-large;
+	}
+}
