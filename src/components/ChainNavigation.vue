@@ -1,15 +1,11 @@
 <template>
     <section>
         <section class="contain chain-nav">
-            <!--<router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>-->
+            <router-link exact-active-class="active" tag="button" :to="{ name: 'power' }">{{ $t('lang.votingPower') }}</router-link>
             <router-link exact-active-class="active" tag="button" :to="{ name: 'producers' }">{{ $t('lang.producers') }}</router-link>
             <router-link exact-active-class="active" tag="button" :to="{ name: 'info' }" exact>{{ $t('lang.chainInfo') }}</router-link>
             <button v-if="canShowScatterButton()" @click="loginWithScatter">{{ $t('lang.scatter') }}</button>
             <button v-if="!canShowScatterButton()" @click="logoutScatter">Logout</button>
-
-            <!-- ACTIVATED STAKE ( I think? ) -->
-            <!--<br><br>-->
-            <!--{{(((chainState.total_activated_stake/10000) / '1000000000.0000') * 100).toFixed(4)}}%-->
         </section>
         <hr/>
     </section>

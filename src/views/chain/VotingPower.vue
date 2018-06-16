@@ -85,14 +85,6 @@
                         </ul>
                     </td>
                 </tr>
-                <tr>
-                    <th>{{ $t('lang.voterInfo') }}</th>
-                    <td>
-                        <ul>
-                            <li v-for="key in Object.keys(voter.voter_info)">{{key}}: {{voter.voter_info[key]}}</li>
-                        </ul>
-                    </td>
-                </tr>
             </table>
 
             <div style="height:200px;"></div>
@@ -145,7 +137,6 @@ export default class VotingPower extends Vue {
 
   async initialize() {
     if (this.voter) {
-      console.log("voter", this.voter);
       this.symbol = this.voter.total_resources.cpu_weight.split(" ")[1];
       this.toStake = this.voter.voter_info
         ? this.voter.voter_info.staked / 10000
@@ -155,9 +146,10 @@ export default class VotingPower extends Vue {
         this.voter.account_name,
         this.symbol
       );
-      const delegated = this.voter.delegated_bandwidth
-        ? parseFloat(this.voter.delegated_bandwidth.cpu_weight.split(" ")[0]) +
-          parseFloat(this.voter.delegated_bandwidth.net_weight.split(" ")[0])
+
+      const delegated = this.voter.self_delegated_bandwidth
+        ? parseFloat(this.voter.self_delegated_bandwidth.cpu_weight.split(" ")[0]) +
+          parseFloat(this.voter.self_delegated_bandwidth.net_weight.split(" ")[0])
         : 0;
 
       this.totalBalance = delegated + parseFloat(tokens.split(" ")[0]);
