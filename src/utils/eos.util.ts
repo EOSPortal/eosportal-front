@@ -10,20 +10,15 @@ export const getChainId = (httpEndpoint:string) => {
 
 export const getEos = () => {
   if (!store.state.network) return null;
-  const protocol = location.protocol.substring(0, location.protocol.length - 1);
-  const httpEndpoint = store.state.network.port !== 80
-        ? `${protocol}://${store.state.network.host}:${store.state.network.port}`
-        : `${protocol}://${store.state.network.host}`;
-
+  const httpEndpoint = `https://${store.state.network.host}:${store.state.network.port}`;
   return Eos({ httpEndpoint, chainId:store.getters.chainId });
 };
 
 export const getScatterEos = () => {
-  const protocol = location.protocol.substring(0, location.protocol.length - 1);
   if (!store.state.scatter || !store.state.network) return null;
   return store.state.scatter.eos(store.state.network, Eos, {
     chainId: store.getters.chainId
-  }, protocol);
+  });
 };
 
 export const getProducerCount = async (httpEndpoint: string) => {

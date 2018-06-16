@@ -80,31 +80,32 @@
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
 
-            const originalLength:number = chainData.nodes.length;
-            let network:null | string = null;
-
-            // Discards slow networks. ( > 2 sec )
-            const raceNetwork = (endpoint:string) => Promise.race([
-            	new Promise((res, rej) => setTimeout(() => res(), 2000)).catch(() => null),
-                fetch(`${endpoint}/v1/chain/get_info`).then(() => endpoint).catch(() => null)
-            ]);
-
-            while(!network && chainData.nodes.length){
-                const node:string = chainData.nodes[0];
-                if (node.indexOf(protocol) === 0) network = (await raceNetwork(node)) as string | null;
-                if(!network) chainData.nodes.shift();
-            }
-
-            //TODO: Notify API of stale nodes.
-            if(chainData.nodes.length !== originalLength){
-            }
-
-            //TODO: All networks are stale
-            if(!network){
-                return;
-            }
-
-            this.setNetwork(network);
+//            const originalLength:number = chainData.nodes.length;
+//            let network:null | string = null;
+//
+//            // Discards slow networks. ( > 2 sec )
+//            const raceNetwork = (endpoint:string) => Promise.race([
+//            	new Promise((res, rej) => setTimeout(() => res(), 2000)).catch(() => null),
+//                fetch(`${endpoint}/v1/chain/get_info`).then(() => endpoint).catch(() => null)
+//            ]);
+//
+//            while(!network && chainData.nodes.length){
+//                const node:string = chainData.nodes[0];
+//                if (node.indexOf(protocol) === 0) network = (await raceNetwork(node)) as string | null;
+//                if(!network) chainData.nodes.shift();
+//            }
+//
+//            //TODO: Notify API of stale nodes.
+//            if(chainData.nodes.length !== originalLength){
+//            }
+//
+//            //TODO: All networks are stale
+//            if(!network){
+//                return;
+//            }
+//
+//            this.setNetwork(network);
+            this.setNetwork('https://nodes.get-scatter.com');
         }
 
         async recurseProducers(){

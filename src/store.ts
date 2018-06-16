@@ -96,7 +96,7 @@ export default new Vuex.Store({
     setNetwork({ commit, state }, networkString:string | null){
       if(networkString === null) return commit('setNetwork', null);
       const {host, port} = urlUtils.urlToHostPort(networkString);
-      commit('setNetwork', { blockchain:'eos', host, port, chainId:state.chainData.chainId});
+      commit('setNetwork', { protocol:'https', blockchain:'eos', host, port, chainId:state.chainData.chainId});
     },
     async login({state}){
       if(!state.scatter) return false;
