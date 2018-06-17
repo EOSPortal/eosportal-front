@@ -173,7 +173,7 @@ export default class VotingPower extends Vue {
   async delegateBW() {
     const fix = (n: number) =>
       parseFloat(n.toFixed(this.decimals.toString().length));
-    const symbolWrap = (n: number) => `${n} ${this.symbol}`;
+    const symbolWrap = (n: number) => `${n.toFixed(4)} ${this.symbol}`;
     const previousStake = this.voter.voter_info
       ? this.voter.voter_info.staked / 10000
       : 0;

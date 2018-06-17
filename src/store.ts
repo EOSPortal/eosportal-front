@@ -11,7 +11,7 @@ export default new Vuex.Store({
     chains: [],
     chainData:null,
     chainState:null,
-    theme:'light',
+    theme:localStorage.getItem('theme') || 'light',
 
     voter:null,
     producers:[],

@@ -54,6 +54,7 @@
 
         toggleTheme(){
             this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
+            localStorage.setItem('theme', this.theme);
         }
 
         changeLanguage(){
