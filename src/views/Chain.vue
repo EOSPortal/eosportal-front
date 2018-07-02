@@ -105,7 +105,7 @@
 //            }
 //
 //            this.setNetwork(network);
-            this.setNetwork('https://nodes.get-scatter.com');
+            this.setNetwork('https://api1.eosdublin.io');
         }
 
         async recurseProducers(){
