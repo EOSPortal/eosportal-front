@@ -14,7 +14,7 @@ export const getBpStandardInfo = (bpUrl: string) => {
 	const url = bpUrl.indexOf('http') !== 0 ? 'http://'+bpUrl : bpUrl;
 	return Promise.race([
 		new Promise((res, rej) => setTimeout(() => rej(false), 1500)).catch(() => null),
-		fetch(`//${config.domain}/bps/${url}`).then((res: any) => res.json()).catch(() => null)
+		fetch(`https://${config.domain}/bps/${url}`).then((res: any) => res.json()).catch(() => null)
 	]);
 }
 

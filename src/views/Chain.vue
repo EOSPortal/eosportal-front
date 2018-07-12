@@ -72,11 +72,7 @@
         }
 
         async bindNetwork(chainData:any|null = null){
-        	if(!chainData) chainData = await getChain(this.$route.params.chainId);
-            if(!chainData) return this.$router.push({path:'/'});
-
-
-            this.setChainData(chainData);
+            this.setChainData({ chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"});
 
             const protocol = location.protocol.substring(0, location.protocol.length - 1);
 
