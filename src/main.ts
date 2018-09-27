@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import './filters'
 import i18n from './locales/index'
 import Toasted from 'vue-toasted';
+import ScatterJS from 'scatter-js/dist/scatter.esm';
 
 Vue.config.productionTip = false;
 
@@ -27,10 +28,8 @@ new Vue({
 
 Vue.use(Toasted)
 
-document.addEventListener('scatterLoaded', () => {
-
-  window.scatter.requireVersion(4.0);
-  store.dispatch('setScatter', window.scatter);
+ScatterJS.scatter.connect("eosportal.io").then(connected => {
+  if(!connected) return false;
+  store.dispatch('setScatter', ScatterJS.scatter);
   window.scatter = null;
-
 });
