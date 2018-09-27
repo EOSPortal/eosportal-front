@@ -28,7 +28,7 @@ new Vue({
 
 Vue.use(Toasted)
 
-ScatterJS.scatter.connect("eosportal.io").then(connected => {
+ScatterJS.scatter.connect("eosportal.io").then((connected: boolean) => {
   if(!connected) return false;
   store.dispatch('setScatter', ScatterJS.scatter);
   window.scatter = null;
