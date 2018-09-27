@@ -6,7 +6,8 @@ import './registerServiceWorker'
 import './filters'
 import i18n from './locales/index'
 import Toasted from 'vue-toasted';
-import ScatterJS from 'scatter-js/dist/scatter.esm';
+
+const ScatterJS = require('scatter-js/dist/scatter.esm');
 
 Vue.config.productionTip = false;
 
