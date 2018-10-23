@@ -29,11 +29,9 @@ new Vue({
 
 Vue.use(Toasted)
 
-window.ScatterJS.plugins( new window.ScatterEOS() );
-window.ScatterJS.scatter.connect("eosportal.io").then((connected: boolean) => {
+ScatterJS.plugins( new ScatterEOS() );
+ScatterJS.scatter.connect("eosportal.io").then((connected: boolean) => {
   if(!connected) return false;
-  store.dispatch('setScatter', window.ScatterJS.scatter);
+  store.dispatch('setScatter', ScatterJS.scatter);
   window.scatter = null;
-  window.ScatterJS = null;
-  window.ScatterEOS = null;
 });
