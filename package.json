@@ -12,12 +12,13 @@
     "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "dependencies": {
+    "@types/ramda": "^0.25.39",
     "ajv": "^6.5.0",
     "bp-info-standard": "github:EOSPortal/bp-info-standard",
     "eosjs": "^16.0.9",
     "express": "^4.16.3",
     "npm": "^6.1.0",
-    "ramda": "^0.25.0",
+    "ramda": "0.25.0",
     "regenerator-runtime": "^0.12.1",
     "register-service-worker": "^1.4.0",
     "scatter-js": "^2.5.2",
@@ -36,7 +37,6 @@
   "devDependencies": {
     "@types/chai": "^4.1.0",
     "@types/mocha": "^2.2.46",
-    "@types/ramda": "github:types/npm-ramda#dist",
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-e2e-cypress": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
@@ -47,7 +47,7 @@
     "@vue/eslint-config-typescript": "^3.0.0-beta.15",
     "@vue/test-utils": "^1.0.0-beta.16",
     "chai": "^4.1.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.4",
     "sass-loader": "^6.0.6",
     "vue-template-compiler": "^2.5.13"
   },
