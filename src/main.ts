@@ -7,7 +7,8 @@ import './filters'
 import i18n from './locales/index'
 import Toasted from 'vue-toasted';
 
-const ScatterJS = require('scatter-js/dist/scatter.esm');
+import ScatterJS from 'scatterjs-core';
+import ScatterEOS from 'scatterjs-plugin-eosjs';
 
 Vue.config.productionTip = false;
 
@@ -29,6 +30,7 @@ new Vue({
 
 Vue.use(Toasted)
 
+ScatterJS.plugins( new ScatterEOS() );
 ScatterJS.scatter.connect("eosportal.io").then((connected: boolean) => {
   if(!connected) return false;
   store.dispatch('setScatter', ScatterJS.scatter);

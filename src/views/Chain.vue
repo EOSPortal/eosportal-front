@@ -101,7 +101,7 @@
 //            }
 //
 //            this.setNetwork(network);
-            this.setNetwork('https://api1.eosdublin.io');
+            this.setNetwork('https://proxy.eosnode.tools');
         }
 
         async recurseProducers(){
