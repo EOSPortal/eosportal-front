@@ -7,9 +7,8 @@ import './filters'
 import i18n from './locales/index'
 import Toasted from 'vue-toasted';
 
-import ScatterJS from 'scatterjs-core';
-import ScatterEOS from 'scatterjs-plugin-eosjs';
-
+const ScatterJS = require('scatterjs-core');
+const ScatterEOS = require('scatterjs-plugin-eosjs');
 Vue.config.productionTip = false;
 
 declare global {
